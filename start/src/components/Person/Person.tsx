@@ -1,18 +1,20 @@
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 
 interface ProfileProps {
     info: {
-        name: string;
-        age: number;
-    }
+        name: string,
+        age: number
+    };
 }
 
-const Person: FC<ProfileProps> = ({ info }) => {
+const Person: FC<ProfileProps> = ({ info, children }) => {
     return (
-        <h2>
-            Hello my name is {info.name} I am {info.age} years
-            old.
-        </h2>
+        <Fragment>
+            <h2>
+                Hello my name is {info.name} I am {info.age} years old.
+            </h2>
+            <p>{children}</p>
+        </Fragment>
     );
 };
 

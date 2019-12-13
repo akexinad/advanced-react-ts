@@ -28,7 +28,8 @@ class App extends Component {
             <div className="App">
                 <h1>Hello World</h1>
                 <h2>Working</h2>
-                <Person info={ profile } />
+                <Person info={ profile } >LALALALALALAALAL</Person>
+                <Person info={ profile } ></Person>
                 <TodoList todos={ todos }/>
             </div>
         );
