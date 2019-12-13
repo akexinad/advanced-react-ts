@@ -1,0 +1,5 @@
+WHAT IS REACT
+=============
+
+React is basically is JS library for building User Interfaces.
+
