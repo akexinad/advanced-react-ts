@@ -1,4 +1,4 @@
-import React, { Component, Props } from "react";
+import React, { Component } from "react";
 import "./App.css";
 
 import Person from "./components/Person/Person";
@@ -6,7 +6,6 @@ import TodoList from "./components/TodoList/TodoList";
 
 
 class App extends Component {
-
     
     public render() {
         const profile = {
@@ -25,7 +24,6 @@ class App extends Component {
             }
         ];
     
-        
         return (
             <div className="App">
                 <h1>Hello World</h1>
