@@ -6,31 +6,33 @@ import TodoList from "./components/TodoList/TodoList";
 
 
 class App extends Component {
+
+    state = {
+        profile: [
+            { name: "fellini", age: 44 },
+            { name: "pasolini", age: 34 }
+        ],
+        todos: [
+            { id: "001", text: "get milk" },
+            { id: "002", text: "eggs" }
+        ]
+    };
+
+    switchNameHandler = () => {
+        console.log(this);
+        
+        console.log('clicked');
+    }
     
     public render() {
-        const profile = {
-            name: "fellini",
-            age: 44
-        }
-
-        const todos = [
-            {
-                id: "001",
-                text: "get milk"
-            },
-            {
-                id: "002",
-                text: "eggs"
-            }
-        ];
-    
         return (
             <div className="App">
                 <h1>Hello World</h1>
                 <h2>Working</h2>
-                <Person info={ profile } >LALALALALALAALAL</Person>
-                <Person info={ profile } ></Person>
-                <TodoList todos={ todos }/>
+                <button onClick={ this.switchNameHandler }>Switch Name</button>
+                <Person info={ this.state.profile[0] } >LALALALALALAALAL</Person>
+                <Person info={ this.state.profile[1] } ></Person>
+                <TodoList todos={ this.state.todos }/>
             </div>
         );
     }
