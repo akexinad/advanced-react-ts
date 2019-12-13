@@ -1,17 +1,20 @@
 import React, { FC, Fragment } from "react";
 
 interface ProfileProps {
-    info: {
+    user: {
         name: string,
         age: number
     };
 }
 
-const Person: FC<ProfileProps> = ({ info, children }) => {
+const Person: FC<ProfileProps> = ({ user, children }) => {
+    console.log(user);
+    
+    
     return (
         <Fragment>
             <h2>
-                Hello my name is {info.name} I am {info.age} years old.
+                Hello my name is {user.name} I am {user.age} years old.
             </h2>
             <p>{children}</p>
         </Fragment>
