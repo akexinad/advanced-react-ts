@@ -2,15 +2,14 @@ import React, { FC, Fragment } from "react";
 
 interface ProfileProps {
     user: {
-        name: string,
-        age: number
+        name: string;
+        age: number;
     };
 }
 
 const Person: FC<ProfileProps> = ({ user, children }) => {
     console.log(user);
-    
-    
+
     return (
         <Fragment>
             <h2>
