@@ -4,9 +4,7 @@ import "./App.css";
 import Person from "./components/Person/Person";
 import TodoList from "./components/TodoList/TodoList";
 
-
 class App extends Component {
-
     state = {
         profile: [
             { name: "fellini", age: 44 },
@@ -19,20 +17,25 @@ class App extends Component {
     };
 
     switchNameHandler = () => {
-        console.log(this);
-        
-        console.log('clicked');
-    }
-    
-    public render() {
+        this.setState({
+            profile: [
+                { name: "fellini", age: 44349656 },
+                { name: "benigni", age: 34 }
+            ]
+        });
+
+        console.log("clicked");
+    };
+
+    render() {
         return (
             <div className="App">
                 <h1>Hello World</h1>
                 <h2>Working</h2>
-                <button onClick={ this.switchNameHandler }>Switch Name</button>
-                <Person info={ this.state.profile[0] } >LALALALALALAALAL</Person>
-                <Person info={ this.state.profile[1] } ></Person>
-                <TodoList todos={ this.state.todos }/>
+                <button onClick={this.switchNameHandler}>Switch Name</button>
+                <Person info={this.state.profile[0]}>LALALALALALAALAL</Person>
+                <Person info={this.state.profile[1]}></Person>
+                <TodoList todos={this.state.todos} />
             </div>
         );
     }
