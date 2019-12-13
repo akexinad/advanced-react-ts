@@ -2,8 +2,9 @@ import React, { FC, useState } from "react";
 
 import "./App.css";
 
-import Person from "./components/Person/Person";
-import TodoList from "./components/TodoList/TodoList";
+import Person from "../Person/Person";
+import TodoList from "../TodoList/TodoList";
+import Button, {  } from "../Button/Button";
 
 interface Profile {
     name: string;
@@ -26,6 +27,10 @@ const initialTodoData = [
     { id: "002", text: "eggs" }
 ];
 
+const mock = [
+    { foo: "yes", bar: 34, baz: true }
+]
+
 const App: FC = () => {
     const [profileState, setProfileState] = useState<Profile[]>(
         initialProfileData
@@ -45,6 +50,7 @@ const App: FC = () => {
             <h1>Hello World</h1>
             <h2>Working</h2>
             <button onClick={switchNameHandler}>Switch Name</button>
+            <Button buttonClick={mock} />
             <Person user={profileState[0]}>LALALALALALAALAL</Person>
             <Person user={profileState[1]}></Person>
             <Person user={profileState[2]}></Person>
