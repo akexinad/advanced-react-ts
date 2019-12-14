@@ -4,7 +4,7 @@ import "./App.css";
 
 import Person from "../Person/Person";
 import TodoList from "../TodoList/TodoList";
-import Button, {  } from "../Button/Button";
+import Button from "../Button/Button";
 
 interface Profile {
     name: string;
@@ -27,9 +27,7 @@ const initialTodoData = [
     { id: "002", text: "eggs" }
 ];
 
-const mock = [
-    { foo: "yes", bar: 34, baz: true }
-]
+const mock = [{ foo: "yes", bar: 34, baz: true }];
 
 const App: FC = () => {
     const [profileState, setProfileState] = useState<Profile[]>(
@@ -37,7 +35,7 @@ const App: FC = () => {
     );
     const [todoState] = useState<TodoItem[]>(initialTodoData);
 
-    const switchNameHandler = () => {
+    const editProfileHandler = () => {
         setProfileState([
             { name: "fellini", age: 99999 },
             { name: "paso", age: 34 },
@@ -49,11 +47,29 @@ const App: FC = () => {
         <div className="App">
             <h1>Hello World</h1>
             <h2>Working</h2>
-            <button onClick={switchNameHandler}>Switch Name</button>
-            <Button buttonClick={mock} />
-            <Person user={profileState[0]}>LALALALALALAALAL</Person>
-            <Person user={profileState[1]}></Person>
-            <Person user={profileState[2]}></Person>
+            <button onClick={ editProfileHandler }>Switch Name</button>
+            {/* <Button buttonClick={mock} /> */} 
+            <Person 
+                click={editProfileHandler}
+                user={profileState[0]}
+            >
+                props.children
+            </Person>
+            <Person 
+                click={editProfileHandler}
+                user={profileState[1]}
+            >
+                props.children
+            </Person>
+            <Person 
+                click={editProfileHandler}
+                user={profileState[2]}
+            >
+                props.children
+            </Person>
+            <br />
+            <br />
+            <br />
             <TodoList todos={todoState} />
         </div>
     );
