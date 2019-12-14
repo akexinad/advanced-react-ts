@@ -42,7 +42,7 @@ const App: FC = () => {
     };
 
     const addTodoHandler = (text: TodoItem["text"]) => {
-        const id = Math.floor(Math.random() * 1000).toString();
+        const id = "00" + (todoList.length + 1);
 
         const newItem = {
             id,

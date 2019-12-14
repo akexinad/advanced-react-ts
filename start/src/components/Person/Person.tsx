@@ -1,5 +1,7 @@
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, useState } from "react";
 import { TodoItem } from "../App/App";
+
+import "./Person.css";
 
 interface PersonProps {
     user: {
@@ -14,8 +16,6 @@ const Person: FC<PersonProps> = ({ user, click, todo, children }) => {
     const [newTodo, setNewTodo] = useState<string>("");
 
     const todoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-
         const text = e.target.value;
 
         setNewTodo(text);
@@ -32,7 +32,7 @@ const Person: FC<PersonProps> = ({ user, click, todo, children }) => {
     };
 
     return (
-        <Fragment>
+        <div className="Person">
             <h2 onClick={click}>
                 Hello my name is {user.name} I am {user.age} years old.
             </h2>
@@ -48,7 +48,7 @@ const Person: FC<PersonProps> = ({ user, click, todo, children }) => {
                     value="submit"
                 />
             </form>
-        </Fragment>
+        </div>
     );
 };
 
