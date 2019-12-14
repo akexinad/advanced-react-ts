@@ -42,7 +42,7 @@ const App: FC = () => {
     };
 
     const addTodoHandler = (text: TodoItem["text"]) => {
-        const id = "00" + (todoList.length + 1);
+        const id: TodoItem["id"] = "00" + (todoList.length + 1);
 
         const newItem = {
             id,
@@ -59,7 +59,7 @@ const App: FC = () => {
             <h1>Hello World</h1>
             <h2>Working</h2>
             <button onClick={editProfileHandler}>Switch Name</button>
-            {/* <Button buttonClick={mock} /> */}
+            <Button buttonClick={mock} />
             <Person
                 click={editProfileHandler}
                 user={profileList[0]}

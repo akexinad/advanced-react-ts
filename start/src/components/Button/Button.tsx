@@ -17,7 +17,22 @@ const Button: FC<ButtonClickProps> = ({ buttonClick }) => {
         console.log("clicked!");
     };
 
-    return <button onClick={clickHandler}>Btn Component</button>;
+    const style = {
+        backgroundColor: "white",
+        font: "inherit",
+        border: "1px solid blue",
+        padding: "8px",
+        cursor: "pointer"
+    };
+
+    return (
+        <button
+            onClick={clickHandler}
+            style={style}
+        >
+            Btn Component
+        </button>
+    );
 };
 
 export default Button;
