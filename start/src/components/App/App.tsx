@@ -35,26 +35,24 @@ const App: FC = () => {
 
     const editProfileHandler = () => {
         setProfile([
-            { name: "fellini", age: 99999 },
-            { name: "paso", age: 34 },
-            { name: "danny", age: 22 }
+            { name: "jerry", age: 99999 },
+            { name: "george", age: 34 },
+            { name: "kramer", age: 22 }
         ]);
     };
 
     const addTodoHandler = (text: TodoItem["text"]) => {
-        
         const id = Math.floor(Math.random() * 1000).toString();
 
         const newItem = {
             id,
             text
-        }
+        };
 
         setTodo(todoList => [...todoList, newItem]);
     };
 
     console.log(todoList);
-    
 
     return (
         <div className="App">
@@ -62,13 +60,25 @@ const App: FC = () => {
             <h2>Working</h2>
             <button onClick={editProfileHandler}>Switch Name</button>
             {/* <Button buttonClick={mock} /> */}
-            <Person click={editProfileHandler} user={profileList[0]} todo={addTodoHandler}>
+            <Person
+                click={editProfileHandler}
+                user={profileList[0]}
+                todo={addTodoHandler}
+            >
                 props.children
             </Person>
-            <Person click={editProfileHandler} user={profileList[1]} todo={addTodoHandler}>
+            <Person
+                click={editProfileHandler}
+                user={profileList[1]}
+                todo={addTodoHandler}
+            >
                 props.children
             </Person>
-            <Person click={editProfileHandler} user={profileList[2]} todo={addTodoHandler}>
+            <Person
+                click={editProfileHandler}
+                user={profileList[2]}
+                todo={addTodoHandler}
+            >
                 props.children
             </Person>
             <br />
