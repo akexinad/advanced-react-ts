@@ -11,7 +11,7 @@ interface Profile {
     age: number;
 }
 
-interface TodoItem {
+export interface TodoItem {
     id: string;
     text: string;
 }
@@ -30,47 +30,51 @@ const initialTodoData = [
 const mock = [{ foo: "yes", bar: 34, baz: true }];
 
 const App: FC = () => {
-    const [profileState, setProfileState] = useState<Profile[]>(
-        initialProfileData
-    );
-    const [todoState] = useState<TodoItem[]>(initialTodoData);
+    const [profileList, setProfile] = useState<Profile[]>(initialProfileData);
+    const [todoList, setTodo] = useState<TodoItem[]>(initialTodoData);
 
     const editProfileHandler = () => {
-        setProfileState([
+        setProfile([
             { name: "fellini", age: 99999 },
             { name: "paso", age: 34 },
             { name: "danny", age: 22 }
         ]);
     };
 
+    const addTodoHandler = (text: TodoItem["text"]) => {
+        
+        const id = Math.floor(Math.random() * 1000).toString();
+
+        const newItem = {
+            id,
+            text
+        }
+
+        setTodo(todoList => [...todoList, newItem]);
+    };
+
+    console.log(todoList);
+    
+
     return (
         <div className="App">
             <h1>Hello World</h1>
             <h2>Working</h2>
-            <button onClick={ editProfileHandler }>Switch Name</button>
-            {/* <Button buttonClick={mock} /> */} 
-            <Person 
-                click={editProfileHandler}
-                user={profileState[0]}
-            >
+            <button onClick={editProfileHandler}>Switch Name</button>
+            {/* <Button buttonClick={mock} /> */}
+            <Person click={editProfileHandler} user={profileList[0]} todo={addTodoHandler}>
                 props.children
             </Person>
-            <Person 
-                click={editProfileHandler}
-                user={profileState[1]}
-            >
+            <Person click={editProfileHandler} user={profileList[1]} todo={addTodoHandler}>
                 props.children
             </Person>
-            <Person 
-                click={editProfileHandler}
-                user={profileState[2]}
-            >
+            <Person click={editProfileHandler} user={profileList[2]} todo={addTodoHandler}>
                 props.children
             </Person>
             <br />
             <br />
             <br />
-            <TodoList todos={todoState} />
+            <TodoList todos={todoList} />
         </div>
     );
 };
