@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 import "./App.css";
 
@@ -61,40 +61,49 @@ class App extends Component {
     renderPersons = () => {
         return (
             this.state.showPersons ? 
-                <div>
-                    <Person
-                        click={this.editProfileHandler}
-                        user={this.state.profileList[0]}
-                        todo={this.addTodoHandler}
-                    >
-                        props.children
-                    </Person>
-                    <Person
-                        click={this.editProfileHandler}
-                        user={this.state.profileList[1]}
-                        todo={this.addTodoHandler}
-                    >
-                        props.children
-                    </Person>
-                    <Person
-                        click={this.editProfileHandler}
-                        user={this.state.profileList[2]}
-                        todo={this.addTodoHandler}
-                    >
-                        props.children
-                    </Person>
-                </div>
+            <Fragment>
+                <Person
+                    click={this.editProfileHandler}
+                    user={this.state.profileList[0]}
+                    todo={this.addTodoHandler}
+                >
+                    props.children
+                </Person>
+                <Person
+                    click={this.editProfileHandler}
+                    user={this.state.profileList[1]}
+                    todo={this.addTodoHandler}
+                >
+                    props.children
+                </Person>
+                <Person
+                    click={this.editProfileHandler}
+                    user={this.state.profileList[2]}
+                    todo={this.addTodoHandler}
+                >
+                    props.children
+                </Person>
+            </Fragment>
             :
             null
         );
     }
 
     render() {
+
+        const style = {
+            backgroundColor: 'white',
+            font: 'inherit',
+            border: '1px solid blue',
+            padding: '8px',
+            cursor: 'pointer'
+        }
+        
         return (
             <div className="App">
                 <h1>Hello World</h1>
                 <h2>Working</h2>
-                <button onClick={this.togglePersonsHandler}>Show Persons</button>
+                <button style={style} onClick={this.togglePersonsHandler}>Show Persons</button>
                 { this.renderPersons() }
                 <br />
                 <br />
@@ -103,7 +112,6 @@ class App extends Component {
             </div>
         );
     }
-
 };
 
 export default App;
