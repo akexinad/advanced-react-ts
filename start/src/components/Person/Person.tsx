@@ -9,11 +9,12 @@ interface PersonProps {
         name: string;
         age: number;
     };
-    click: () => void;
+    changeDetails: () => void;
+    deletePerson: (id: string) => void;
     todo: (text: TodoItem["text"]) => void;
 }
 
-const Person: FC<PersonProps> = ({ user, click, todo, children }) => {
+const Person: FC<PersonProps> = ({ user, changeDetails, deletePerson, todo, children }) => {
     const [newTodo, setNewTodo] = useState<string>("");
 
     const todoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +35,7 @@ const Person: FC<PersonProps> = ({ user, click, todo, children }) => {
 
     return (
         <div className="Person">
-            <h2 onClick={click}>
+            <h2 onClick={changeDetails}>
                 Hello my name is {user.name} I am {user.age} years old.
             </h2>
             <p>{children}</p>
@@ -49,6 +50,7 @@ const Person: FC<PersonProps> = ({ user, click, todo, children }) => {
                     value="submit"
                 />
             </form>
+            <button onClick={(e) => deletePerson(user.id)}>Delete Person</button>
         </div>
     );
 };

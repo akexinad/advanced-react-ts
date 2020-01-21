@@ -34,6 +34,12 @@ class App extends Component {
         });
     };
 
+    deletePersonHandler = (id: string) => {
+        const persons = this.state.profileList;
+        persons.splice(0, 1);
+        this.setState({persons});
+    }
+    
     togglePersonsHandler = () => {
         const doesShow = this.state.showPersons;
         this.setState({
@@ -57,11 +63,12 @@ class App extends Component {
     renderPersons = () => {
         return this.state.showPersons ? (
             <Fragment>
-                {this.state.profileList.map(profile => {
+                {this.state.profileList.map((profile) => {
                     return (
                         <Person
                             key={profile.id}
-                            click={this.editProfileHandler}
+                            changeDetails={this.editProfileHandler}
+                            deletePerson={(e) => this.deletePersonHandler(profile.id)}
                             user={profile}
                             todo={this.addTodoHandler}
                         />
