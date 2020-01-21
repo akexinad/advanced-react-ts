@@ -35,9 +35,11 @@ class App extends Component {
     };
 
     deletePersonHandler = (id: string) => {
-        const persons = this.state.profileList;
+        const persons = [...this.state.profileList];
         persons.splice(0, 1);
-        this.setState({persons});
+        this.setState({
+            profileList: persons
+        });
     }
     
     togglePersonsHandler = () => {
