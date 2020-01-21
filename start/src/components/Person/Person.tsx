@@ -5,6 +5,7 @@ import "./Person.css";
 
 interface PersonProps {
     user: {
+        id: string;
         name: string;
         age: number;
     };

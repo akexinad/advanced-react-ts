@@ -13,9 +13,9 @@ export interface TodoItem {
 class App extends Component {
     state = {
         profileList: [
-            { name: "fellini", age: 44 },
-            { name: "pasolini", age: 34 },
-            { name: "benigni", age: 22 }
+            { id: "001", name: "fellini", age: 44 },
+            { id: "002", name: "pasolini", age: 34 },
+            { id: "003", name: "benigni", age: 22 }
         ],
         todoList: [
             { id: "001", text: "get milk" },
@@ -27,9 +27,9 @@ class App extends Component {
     editProfileHandler = () => {
         this.setState({
             profileList: [
-                { name: "jerry", age: 99999 },
-                { name: "george", age: 34 },
-                { name: "kramer", age: 22 }
+                { id: "001", name: "jerry", age: 99999 },
+                { id: "002", name: "george", age: 34 },
+                { id: "003", name: "kramer", age: 22 }
             ]
         });
     };
@@ -57,27 +57,16 @@ class App extends Component {
     renderPersons = () => {
         return this.state.showPersons ? (
             <Fragment>
-                <Person
-                    click={this.editProfileHandler}
-                    user={this.state.profileList[0]}
-                    todo={this.addTodoHandler}
-                >
-                    props.children
-                </Person>
-                <Person
-                    click={this.editProfileHandler}
-                    user={this.state.profileList[1]}
-                    todo={this.addTodoHandler}
-                >
-                    props.children
-                </Person>
-                <Person
-                    click={this.editProfileHandler}
-                    user={this.state.profileList[2]}
-                    todo={this.addTodoHandler}
-                >
-                    props.children
-                </Person>
+                {this.state.profileList.map(profile => {
+                    return (
+                        <Person
+                            key={profile.id}
+                            click={this.editProfileHandler}
+                            user={profile}
+                            todo={this.addTodoHandler}
+                        />
+                    );
+                })}
             </Fragment>
         ) : null;
     };
@@ -96,7 +85,7 @@ class App extends Component {
                 <h1>Hello World</h1>
                 <h2>Working</h2>
                 <button style={style} onClick={this.togglePersonsHandler}>
-                    Show Persons
+                    {this.state.showPersons ? "Hide Persons" : "Show Persons"}
                 </button>
                 {this.renderPersons()}
                 <br />
