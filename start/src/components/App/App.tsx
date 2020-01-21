@@ -11,7 +11,6 @@ export interface TodoItem {
 }
 
 class App extends Component {
-
     state = {
         profileList: [
             { name: "fellini", age: 44 },
@@ -20,17 +19,17 @@ class App extends Component {
         ],
         todoList: [
             { id: "001", text: "get milk" },
-            { id: "002", text: "eggs" }        
+            { id: "002", text: "eggs" }
         ],
         showPersons: false
-    }
-    
+    };
+
     editProfileHandler = () => {
         this.setState({
             profileList: [
-                { name: "jerry", age: 99999  },
+                { name: "jerry", age: 99999 },
                 { name: "george", age: 34 },
-                { name: "kramer", age: 22 }    
+                { name: "kramer", age: 22 }
             ]
         });
     };
@@ -39,8 +38,8 @@ class App extends Component {
         const doesShow = this.state.showPersons;
         this.setState({
             showPersons: !doesShow
-        })
-    }
+        });
+    };
 
     addTodoHandler = (text: TodoItem["text"]) => {
         const id: TodoItem["id"] = "00" + (this.state.todoList.length + 1);
@@ -51,16 +50,12 @@ class App extends Component {
         };
 
         this.setState({
-            todoList: [
-                ...this.state.todoList,
-                newItem
-            ]
+            todoList: [...this.state.todoList, newItem]
         });
     };
 
     renderPersons = () => {
-        return (
-            this.state.showPersons ? 
+        return this.state.showPersons ? (
             <Fragment>
                 <Person
                     click={this.editProfileHandler}
@@ -84,27 +79,26 @@ class App extends Component {
                     props.children
                 </Person>
             </Fragment>
-            :
-            null
-        );
-    }
+        ) : null;
+    };
 
     render() {
-
         const style = {
-            backgroundColor: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer'
-        }
-        
+            backgroundColor: "white",
+            font: "inherit",
+            border: "1px solid blue",
+            padding: "8px",
+            cursor: "pointer"
+        };
+
         return (
             <div className="App">
                 <h1>Hello World</h1>
                 <h2>Working</h2>
-                <button style={style} onClick={this.togglePersonsHandler}>Show Persons</button>
-                { this.renderPersons() }
+                <button style={style} onClick={this.togglePersonsHandler}>
+                    Show Persons
+                </button>
+                {this.renderPersons()}
                 <br />
                 <br />
                 <br />
@@ -112,6 +106,6 @@ class App extends Component {
             </div>
         );
     }
-};
+}
 
 export default App;
