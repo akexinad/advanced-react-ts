@@ -62,6 +62,32 @@ class App extends Component {
         });
     };
 
+    handleUsernameChange = (
+        value: React.ChangeEvent["target"]["nodeValue"],
+        id: string
+    ) => {
+        console.log(id);
+        console.log(value);
+
+        const newProfileList = [...this.state.profileList];
+
+        const personIndex = newProfileList.findIndex(
+            person => person.id === id
+        );
+
+        const person = newProfileList[personIndex];
+
+        if (!value) return;
+
+        person.name = value;
+
+        console.log(newProfileList);
+
+        this.setState({
+            profileList: newProfileList
+        });
+    };
+
     renderPersons = () => {
         return this.state.showPersons ? (
             <Fragment>
@@ -77,6 +103,9 @@ class App extends Component {
                             }
                             user={profile}
                             todo={this.addTodoHandler}
+                            changeUserName={(value, id) =>
+                                this.handleUsernameChange(value, id)
+                            }
                         />
                     );
                 })}

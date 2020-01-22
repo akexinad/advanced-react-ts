@@ -10,6 +10,10 @@ interface PersonProps {
         age: number;
     };
     changeDetails: (event: React.MouseEvent, id: string) => void;
+    changeUserName: (
+        value: React.ChangeEvent["target"]["nodeValue"],
+        id: string
+    ) => void;
     deletePerson: (id: string) => void;
     todo: (text: TodoItem["text"]) => void;
 }
@@ -18,6 +22,7 @@ const Person: FC<PersonProps> = ({
     user,
     changeDetails,
     deletePerson,
+    changeUserName,
     todo,
     children
 }) => {
@@ -47,9 +52,15 @@ const Person: FC<PersonProps> = ({
             <p>{children}</p>
             <form onSubmit={submitHandler}>
                 <input type="text" value={newTodo} onChange={todoHandler} />
-                <input type="submit" value="submit" />
+                <input type="submit" value="Add Todo" />
             </form>
             <button onClick={e => deletePerson(user.id)}>Delete Person</button>
+            <br />
+            <input
+                type="text"
+                placeholder="change name"
+                onChange={e => changeUserName(e.target.value, user.id)}
+            />
         </div>
     );
 };
