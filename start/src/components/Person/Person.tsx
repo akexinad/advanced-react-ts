@@ -1,4 +1,6 @@
 import React, { FC, useState } from "react";
+import Radium from "radium";
+
 import { TodoItem } from "../App/App";
 
 import "./Person.css";
@@ -44,6 +46,12 @@ const Person: FC<PersonProps> = ({
         todo(newTodo);
     };
 
+    const style = {
+        "@media (min-width: 500px)": {
+            "width": "450px"
+        }
+    };
+
     return (
         <div className="Person">
             <h2 onClick={e => changeDetails(e, user.id)}>
@@ -65,4 +73,4 @@ const Person: FC<PersonProps> = ({
     );
 };
 
-export default Person;
+export default Radium(Person);
