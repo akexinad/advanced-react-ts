@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Radium from "radium";
 
 import "./App.css";
 
@@ -115,27 +116,43 @@ class App extends Component {
             font: "inherit",
             border: "1px solid blue",
             padding: "8px",
-            cursor: "pointer"
+            cursor: "pointer",
+            ":hover": {
+                backgroundColor: "lightgreen",
+                color: "black"
+            }
         };
 
-        this.state.showPersons
-        ? (style.backgroundColor = "red")
-        : (style.backgroundColor = "green");
+        if (this.state.showPersons) {
+            style.backgroundColor = "red";
+            style[":hover"] = {
+                backgroundColor: "salmon",
+                color: "black"
+            };
+        } else {
+            style.backgroundColor = "green";
+            style[":hover"] = {
+                backgroundColor: "lightgreen",
+                color: "black"
+            };
+        }
 
         const classes = [];
 
         if (this.state.profileList.length <= 2) {
-            classes.push('orange');
+            classes.push("orange");
         }
 
         if (this.state.profileList.length <= 1) {
-            classes.push('red');
+            classes.push("red");
         }
 
         return (
             <div className="App">
                 <h1>Hello World</h1>
-                <h2 className={classes.join(' ')} >This class binding is working</h2>
+                <h2 className={classes.join(" ")}>
+                    This class binding is working
+                </h2>
                 <button style={style} onClick={this.togglePersonsHandler}>
                     {this.state.showPersons ? "Hide Persons" : "Show Persons"}
                 </button>
@@ -149,4 +166,5 @@ class App extends Component {
     }
 }
 
-export default App;
+// this is an example of a higher order component
+export default Radium(App);
