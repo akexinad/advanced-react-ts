@@ -47,7 +47,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <h2>Assignment 2</h2>
-        <input type="text" onChange={e => this.handleInputChange(e)} />
+        <input type="text" onChange={e => this.handleInputChange(e)} value={this.state.userInput}/>
         <h3>{this.state.userInput}</h3>
         <Validation userInput={this.state.userInput} />
         {this.renderInputCharacters()}
