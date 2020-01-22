@@ -66,9 +66,6 @@ class App extends Component {
         value: React.ChangeEvent["target"]["nodeValue"],
         id: string
     ) => {
-        console.log(id);
-        console.log(value);
-
         const newProfileList = [...this.state.profileList];
 
         const personIndex = newProfileList.findIndex(
@@ -80,8 +77,6 @@ class App extends Component {
         if (!value) return;
 
         person.name = value;
-
-        console.log(newProfileList);
 
         this.setState({
             profileList: newProfileList
@@ -115,12 +110,17 @@ class App extends Component {
 
     render() {
         const style = {
-            backgroundColor: "white",
+            backgroundColor: "green",
+            color: "white",
             font: "inherit",
             border: "1px solid blue",
             padding: "8px",
             cursor: "pointer"
         };
+
+        this.state.showPersons
+            ? (style.backgroundColor = "red")
+            : (style.backgroundColor = "green");
 
         return (
             <div className="App">
