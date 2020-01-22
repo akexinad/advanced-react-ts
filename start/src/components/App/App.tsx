@@ -6,8 +6,17 @@ import "./App.css";
 import Person from "../Person/Person";
 import TodoList from "../TodoList/TodoList";
 
-const StyledButton = styled.button`
-    background-color: green;
+export interface TodoItem {
+    id: string;
+    text: string;
+}
+
+export interface StyledButtonProps {
+    alt: boolean;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
+    background-color: ${props => props.alt ? 'red' : 'green'};
     color: white;
     font: inherit;
     border: 1px solid blue;
@@ -15,15 +24,10 @@ const StyledButton = styled.button`
     cursor: pointer;
 
     &:hover {
-        background-color: lightgreen;
-        color: black
+        background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+        color: black;
     }
 `;
-
-export interface TodoItem {
-    id: string;
-    text: string;
-}
 
 class App extends Component {
     state = {
@@ -124,7 +128,6 @@ class App extends Component {
     };
 
     render() {
-
         const classes = [];
 
         if (this.state.profileList.length <= 2) {
@@ -141,7 +144,7 @@ class App extends Component {
                 <h2 className={classes.join(" ")}>
                     This class binding is working
                 </h2>
-                <StyledButton onClick={this.togglePersonsHandler}>
+                <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>
                     {this.state.showPersons ? "Hide Persons" : "Show Persons"}
                 </StyledButton>
                 {this.renderPersons()}
