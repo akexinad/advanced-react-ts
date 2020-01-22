@@ -1,9 +1,24 @@
 import React, { Component, Fragment } from "react";
+import styled from "styled-components";
 
 import "./App.css";
 
 import Person from "../Person/Person";
 import TodoList from "../TodoList/TodoList";
+
+const StyledButton = styled.button`
+    background-color: green;
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lightgreen;
+        color: black
+    }
+`;
 
 export interface TodoItem {
     id: string;
@@ -109,32 +124,6 @@ class App extends Component {
     };
 
     render() {
-        const style = {
-            backgroundColor: "green",
-            color: "white",
-            font: "inherit",
-            border: "1px solid blue",
-            padding: "8px",
-            cursor: "pointer",
-            ":hover": {
-                backgroundColor: "lightgreen",
-                color: "black"
-            }
-        };
-
-        if (this.state.showPersons) {
-            style.backgroundColor = "red";
-            style[":hover"] = {
-                backgroundColor: "salmon",
-                color: "black"
-            };
-        } else {
-            style.backgroundColor = "green";
-            style[":hover"] = {
-                backgroundColor: "lightgreen",
-                color: "black"
-            };
-        }
 
         const classes = [];
 
@@ -152,9 +141,9 @@ class App extends Component {
                 <h2 className={classes.join(" ")}>
                     This class binding is working
                 </h2>
-                <button style={style} onClick={this.togglePersonsHandler}>
+                <StyledButton onClick={this.togglePersonsHandler}>
                     {this.state.showPersons ? "Hide Persons" : "Show Persons"}
-                </button>
+                </StyledButton>
                 {this.renderPersons()}
                 <br />
                 <br />
