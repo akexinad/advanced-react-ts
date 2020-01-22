@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import Radium from "radium";
 
 import "./App.css";
 
@@ -167,4 +166,4 @@ class App extends Component {
 }
 
 // this is an example of a higher order component
-export default Radium(App);
+export default App;

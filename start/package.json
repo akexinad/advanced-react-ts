@@ -11,10 +11,12 @@
     "@types/radium": "^0.24.2",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",
+    "@types/styled-components": "^4.4.2",
     "radium": "^0.26.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
+    "styled-components": "^5.0.0",
     "typescript": "^3.7.3"
   },
   "scripts": {

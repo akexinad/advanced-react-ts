@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
-import Radium from "radium";
+import styled from "styled-components";
 
 import { TodoItem } from "../App/App";
 
-import "./Person.css";
+// import "./Person.css";
 
 interface PersonProps {
     user: {
@@ -46,14 +46,21 @@ const Person: FC<PersonProps> = ({
         todo(newTodo);
     };
 
-    const style = {
-        "@media (min-width: 500px)": {
-            "width": "450px"
+    const StyledDiv = styled.div`
+        width: 60%;
+        margin: auto;
+        border: 1px solid #eee;
+        box-shadow: 0 2px 3px salmon;
+        padding: 16px;
+        text-align: center;
+
+        @media (min-width: 500px) {
+            width: 450px;
         }
-    };
+    `;
 
     return (
-        <div className="Person">
+        <StyledDiv>
             <h2 onClick={e => changeDetails(e, user.id)}>
                 Hello my name is {user.name} I am {user.age} years old.
             </h2>
@@ -69,8 +76,8 @@ const Person: FC<PersonProps> = ({
                 placeholder="change name"
                 onChange={e => changeUserName(e.target.value, user.id)}
             />
-        </div>
+        </StyledDiv>
     );
 };
 
-export default Radium(Person);
+export default Person;
