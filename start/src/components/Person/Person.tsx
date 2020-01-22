@@ -9,12 +9,18 @@ interface PersonProps {
         name: string;
         age: number;
     };
-    changeDetails: () => void;
+    changeDetails: (event: React.MouseEvent, id: string) => void;
     deletePerson: (id: string) => void;
     todo: (text: TodoItem["text"]) => void;
 }
 
-const Person: FC<PersonProps> = ({ user, changeDetails, deletePerson, todo, children }) => {
+const Person: FC<PersonProps> = ({
+    user,
+    changeDetails,
+    deletePerson,
+    todo,
+    children
+}) => {
     const [newTodo, setNewTodo] = useState<string>("");
 
     const todoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,22 +41,15 @@ const Person: FC<PersonProps> = ({ user, changeDetails, deletePerson, todo, chil
 
     return (
         <div className="Person">
-            <h2 onClick={changeDetails}>
+            <h2 onClick={e => changeDetails(e, user.id)}>
                 Hello my name is {user.name} I am {user.age} years old.
             </h2>
             <p>{children}</p>
             <form onSubmit={submitHandler}>
-                <input
-                    type="text"
-                    value={newTodo}
-                    onChange={todoHandler}
-                />
-                <input
-                    type="submit"
-                    value="submit"
-                />
+                <input type="text" value={newTodo} onChange={todoHandler} />
+                <input type="submit" value="submit" />
             </form>
-            <button onClick={(e) => deletePerson(user.id)}>Delete Person</button>
+            <button onClick={e => deletePerson(user.id)}>Delete Person</button>
         </div>
     );
 };

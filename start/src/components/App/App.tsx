@@ -24,7 +24,7 @@ class App extends Component {
         showPersons: false
     };
 
-    editProfileHandler = () => {
+    editProfileHandler = (event: React.MouseEvent, id: string) => {
         this.setState({
             profileList: [
                 { id: "001", name: "jerry", age: 99999 },
@@ -40,8 +40,8 @@ class App extends Component {
         this.setState({
             profileList: persons
         });
-    }
-    
+    };
+
     togglePersonsHandler = () => {
         const doesShow = this.state.showPersons;
         this.setState({
@@ -65,12 +65,16 @@ class App extends Component {
     renderPersons = () => {
         return this.state.showPersons ? (
             <Fragment>
-                {this.state.profileList.map((profile) => {
+                {this.state.profileList.map(profile => {
                     return (
                         <Person
                             key={profile.id}
-                            changeDetails={this.editProfileHandler}
-                            deletePerson={(e) => this.deletePersonHandler(profile.id)}
+                            changeDetails={e =>
+                                this.editProfileHandler(e, profile.id)
+                            }
+                            deletePerson={e =>
+                                this.deletePersonHandler(profile.id)
+                            }
                             user={profile}
                             todo={this.addTodoHandler}
                         />
