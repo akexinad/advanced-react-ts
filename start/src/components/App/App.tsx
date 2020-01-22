@@ -119,13 +119,23 @@ class App extends Component {
         };
 
         this.state.showPersons
-            ? (style.backgroundColor = "red")
-            : (style.backgroundColor = "green");
+        ? (style.backgroundColor = "red")
+        : (style.backgroundColor = "green");
+
+        const classes = [];
+
+        if (this.state.profileList.length <= 2) {
+            classes.push('orange');
+        }
+
+        if (this.state.profileList.length <= 1) {
+            classes.push('red');
+        }
 
         return (
             <div className="App">
                 <h1>Hello World</h1>
-                <h2>Working</h2>
+                <h2 className={classes.join(' ')} >This class binding is working</h2>
                 <button style={style} onClick={this.togglePersonsHandler}>
                     {this.state.showPersons ? "Hide Persons" : "Show Persons"}
                 </button>
