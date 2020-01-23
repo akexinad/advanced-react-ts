@@ -20,13 +20,25 @@ interface PersonProps {
     todo: (text: TodoItem["text"]) => void;
 }
 
+const StyledDiv = styled.div`
+    width: 60%;
+    margin: auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px salmon;
+    padding: 16px;
+    text-align: center;
+
+    @media (min-width: 500px) {
+        width: 450px;
+    }
+`;
+
 const Person: FC<PersonProps> = ({
     user,
     changeDetails,
     deletePerson,
     changeUserName,
-    todo,
-    children
+    todo
 }) => {
     const [newTodo, setNewTodo] = useState<string>("");
 
@@ -46,25 +58,11 @@ const Person: FC<PersonProps> = ({
         todo(newTodo);
     };
 
-    const StyledDiv = styled.div`
-        width: 60%;
-        margin: auto;
-        border: 1px solid #eee;
-        box-shadow: 0 2px 3px salmon;
-        padding: 16px;
-        text-align: center;
-
-        @media (min-width: 500px) {
-            width: 450px;
-        }
-    `;
-
     return (
         <StyledDiv>
             <h2 onClick={e => changeDetails(e, user.id)}>
                 Hello my name is {user.name} I am {user.age} years old.
             </h2>
-            <p>{children}</p>
             <form onSubmit={submitHandler}>
                 <input type="text" value={newTodo} onChange={todoHandler} />
                 <input type="submit" value="Add Todo" />
