@@ -1,34 +1,16 @@
-import React, { Component, Fragment } from "react";
-import styled from "styled-components";
+import React, { Component } from "react";
 
 import "./App.css";
 
-import Person from "../Person/Person";
 import TodoList from "../TodoList/TodoList";
-import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+import PersonList from "../Persons/PersonList/PersonList";
+import Cockpit from "../Cockpit/Cockpit";
 
 export interface TodoItem {
     id: string;
     text: string;
 }
 
-export interface StyledButtonProps {
-    alt: number | undefined;
-}
-
-const StyledButton = styled.button<StyledButtonProps>`
-    background-color: ${props => (Boolean(props.alt) ? "red" : "green")};
-    color: white;
-    font: inherit;
-    border: 1px solid blue;
-    padding: 8px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: ${props => (Boolean(props.alt) ? "salmon" : "lightgreen")};
-        color: black;
-    }
-`;
 
 class App extends Component {
     state = {
@@ -56,16 +38,10 @@ class App extends Component {
 
     deletePersonHandler = (id: string) => {
         const persons = [...this.state.profileList];
-        persons.splice(0, 1);
+        const personIndex = persons.findIndex(person => person.id === id);
+        persons.splice(personIndex, 1);
         this.setState({
             profileList: persons
-        });
-    };
-
-    togglePersonsHandler = () => {
-        const doesShow = this.state.showPersons;
-        this.setState({
-            showPersons: !doesShow
         });
     };
 
@@ -103,58 +79,23 @@ class App extends Component {
         });
     };
 
-    renderPersons = () => {
-        return this.state.showPersons ? (
-            <Fragment>
-                {this.state.profileList.map(profile => {
-                    return (
-                        <ErrorBoundary key={profile.id}>
-                            <Person
-                                key={profile.id}
-                                changeDetails={e =>
-                                    this.editProfileHandler(e, profile.id)
-                                }
-                                deletePerson={e =>
-                                    this.deletePersonHandler(profile.id)
-                                }
-                                user={profile}
-                                todo={this.addTodoHandler}
-                                changeUserName={(value, id) =>
-                                    this.handleUsernameChange(value, id)
-                                }
-                            />
-                        </ErrorBoundary>
-                    );
-                })}
-            </Fragment>
-        ) : null;
-    };
-
-    render() { 
-
-        const classes = [];
-
-        if (this.state.profileList.length <= 2) {
-            classes.push("orange");
-        }
-
-        if (this.state.profileList.length <= 1) {
-            classes.push("red");
-        }
-
+    render() {
+        
         return (
             <div className="App">
-                <h1>Hello World</h1>
-                <h2 className={classes.join(" ")}>
-                    This class binding is working
-                </h2>
-                <StyledButton
-                    alt={this.state.showPersons ? 1 : undefined}
-                    onClick={this.togglePersonsHandler}
-                >
-                    {this.state.showPersons ? "Hide Persons" : "Show Persons"}
-                </StyledButton>
-                {this.renderPersons()}
+                <Cockpit 
+                    profileList={this.state.profileList}
+                    showProfileList={this.state.showPersons}
+                />
+                {this.state.showPersons ? (
+                    <PersonList
+                        profiles={this.state.profileList}
+                        editProfile={this.editProfileHandler}
+                        deleteProfile={this.deletePersonHandler}
+                        changeProfileName={this.handleUsernameChange}
+                        addTodo={this.addTodoHandler}
+                    />
+                ) : null}
                 <br />
                 <br />
                 <br />

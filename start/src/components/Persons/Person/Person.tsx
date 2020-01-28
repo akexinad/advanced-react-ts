@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
 
-import { TodoItem } from "../App/App";
+import { TodoItem } from "../../App/App";
 
 // import "./Person.css";
 
@@ -41,11 +41,20 @@ const Person: FC<PersonProps> = ({
     todo
 }) => {
     const [newTodo, setNewTodo] = useState<string>("");
+    const [profileName, setProfileName] = useState(user.name);
 
     const todoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
 
         setNewTodo(text);
+    };
+
+    const profileNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newName = e.target.value;
+
+        setProfileName(newName);
+
+        changeUserName(newName, user.id);
     };
 
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,18 +70,18 @@ const Person: FC<PersonProps> = ({
     return (
         <StyledDiv>
             <h2 onClick={e => changeDetails(e, user.id)}>
-                Hello my name is {user.name} I am {user.age} years old.
+                Hello my name is {profileName} I am {user.age} years old.
             </h2>
             <form onSubmit={submitHandler}>
                 <input type="text" value={newTodo} onChange={todoHandler} />
                 <input type="submit" value="Add Todo" />
             </form>
-            <button onClick={e => deletePerson(user.id)}>Delete Person</button>
+            <button onClick={() => deletePerson(user.id)}>Delete Person</button>
             <br />
             <input
                 type="text"
                 placeholder="change name"
-                onChange={e => changeUserName(e.target.value, user.id)}
+                onChange={profileNameHandler}
             />
         </StyledDiv>
     );
