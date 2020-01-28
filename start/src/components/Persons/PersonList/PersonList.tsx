@@ -7,10 +7,6 @@ interface PersonListProps {
         name: string;
         age: number;
     }[];
-    editProfile: (
-        event: React.MouseEvent<Element, MouseEvent>,
-        id: string
-    ) => void;
     deleteProfile: (id: string) => void;
     changeProfileName: (
         value: React.ChangeEvent["target"]["nodeValue"],
@@ -21,7 +17,6 @@ interface PersonListProps {
 
 const PersonList: FC<PersonListProps> = ({
     profiles,
-    editProfile,
     deleteProfile,
     changeProfileName,
     addTodo
@@ -34,7 +29,6 @@ const PersonList: FC<PersonListProps> = ({
                     <Person
                         key={profile.id}
                         user={profile}
-                        changeDetails={editProfile}
                         changeUserName={changeProfileName}
                         deletePerson={deleteProfile}
                         todo={addTodo}

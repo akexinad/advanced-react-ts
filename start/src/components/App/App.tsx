@@ -11,7 +11,6 @@ export interface TodoItem {
     text: string;
 }
 
-
 class App extends Component {
     state = {
         profileList: [
@@ -24,16 +23,6 @@ class App extends Component {
             { id: "002", text: "eggs" }
         ],
         showPersons: false
-    };
-
-    editProfileHandler = (event: React.MouseEvent, id: string) => {
-        this.setState({
-            profileList: [
-                { id: "001", name: "jerry", age: 99999 },
-                { id: "002", name: "george", age: 34 },
-                { id: "003", name: "kramer", age: 22 }
-            ]
-        });
     };
 
     deletePersonHandler = (id: string) => {
@@ -79,18 +68,27 @@ class App extends Component {
         });
     };
 
-    render() {
+    profileListToggleHandler = (toggle: boolean) => {
+        console.log("hello world");
         
+        toggle = !toggle;
+        
+        this.setState({
+            showPersons: toggle
+        });
+    };
+
+    render() {
         return (
             <div className="App">
-                <Cockpit 
+                <Cockpit
                     profileList={this.state.profileList}
                     showProfileList={this.state.showPersons}
+                    toggleProfileList={this.profileListToggleHandler}
                 />
                 {this.state.showPersons ? (
                     <PersonList
                         profiles={this.state.profileList}
-                        editProfile={this.editProfileHandler}
                         deleteProfile={this.deletePersonHandler}
                         changeProfileName={this.handleUsernameChange}
                         addTodo={this.addTodoHandler}

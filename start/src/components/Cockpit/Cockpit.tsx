@@ -1,5 +1,7 @@
-import React, { Fragment, FC, useState } from "react";
+import React, { Fragment, FC } from "react";
 import styled from "styled-components";
+
+import "./Cockpit.css";
 
 interface CockpitProps {
     profileList: {
@@ -8,6 +10,7 @@ interface CockpitProps {
         age: number;
     }[];
     showProfileList: boolean;
+    toggleProfileList: (toggle: boolean) => void;
 }
 
 export interface StyledButtonProps {
@@ -28,9 +31,12 @@ const StyledButton = styled.button<StyledButtonProps>`
     }
 `;
 
-const Cockpit: FC<CockpitProps> = ({ profileList, showProfileList }) => {
-    const [showProfiles, setShowProfiles] = useState(showProfileList);
-    
+const Cockpit: FC<CockpitProps> = ({
+    profileList,
+    showProfileList,
+    toggleProfileList
+}) => {
+
     const classes = [];
 
     if (profileList.length <= 2) {
@@ -41,17 +47,13 @@ const Cockpit: FC<CockpitProps> = ({ profileList, showProfileList }) => {
         classes.push("red");
     }
 
-    const togglePersonsHandler = () => {
-        setShowProfiles(!showProfiles);
-    };
-
     return (
         <Fragment>
             <h1>Hello World</h1>
             <h2 className={classes.join(" ")}>This class binding is working</h2>
             <StyledButton
                 alt={showProfileList ? "false" : undefined}
-                onClick={togglePersonsHandler}
+                onClick={() => toggleProfileList(showProfileList)}
             >
                 {showProfileList ? "Hide Persons" : "Show Persons"}
             </StyledButton>

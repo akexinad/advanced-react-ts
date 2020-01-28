@@ -11,7 +11,6 @@ interface PersonProps {
         name: string;
         age: number;
     };
-    changeDetails: (event: React.MouseEvent, id: string) => void;
     changeUserName: (
         value: React.ChangeEvent["target"]["nodeValue"],
         id: string
@@ -35,7 +34,6 @@ const StyledDiv = styled.div`
 
 const Person: FC<PersonProps> = ({
     user,
-    changeDetails,
     deletePerson,
     changeUserName,
     todo
@@ -69,7 +67,7 @@ const Person: FC<PersonProps> = ({
 
     return (
         <StyledDiv>
-            <h2 onClick={e => changeDetails(e, user.id)}>
+            <h2>
                 Hello my name is {profileName} I am {user.age} years old.
             </h2>
             <form onSubmit={submitHandler}>
