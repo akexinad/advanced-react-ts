@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 
 import "./App.css";
 
-import Person from "../Person/Person";
 import TodoList from "../TodoList/TodoList";
+import PersonList from "../Persons/PersonList/PersonList";
 
 export interface TodoItem {
     id: string;
@@ -12,11 +12,11 @@ export interface TodoItem {
 }
 
 export interface StyledButtonProps {
-    alt: boolean;
+    alt: string | undefined;
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
-    background-color: ${props => props.alt ? 'red' : 'green'};
+    background-color: ${props => (props.alt ? "red" : "green")};
     color: white;
     font: inherit;
     border: 1px solid blue;
@@ -24,7 +24,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     cursor: pointer;
 
     &:hover {
-        background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+        background-color: ${props => (props.alt ? "salmon" : "lightgreen")};
         color: black;
     }
 `;
@@ -102,31 +102,6 @@ class App extends Component {
         });
     };
 
-    renderPersons = () => {
-        return this.state.showPersons ? (
-            <Fragment>
-                {this.state.profileList.map(profile => {
-                    return (
-                        <Person
-                            key={profile.id}
-                            changeDetails={e =>
-                                this.editProfileHandler(e, profile.id)
-                            }
-                            deletePerson={e =>
-                                this.deletePersonHandler(profile.id)
-                            }
-                            user={profile}
-                            todo={this.addTodoHandler}
-                            changeUserName={(value, id) =>
-                                this.handleUsernameChange(value, id)
-                            }
-                        />
-                    );
-                })}
-            </Fragment>
-        ) : null;
-    };
-
     render() {
         const classes = [];
 
@@ -144,10 +119,21 @@ class App extends Component {
                 <h2 className={classes.join(" ")}>
                     This class binding is working
                 </h2>
-                <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>
+                <StyledButton
+                    alt={this.state.showPersons ? "false" : undefined}
+                    onClick={this.togglePersonsHandler}
+                >
                     {this.state.showPersons ? "Hide Persons" : "Show Persons"}
                 </StyledButton>
-                {this.renderPersons()}
+                {this.state.showPersons ? (
+                    <PersonList
+                        profiles={this.state.profileList}
+                        editProfile={this.editProfileHandler}
+                        deleteProfile={this.deletePersonHandler}
+                        changeProfileName={this.handleUsernameChange}
+                        addTodo={this.addTodoHandler}
+                    />
+                ) : null}
                 <br />
                 <br />
                 <br />
