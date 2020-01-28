@@ -70,9 +70,9 @@ class App extends Component {
 
     profileListToggleHandler = (toggle: boolean) => {
         console.log("hello world");
-        
+
         toggle = !toggle;
-        
+
         this.setState({
             showPersons: toggle
         });

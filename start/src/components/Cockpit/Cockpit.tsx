@@ -1,8 +1,6 @@
 import React, { Fragment, FC } from "react";
 import styled from "styled-components";
 
-import "./Cockpit.css";
-
 interface CockpitProps {
     profileList: {
         id: string;

@@ -3,8 +3,6 @@ import styled from "styled-components";
 
 import { TodoItem } from "../../App/App";
 
-// import "./Person.css";
-
 interface PersonProps {
     user: {
         id: string;
