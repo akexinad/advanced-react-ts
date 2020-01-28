@@ -2,16 +2,20 @@ import React, { Component } from "react";
 
 import "./App.css";
 
-import TodoList from "../TodoList/TodoList";
-import PersonList from "../Persons/PersonList/PersonList";
-import Cockpit from "../Cockpit/Cockpit";
+import TodoList from "../../components/TodoList/TodoList";
+import PersonList from "../../components/Persons/PersonList/PersonList";
+import Cockpit from "../../components/Cockpit/Cockpit";
 
 export interface TodoItem {
     id: string;
     text: string;
 }
 
-class App extends Component {
+interface AppProps {
+    appProp: string;
+}
+
+class App extends Component<AppProps> {
     state = {
         profileList: [
             { id: "001", name: "fellini", age: 44 },
@@ -103,5 +107,4 @@ class App extends Component {
     }
 }
 
-// this is an example of a higher order component
 export default App;

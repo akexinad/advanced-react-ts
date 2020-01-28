@@ -3,3 +3,55 @@ WHAT IS REACT
 
 React is basically is JS library for building User Interfaces.
 
+
+
+COMPONENT LIFECYCLES
+====================
+
+NOTE: Lifecycle hooks have nothing to do with React hooks.
+
+Below is a list of the class lifecycle hooks in execution order.
+
+
+CONSTRUCTOR
+===========
+
+The first to invoke.
+
+If you create your own constructor where you have to create your own logic then you have to call super(props).
+
+DO NOT CAUSE SIDE EFFECTS. Example. Do not make HTTP requests or store data in local storage.
+
+
+GET DERIVED STATE FROM PROPS
+============================
+
+Whenever your props change, you can sync your state to the changes.
+
+This will be used very very rarely.
+
+AGAIN, DO NOT CAUSE SIDE EFFECTS.
+
+
+RENDER
+======
+
+We all know this one.
+
+This is where you prepare and structure your JSX code.
+
+
+RENDER CHILD COMPONENTS
+=======================
+
+All the components declared in the render() function above will then be invoked.
+
+
+COMPONENT DID MOUNT
+===================
+
+This is a very important hook.
+
+HERE YOU CAUSE SIDE-EFFECTS (Http requests).
+
+You should not call setState in this hook UNLESS it is done within the .then block of a promise.

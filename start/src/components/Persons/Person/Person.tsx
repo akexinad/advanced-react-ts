@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
 
-import { TodoItem } from "../../App/App";
+import { TodoItem } from "../../../containers/App/App";
 
 interface PersonProps {
     user: {
@@ -37,7 +37,7 @@ const Person: FC<PersonProps> = ({
     todo
 }) => {
     const [newTodo, setNewTodo] = useState<string>("");
-    const [profileName, setProfileName] = useState(user.name);
+    const [profileName, setProfileName] = useState<string>(user.name);
 
     const todoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
