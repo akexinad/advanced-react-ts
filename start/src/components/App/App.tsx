@@ -1,33 +1,17 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 
 import "./App.css";
 
 import TodoList from "../TodoList/TodoList";
 import PersonList from "../Persons/PersonList/PersonList";
+import Cockpit from "../Cockpit/Cockpit";
 
 export interface TodoItem {
     id: string;
     text: string;
 }
 
-export interface StyledButtonProps {
-    alt: string | undefined;
-}
 
-const StyledButton = styled.button<StyledButtonProps>`
-    background-color: ${props => (props.alt ? "red" : "green")};
-    color: white;
-    font: inherit;
-    border: 1px solid blue;
-    padding: 8px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: ${props => (props.alt ? "salmon" : "lightgreen")};
-        color: black;
-    }
-`;
 
 class App extends Component {
     state = {
@@ -59,13 +43,6 @@ class App extends Component {
         persons.splice(personIndex, 1);
         this.setState({
             profileList: persons
-        });
-    };
-
-    togglePersonsHandler = () => {
-        const doesShow = this.state.showPersons;
-        this.setState({
-            showPersons: !doesShow
         });
     };
 
@@ -104,28 +81,13 @@ class App extends Component {
     };
 
     render() {
-        const classes = [];
-
-        if (this.state.profileList.length <= 2) {
-            classes.push("orange");
-        }
-
-        if (this.state.profileList.length <= 1) {
-            classes.push("red");
-        }
-
+        
         return (
             <div className="App">
-                <h1>Hello World</h1>
-                <h2 className={classes.join(" ")}>
-                    This class binding is working
-                </h2>
-                <StyledButton
-                    alt={this.state.showPersons ? "false" : undefined}
-                    onClick={this.togglePersonsHandler}
-                >
-                    {this.state.showPersons ? "Hide Persons" : "Show Persons"}
-                </StyledButton>
+                <Cockpit 
+                    profileList={this.state.profileList}
+                    showProfileList={this.state.showPersons}
+                />
                 {this.state.showPersons ? (
                     <PersonList
                         profiles={this.state.profileList}
