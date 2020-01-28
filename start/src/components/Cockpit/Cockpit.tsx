@@ -13,8 +13,12 @@ interface CockpitProps {
     toggleProfileList: (toggle: boolean) => void;
 }
 
-export interface StyledButtonProps {
+interface StyledButtonProps {
     alt: string | undefined;
+}
+
+interface StyledH2Props {
+    profileListLength: number;
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -31,12 +35,23 @@ const StyledButton = styled.button<StyledButtonProps>`
     }
 `;
 
+const StyledH2 = styled.h2<StyledH2Props>`
+    color: ${({ profileListLength }) => {
+        if (profileListLength <= 1) {
+            return "red";
+        } else if (profileListLength <= 2) {
+            return "orange";
+        } else {
+            return "black";
+        }
+    }};
+`;
+
 const Cockpit: FC<CockpitProps> = ({
     profileList,
     showProfileList,
     toggleProfileList
 }) => {
-
     const classes = [];
 
     if (profileList.length <= 2) {
@@ -50,7 +65,9 @@ const Cockpit: FC<CockpitProps> = ({
     return (
         <Fragment>
             <h1>Hello World</h1>
-            <h2 className={classes.join(" ")}>This class binding is working</h2>
+            <StyledH2 profileListLength={profileList.length}>
+                This class binding is working
+            </StyledH2>
             <StyledButton
                 alt={showProfileList ? "false" : undefined}
                 onClick={() => toggleProfileList(showProfileList)}
