@@ -53,15 +53,12 @@ const Cockpit: FC<CockpitProps> = ({
     useEffect(() => {
         console.log("Cockpit.tsx: useEffect()");
 
-        let x = 7;
-
-        x = 24;
-
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             alert("Saved data to cloud!");
         }, 500);
 
         return () => {
+            clearTimeout(timer);
             console.log("Cockpit.tsx: Cleanup in useEffect()");
         };
     }, []);
