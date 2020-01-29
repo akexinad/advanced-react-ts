@@ -62,16 +62,16 @@ class App extends Component<AppProps, AppState> {
         return state;
     }
 
-    componentDidMount = () => {
-        console.log("App.tsx: componentDidMount()");
-        this.setState({
-            profileList: [
-                { id: "001", name: "foo", age: 99 },
-                { id: "002", name: "bar", age: 99 },
-                { id: "003", name: "baz", age: 99 }
-            ]
-        });
-    };
+    // componentDidMount = () => {
+    //     console.log("App.tsx: componentDidMount()");
+    //     this.setState({
+    //         profileList: [
+    //             { id: "001", name: "foo", age: 99 },
+    //             { id: "002", name: "bar", age: 99 },
+    //             { id: "003", name: "baz", age: 99 }
+    //         ]
+    //     });
+    // };
 
     deletePersonHandler = (id: string) => {
         const persons = [...this.state.profileList];

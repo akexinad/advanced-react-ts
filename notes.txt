@@ -130,3 +130,12 @@ Is invoked every render.
 The second argument of useEffect (the array) is used to decide when you want the hook to execute. You can variables that you want the hook to watch out for, and when those variables change, the hook will execute.
 
 To make sure that the hook only executes once, just pass in an empty array. It works such that since there are no dependencies to look out for, useEffect wont rerun as there is no dependency telling it when in has to rerun.
+
+
+=============================
+=============================
+
+PURE COMPONENTS
+===============
+
+A pure component can be used if you find yourself in a situation where you are using shouldComponentUpdate() for all possible changes to a components properties[props].
