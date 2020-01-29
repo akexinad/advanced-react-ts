@@ -5,6 +5,11 @@ React is basically is JS library for building User Interfaces.
 
 
 
+============================================
+============================================
+
+
+
 COMPONENT LIFECYCLES FOR CREATION
 =================================
 
@@ -57,6 +62,12 @@ HERE YOU CAUSE SIDE-EFFECTS (Http requests).
 You should not call setState in this hook UNLESS it is done within the .then block of a promise.
 
 
+
+============================================
+============================================
+
+
+
 COMPONENT LIFECYCLES FOR UPDATES ON PROPS
 =========================================
 
@@ -102,3 +113,20 @@ COMPONENT DID UPDATE
 This signals that all other lifecycle methods have been executed.
 
 NOW YOU CAN CAUSE SIDE-EFFECTS. And update state. Make sure you do not fall in to an infinite loop where the change in state calls this lifecycle method again.
+
+
+============================================
+============================================
+
+
+REACT HOOKS
+===========
+
+useEffect()
+===========
+
+Is invoked every render.
+
+The second argument of useEffect (the array) is used to decide when you want the hook to execute. You can variables that you want the hook to watch out for, and when those variables change, the hook will execute.
+
+To make sure that the hook only executes once, just pass in an empty array. It works such that since there are no dependencies to look out for, useEffect wont rerun as there is no dependency telling it when in has to rerun.

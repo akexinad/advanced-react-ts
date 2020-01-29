@@ -61,6 +61,7 @@ const Person: FC<PersonProps> = ({
         }
 
         todo(newTodo);
+        setNewTodo("");
     };
 
     return (

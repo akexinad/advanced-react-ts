@@ -1,4 +1,4 @@
-import React, { Fragment, FC } from "react";
+import React, { Fragment, FC, useEffect } from "react";
 import styled from "styled-components";
 
 interface CockpitProps {
@@ -50,6 +50,18 @@ const Cockpit: FC<CockpitProps> = ({
     showProfileList,
     toggleProfileList
 }) => {
+    useEffect(() => {
+        console.log("Cockpit.tsx: useEffect()");
+
+        let x = 7;
+
+        x = 24;
+
+        setTimeout(() => {
+            alert("Saved data to cloud!");
+        }, 500);
+    }, []);
+
     const classes = [];
 
     if (profileList.length <= 2) {
