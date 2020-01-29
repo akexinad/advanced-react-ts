@@ -1,12 +1,8 @@
-import React, { Fragment, FC, useEffect } from "react";
+import React, { Fragment, FC, useEffect, memo } from "react";
 import styled from "styled-components";
 
 interface CockpitProps {
-    profileList: {
-        id: string;
-        name: string;
-        age: number;
-    }[];
+    profileListLength: number;
     showProfileList: boolean;
     toggleProfileList: (toggle: boolean) => void;
 }
@@ -46,7 +42,7 @@ const StyledH2 = styled.h2<StyledH2Props>`
 `;
 
 const Cockpit: FC<CockpitProps> = ({
-    profileList,
+    profileListLength,
     showProfileList,
     toggleProfileList
 }) => {
@@ -61,22 +57,22 @@ const Cockpit: FC<CockpitProps> = ({
             clearTimeout(timer);
             console.log("Cockpit.tsx: Cleanup in useEffect()");
         };
-    }, []);
+    }, [showProfileList]);
 
     const classes = [];
 
-    if (profileList.length <= 2) {
+    if (profileListLength <= 2) {
         classes.push("orange");
     }
 
-    if (profileList.length <= 1) {
+    if (profileListLength <= 1) {
         classes.push("red");
     }
 
     return (
         <Fragment>
             <h1>Cockpit component</h1>
-            <StyledH2 profileListLength={profileList.length}>
+            <StyledH2 profileListLength={profileListLength}>
                 This class binding is working
             </StyledH2>
             <StyledButton
@@ -89,4 +85,5 @@ const Cockpit: FC<CockpitProps> = ({
     );
 };
 
-export default Cockpit;
+// memo is the equivalent of the shouldComponentUpdate found in class-based components for functional components.
+export default memo(Cockpit);

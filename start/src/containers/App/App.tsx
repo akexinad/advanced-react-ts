@@ -143,7 +143,7 @@ class App extends Component<AppProps, AppState> {
         return (
             <div className="App">
                 <Cockpit
-                    profileList={this.state.profileList}
+                    profileListLength={this.state.profileList.length}
                     showProfileList={this.state.showPersons}
                     toggleProfileList={this.profileListToggleHandler}
                 />
