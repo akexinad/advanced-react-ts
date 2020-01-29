@@ -5,8 +5,8 @@ React is basically is JS library for building User Interfaces.
 
 
 
-COMPONENT LIFECYCLES
-====================
+COMPONENT LIFECYCLES FOR CREATION
+=================================
 
 NOTE: Lifecycle hooks have nothing to do with React hooks.
 
@@ -55,3 +55,50 @@ This is a very important hook.
 HERE YOU CAUSE SIDE-EFFECTS (Http requests).
 
 You should not call setState in this hook UNLESS it is done within the .then block of a promise.
+
+
+COMPONENT LIFECYCLES FOR UPDATES ON PROPS
+=========================================
+
+GET DERIVED STATE FROM PROPS
+============================
+
+You would use this to initialize the state of a component based on updated props you are getting from another component.
+
+This is very rarely used as there are more elegant ways of updating the state of lower order components.
+
+NO SIDE EFFECTS ALLOWED.
+
+
+SHOULD COMPONENT UPDATE
+=======================
+
+This gives you the option to cancel the updating process and optimize app performance.
+
+NO SIDE EFFECTS
+
+
+RENDER
+======
+
+Yes this one.
+
+
+UPDATE CHILD COMPONENT PROPS
+============================
+
+Repeat the above process for child components
+
+
+GET SNAPSHOT BEFORE UPDATE
+==========================
+
+This is a niche lifecycle method for last minute DOM checks such as getting the last scroll position of the user.
+
+
+COMPONENT DID UPDATE
+====================
+
+This signals that all other lifecycle methods have been executed.
+
+NOW YOU CAN CAUSE SIDE-EFFECTS. And update state. Make sure you do not fall in to an infinite loop where the change in state calls this lifecycle method again.

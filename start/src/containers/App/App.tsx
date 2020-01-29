@@ -5,6 +5,7 @@ import "./App.css";
 import TodoList from "../../components/TodoList/TodoList";
 import PersonList from "../../components/Persons/PersonList/PersonList";
 import Cockpit from "../../components/Cockpit/Cockpit";
+import Auto from "../../components/Auto/Auto";
 
 export interface TodoItem {
     id: string;
@@ -15,18 +16,61 @@ interface AppProps {
     appProp: string;
 }
 
-class App extends Component<AppProps> {
-    state = {
-        profileList: [
-            { id: "001", name: "fellini", age: 44 },
-            { id: "002", name: "pasolini", age: 34 },
-            { id: "003", name: "benigni", age: 22 }
-        ],
-        todoList: [
-            { id: "001", text: "get milk" },
-            { id: "002", text: "eggs" }
-        ],
-        showPersons: false
+interface AppState {
+    profileList: {
+        id: string;
+        name: string;
+        age: number;
+    }[];
+    todoList: {
+        id: string;
+        text: string;
+    }[];
+    showPersons: boolean;
+    cars: {
+        make: string;
+        model: string;
+    }[];
+}
+
+class App extends Component<AppProps, AppState> {
+    constructor(props: AppProps) {
+        super(props);
+        console.log("App.tsx: constructor()");
+
+        this.state = {
+            profileList: [
+                { id: "001", name: "fellini", age: 44 },
+                { id: "002", name: "pasolini", age: 34 },
+                { id: "003", name: "benigni", age: 22 }
+            ],
+            todoList: [
+                { id: "001", text: "get milk" },
+                { id: "002", text: "eggs" }
+            ],
+            showPersons: false,
+            cars: [
+                { make: "ferrari", model: "f40" },
+                { make: "lancia", model: "stratos" },
+                { make: "pagani", model: "zonda" }
+            ]
+        };
+    }
+
+    static getDerivedStateFromProps(props: AppProps, state: AppState) {
+        console.log("App.tsx: getDerivedStateFromProps()", props);
+        return state;
+    }
+
+    componentDidMount = () => {
+        console.log("App.tsx: componentDidMount()");
+        this.setState({
+            profileList: [
+                { id: "001", name: "foo", age: 99 },
+                { id: "002", name: "bar", age: 99 },
+                { id: "003", name: "baz", age: 99 }
+            ]
+        });
     };
 
     deletePersonHandler = (id: string) => {
@@ -73,8 +117,6 @@ class App extends Component<AppProps> {
     };
 
     profileListToggleHandler = (toggle: boolean) => {
-        console.log("hello world");
-
         toggle = !toggle;
 
         this.setState({
@@ -83,6 +125,7 @@ class App extends Component<AppProps> {
     };
 
     render() {
+        console.log("App.tsx: render()");
         return (
             <div className="App">
                 <Cockpit
@@ -102,6 +145,7 @@ class App extends Component<AppProps> {
                 <br />
                 <br />
                 <TodoList todos={this.state.todoList} />
+                <Auto cars={ this.state.cars } />
             </div>
         );
     }
