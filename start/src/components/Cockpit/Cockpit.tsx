@@ -75,7 +75,7 @@ const Cockpit: FC<CockpitProps> = ({
 
     return (
         <Fragment>
-            <h1>Hello World</h1>
+            <h1>Cockpit component</h1>
             <StyledH2 profileListLength={profileList.length}>
                 This class binding is working
             </StyledH2>

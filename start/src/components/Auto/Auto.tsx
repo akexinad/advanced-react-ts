@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { AppState } from "../../containers/App/App";
 
 interface AutoProps {
     cars: {
@@ -7,12 +8,16 @@ interface AutoProps {
     }[];
 }
 
-class Auto extends Component<AutoProps> {
+class Auto extends Component<AutoProps, AppState> {
 
-    shouldComponentUpdate = (nextProps: any, nextState: any) => {
+    shouldComponentUpdate = (nextProps: AutoProps, nextState: AppState) => {
         console.log("Auto.tsx: shouldComponentUpdate()");
         
-        return true;
+        if (nextProps.cars !== this.props.cars) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     getSnapshotBeforeUpdate = () => {

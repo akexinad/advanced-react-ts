@@ -16,7 +16,7 @@ interface AppProps {
     appProp: string;
 }
 
-interface AppState {
+export interface AppState {
     profileList: {
         id: string;
         name: string;
@@ -124,6 +124,20 @@ class App extends Component<AppProps, AppState> {
         });
     };
 
+    addCarHandler = () => {
+        const newCar: AppState["cars"] = [{
+            make: "foo",
+            model: "bar"
+        }];
+
+        this.setState({
+            cars: [
+                ...this.state.cars,
+                ...newCar
+            ]
+        })
+    };
+
     render() {
         console.log("App.tsx: render()");
         return (
@@ -145,7 +159,8 @@ class App extends Component<AppProps, AppState> {
                 <br />
                 <br />
                 <TodoList todos={this.state.todoList} />
-                <Auto cars={ this.state.cars } />
+                <Auto cars={this.state.cars} />
+                <button onClick={this.addCarHandler}>Add car</button>
             </div>
         );
     }
