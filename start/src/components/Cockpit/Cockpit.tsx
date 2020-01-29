@@ -60,6 +60,10 @@ const Cockpit: FC<CockpitProps> = ({
         setTimeout(() => {
             alert("Saved data to cloud!");
         }, 500);
+
+        return () => {
+            console.log("Cockpit.tsx: Cleanup in useEffect()");
+        };
     }, []);
 
     const classes = [];
