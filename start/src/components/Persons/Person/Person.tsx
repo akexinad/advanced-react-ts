@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect, createRef, RefObject } from "react";
 import styled from "styled-components";
 // import PropTypes from "prop-types";
 
@@ -41,6 +41,22 @@ const Person: FC<PersonProps> = ({
     const [newTodo, setNewTodo] = useState<string>("");
     const [profileName, setProfileName] = useState<string>(user.name);
 
+    // let inputElement: HTMLInputElement | null;
+    /**
+     * I've commented out the first way we can handle reference objects.
+     * Both approaches are ok.
+     */
+    
+    let inputElementRef: RefObject<HTMLInputElement> = createRef();
+    
+    useEffect(() => {
+        // if (!inputElement) return;
+        // inputElement.focus();
+
+        if (!inputElementRef.current) return;
+        inputElementRef.current.focus();
+    });
+
     const todoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
 
@@ -81,6 +97,8 @@ const Person: FC<PersonProps> = ({
                 type="text"
                 placeholder="change name"
                 onChange={profileNameHandler}
+                // ref={refEl => (inputElement = refEl)}
+                ref={inputElementRef}
             />
         </StyledDiv>
     );
@@ -91,7 +109,7 @@ const Person: FC<PersonProps> = ({
 //     user: {
 //         id: PropTypes.string,
 //         name: PropTypes.string,
-//         age: PropTypes.number        
+//         age: PropTypes.number
 //     },
 //     changeUserName: PropTypes.func,
 //     deletePerson: PropTypes.func,
@@ -100,6 +118,6 @@ const Person: FC<PersonProps> = ({
 
 const style = {
     backgroundColor: "green"
-}
+};
 
 export default WithClass(Person, style);
