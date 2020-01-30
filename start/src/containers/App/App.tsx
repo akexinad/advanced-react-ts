@@ -6,6 +6,7 @@ import TodoList from "../../components/TodoList/TodoList";
 import PersonList from "../../components/Persons/PersonList/PersonList";
 import Cockpit from "../../components/Cockpit/Cockpit";
 import Auto from "../../components/Auto/Auto";
+import StyledDiv from "../../hoc/StyledDiv";
 
 export interface TodoItem {
     id: string;
@@ -141,7 +142,7 @@ class App extends Component<AppProps, AppState> {
     render() {
         console.log("App.tsx: render()");
         return (
-            <div className="App">
+            <StyledDiv>
                 <Cockpit
                     profileListLength={this.state.profileList.length}
                     showProfileList={this.state.showPersons}
@@ -161,7 +162,7 @@ class App extends Component<AppProps, AppState> {
                 <TodoList todos={this.state.todoList} />
                 <Auto cars={this.state.cars} />
                 <button onClick={this.addCarHandler}>Add car</button>
-            </div>
+            </StyledDiv>
         );
     }
 }

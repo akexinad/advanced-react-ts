@@ -146,3 +146,10 @@ RENDERING ADJACENT JSX ELEMENTS
 
 When rendering JSX, you usually need one root element.
 OR. You can render an array of JSX elements. To do this you need to wrap them in square brackets, separate each elements by a comma (as you would do in a normal JS array), and give each element a key so React can identify each unique element.
+
+
+HIGHER ORDER COMPONENTS (HOC)
+=============================
+
+Styled Components are a good example of a higher order component.
+Basically an higher order component is a component that can wrap other components and can either have an aesthetic or functional purpose.
