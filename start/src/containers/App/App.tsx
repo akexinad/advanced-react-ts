@@ -69,14 +69,12 @@ class App extends Component<AppProps, AppState> {
     componentDidMount = () => {
         console.log("App.tsx: componentDidMount()");
         setTimeout(() => {
-
             this.setState((prevState: AppState, props: AppProps) => {
                 return {
                     randomCounter: prevState.randomCounter + 1
-                }
-            })
-            
-        }, 5000)
+                };
+            });
+        }, 5000);
     };
 
     deletePersonHandler = (id: string) => {
@@ -131,25 +129,22 @@ class App extends Component<AppProps, AppState> {
     };
 
     addCarHandler = () => {
-        const newCar: AppState["cars"] = [{
-            make: "foo",
-            model: "bar"
-        }];
+        const newCar: AppState["cars"] = [
+            {
+                make: "foo",
+                model: "bar"
+            }
+        ];
 
         this.setState({
-            cars: [
-                ...this.state.cars,
-                ...newCar
-            ]
-        })
+            cars: [...this.state.cars, ...newCar]
+        });
     };
 
     render() {
         console.log("App.tsx: render()");
         return (
-            <StyledDiv
-                backgroundColor="none"
-            >
+            <StyledDiv backgroundColor="none">
                 <Cockpit
                     profileListLength={this.state.profileList.length}
                     showProfileList={this.state.showPersons}
@@ -175,8 +170,8 @@ class App extends Component<AppProps, AppState> {
 }
 
 const style = {
-    textAlign: 'center',
-    backgroundColor: 'pink'
-}
+    textAlign: "center",
+    backgroundColor: "pink"
+};
 
 export default WithClass(App, style);
