@@ -4,6 +4,7 @@ import './index.css';
 import App from './containers/App/App';
 import * as serviceWorker from './serviceWorker';
 
+//@ts-ignore
 ReactDOM.render(<App appProp="Hello World" />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

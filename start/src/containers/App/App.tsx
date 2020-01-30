@@ -7,6 +7,7 @@ import PersonList from "../../components/Persons/PersonList/PersonList";
 import Cockpit from "../../components/Cockpit/Cockpit";
 import Auto from "../../components/Auto/Auto";
 import StyledDiv from "../../hoc/StyledDiv";
+import WithClass from "../../hoc/WithClasses";
 
 export interface TodoItem {
     id: string;
@@ -142,7 +143,9 @@ class App extends Component<AppProps, AppState> {
     render() {
         console.log("App.tsx: render()");
         return (
-            <StyledDiv>
+            <StyledDiv
+                backgroundColor="none"
+            >
                 <Cockpit
                     profileListLength={this.state.profileList.length}
                     showProfileList={this.state.showPersons}
@@ -167,4 +170,9 @@ class App extends Component<AppProps, AppState> {
     }
 }
 
-export default App;
+const style = {
+    textAlign: 'center',
+    backgroundColor: 'pink'
+}
+
+export default WithClass(App, style);

@@ -1,6 +1,5 @@
 import React, { FC, Fragment } from "react";
 import Person from "../Person/Person";
-import Auxilliary from "../../../hoc/Auxilliary";
 
 interface PersonListProps {
     profiles: {
