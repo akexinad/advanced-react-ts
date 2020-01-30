@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, createRef, RefObject } from "react";
+import React, { FC, useState, useEffect, createRef, RefObject, useRef, MutableRefObject } from "react";
 import styled from "styled-components";
 // import PropTypes from "prop-types";
 
@@ -47,7 +47,14 @@ const Person: FC<PersonProps> = ({
      * Both approaches are ok.
      */
     
-    let inputElementRef: RefObject<HTMLInputElement> = createRef();
+    // let inputElementRef: RefObject<HTMLInputElement> = createRef();
+
+    // The above examples are how you would use these in a class based component.
+    // The ref would be instantiated in the constructor and then referenced accordingly in the componentDidMount lifecycle method.
+
+    // This is an example of how it is done in a functional component.
+    let inputElementRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
+
     
     useEffect(() => {
         // if (!inputElement) return;

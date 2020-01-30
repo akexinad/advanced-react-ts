@@ -153,3 +153,9 @@ HIGHER ORDER COMPONENTS (HOC)
 
 Styled Components are a good example of a higher order component.
 Basically an higher order component is a component that can wrap other components and can either have an aesthetic or functional purpose.
+
+
+USING REFS
+==========
+
+On any JSX element, you can add a special ref key prop. It is understood by react.
