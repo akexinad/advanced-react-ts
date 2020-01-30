@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
+// import PropTypes from "prop-types";
 
 import { TodoItem } from "../../../containers/App/App";
 import WithClass from "../../../hoc/WithClasses";
@@ -84,6 +85,18 @@ const Person: FC<PersonProps> = ({
         </StyledDiv>
     );
 };
+
+// If you weren't using TS, this is how you would manage your prop types.
+// Person.propTypes = {
+//     user: {
+//         id: PropTypes.string,
+//         name: PropTypes.string,
+//         age: PropTypes.number        
+//     },
+//     changeUserName: PropTypes.func,
+//     deletePerson: PropTypes.func,
+//     todo: PropTypes.func
+// }
 
 const style = {
     backgroundColor: "green"
