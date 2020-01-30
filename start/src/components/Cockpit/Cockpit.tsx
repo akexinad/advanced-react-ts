@@ -1,11 +1,11 @@
 import React, { Fragment, FC, useEffect, memo } from "react";
 import styled from "styled-components";
+import AuthContext from "../../context/AuthContext";
 
 interface CockpitProps {
     profileListLength: number;
     showProfileList: boolean;
     toggleProfileList: (toggle: boolean) => void;
-    login: () => void;
 }
 
 interface StyledButtonProps {
@@ -58,8 +58,7 @@ const StyledH2 = styled.h2<StyledH2Props>`
 const Cockpit: FC<CockpitProps> = ({
     profileListLength,
     showProfileList,
-    toggleProfileList,
-    login
+    toggleProfileList
 }) => {
     useEffect(() => {
         console.log("Cockpit.tsx: useEffect()");
@@ -97,7 +96,13 @@ const Cockpit: FC<CockpitProps> = ({
             >
                 {showProfileList ? "Hide Persons" : "Show Persons"}
             </StyledButton>
-            <LoginButton backgroundColor="blue" onClick={login}>Login Button</LoginButton>
+            <AuthContext.Consumer>
+                {context => {
+                    return <LoginButton backgroundColor="blue" onClick={context.login}>
+                        Login Button
+                    </LoginButton>;
+                }}
+            </AuthContext.Consumer>
         </Fragment>
     );
 };

@@ -8,6 +8,7 @@ import Cockpit from "../../components/Cockpit/Cockpit";
 import Auto from "../../components/Auto/Auto";
 import StyledDiv from "../../hoc/StyledDiv";
 import WithClass from "../../hoc/WithClasses";
+import AuthContext from "../../context/AuthContext";
 
 export interface TodoItem {
     id: string;
@@ -153,27 +154,32 @@ class App extends Component<AppProps, AppState> {
         console.log("App.tsx: render()");
         return (
             <StyledDiv backgroundColor="none">
-                <Cockpit
-                    profileListLength={this.state.profileList.length}
-                    showProfileList={this.state.showPersons}
-                    toggleProfileList={this.profileListToggleHandler}
-                    login={this.loginHandler}
-                />
-                {this.state.showPersons ? (
-                    <PersonList
-                        profiles={this.state.profileList}
-                        deleteProfile={this.deletePersonHandler}
-                        changeProfileName={this.handleUsernameChange}
-                        addTodo={this.addTodoHandler}
-                        isAuthenticated={this.state.authenticated}
+                <AuthContext.Provider
+                    value={{
+                        authenticated: this.state.authenticated,
+                        login: this.loginHandler
+                    }}
+                >
+                    <Cockpit
+                        profileListLength={this.state.profileList.length}
+                        showProfileList={this.state.showPersons}
+                        toggleProfileList={this.profileListToggleHandler}
                     />
-                ) : null}
-                <br />
-                <br />
-                <br />
-                <TodoList todos={this.state.todoList} />
-                <Auto cars={this.state.cars} />
-                <button onClick={this.addCarHandler}>Add car</button>
+                    {this.state.showPersons ? (
+                        <PersonList
+                            profiles={this.state.profileList}
+                            deleteProfile={this.deletePersonHandler}
+                            changeProfileName={this.handleUsernameChange}
+                            addTodo={this.addTodoHandler}
+                        />
+                    ) : null}
+                    <br />
+                    <br />
+                    <br />
+                    <TodoList todos={this.state.todoList} />
+                    <Auto cars={this.state.cars} />
+                    <button onClick={this.addCarHandler}>Add car</button>
+                </AuthContext.Provider>
             </StyledDiv>
         );
     }

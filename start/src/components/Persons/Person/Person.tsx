@@ -10,6 +10,7 @@ import styled from "styled-components";
 
 import { TodoItem } from "../../../containers/App/App";
 import WithClass from "../../../hoc/WithClasses";
+import AuthContext from "../../../context/AuthContext";
 
 interface PersonProps {
     user: {
@@ -23,7 +24,6 @@ interface PersonProps {
     ) => void;
     deletePerson: (id: string) => void;
     todo: (text: TodoItem["text"]) => void;
-    isAuth: boolean;
 }
 
 const StyledDiv = styled.div`
@@ -43,8 +43,7 @@ const Person: FC<PersonProps> = ({
     user,
     deletePerson,
     changeUserName,
-    todo,
-    isAuth
+    todo
 }) => {
     const [newTodo, setNewTodo] = useState<string>("");
     const [profileName, setProfileName] = useState<string>(user.name);
@@ -100,7 +99,18 @@ const Person: FC<PersonProps> = ({
 
     return (
         <StyledDiv>
-            <p>{isAuth ? "You are currently logged in" : "Please login"}</p>
+            <AuthContext.Consumer>
+                {context => {
+                    return (
+                        <p>
+                            {context.authenticated
+                                ? "LOGGED IN"
+                                : "Please login"}
+                        </p>
+                    );
+                }}
+            </AuthContext.Consumer>
+
             <h2>
                 Hello my name is {profileName} I am {user.age} years old.
             </h2>
