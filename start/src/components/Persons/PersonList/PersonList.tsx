@@ -1,5 +1,6 @@
-import React, { FC, Fragment } from "react";
+import React, { FC } from "react";
 import Person from "../Person/Person";
+import Auxilliary from "../../../hoc/Auxilliary";
 
 interface PersonListProps {
     profiles: {
@@ -22,7 +23,7 @@ const PersonList: FC<PersonListProps> = ({
     addTodo
 }) => {
     return (
-        <Fragment>
+        <Auxilliary>
             <h2>PersonList Component</h2>
             {profiles.map(profile => {
                 return (
@@ -35,7 +36,7 @@ const PersonList: FC<PersonListProps> = ({
                     />
                 );
             })}
-        </Fragment>
+        </Auxilliary>
     );
 };
 

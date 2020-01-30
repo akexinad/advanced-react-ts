@@ -139,3 +139,10 @@ PURE COMPONENTS
 ===============
 
 A pure component can be used if you find yourself in a situation where you are using shouldComponentUpdate() for all possible changes to a components properties[props].
+
+
+RENDERING ADJACENT JSX ELEMENTS
+===============================
+
+When rendering JSX, you usually need one root element.
+OR. You can render an array of JSX elements. To do this you need to wrap them in square brackets, separate each elements by a comma (as you would do in a normal JS array), and give each element a key so React can identify each unique element.
