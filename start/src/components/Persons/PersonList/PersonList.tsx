@@ -13,13 +13,15 @@ interface PersonListProps {
         id: string
     ) => void;
     addTodo: (text: string) => void;
+    isAuthenticated: boolean;
 }
 
 const PersonList: FC<PersonListProps> = ({
     profiles,
     deleteProfile,
     changeProfileName,
-    addTodo
+    addTodo,
+    isAuthenticated
 }) => {
     return (
         <Fragment>
@@ -32,6 +34,7 @@ const PersonList: FC<PersonListProps> = ({
                         changeUserName={changeProfileName}
                         deletePerson={deleteProfile}
                         todo={addTodo}
+                        isAuth={isAuthenticated}
                     />
                 );
             })}

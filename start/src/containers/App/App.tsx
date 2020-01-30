@@ -34,6 +34,7 @@ export interface AppState {
         model: string;
     }[];
     randomCounter: number;
+    authenticated: boolean;
 }
 
 class App extends Component<AppProps, AppState> {
@@ -57,7 +58,8 @@ class App extends Component<AppProps, AppState> {
                 { make: "lancia", model: "stratos" },
                 { make: "pagani", model: "zonda" }
             ],
-            randomCounter: 0
+            randomCounter: 0,
+            authenticated: false
         };
     }
 
@@ -141,6 +143,12 @@ class App extends Component<AppProps, AppState> {
         });
     };
 
+    loginHandler = () => {
+        this.setState({
+            authenticated: true
+        });
+    };
+
     render() {
         console.log("App.tsx: render()");
         return (
@@ -149,6 +157,7 @@ class App extends Component<AppProps, AppState> {
                     profileListLength={this.state.profileList.length}
                     showProfileList={this.state.showPersons}
                     toggleProfileList={this.profileListToggleHandler}
+                    login={this.loginHandler}
                 />
                 {this.state.showPersons ? (
                     <PersonList
@@ -156,6 +165,7 @@ class App extends Component<AppProps, AppState> {
                         deleteProfile={this.deletePersonHandler}
                         changeProfileName={this.handleUsernameChange}
                         addTodo={this.addTodoHandler}
+                        isAuthenticated={this.state.authenticated}
                     />
                 ) : null}
                 <br />

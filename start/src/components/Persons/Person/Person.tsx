@@ -1,4 +1,10 @@
-import React, { FC, useState, useEffect, createRef, RefObject, useRef, MutableRefObject } from "react";
+import React, {
+    FC,
+    useState,
+    useEffect,
+    useRef,
+    MutableRefObject
+} from "react";
 import styled from "styled-components";
 // import PropTypes from "prop-types";
 
@@ -17,6 +23,7 @@ interface PersonProps {
     ) => void;
     deletePerson: (id: string) => void;
     todo: (text: TodoItem["text"]) => void;
+    isAuth: boolean;
 }
 
 const StyledDiv = styled.div`
@@ -36,7 +43,8 @@ const Person: FC<PersonProps> = ({
     user,
     deletePerson,
     changeUserName,
-    todo
+    todo,
+    isAuth
 }) => {
     const [newTodo, setNewTodo] = useState<string>("");
     const [profileName, setProfileName] = useState<string>(user.name);
@@ -46,16 +54,17 @@ const Person: FC<PersonProps> = ({
      * I've commented out the first way we can handle reference objects.
      * Both approaches are ok.
      */
-    
+
     // let inputElementRef: RefObject<HTMLInputElement> = createRef();
 
     // The above examples are how you would use these in a class based component.
     // The ref would be instantiated in the constructor and then referenced accordingly in the componentDidMount lifecycle method.
 
     // This is an example of how it is done in a functional component.
-    let inputElementRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
+    let inputElementRef: MutableRefObject<HTMLInputElement | null> = useRef(
+        null
+    );
 
-    
     useEffect(() => {
         // if (!inputElement) return;
         // inputElement.focus();
@@ -91,6 +100,7 @@ const Person: FC<PersonProps> = ({
 
     return (
         <StyledDiv>
+            <p>{isAuth ? "You are currently logged in" : "Please login"}</p>
             <h2>
                 Hello my name is {profileName} I am {user.age} years old.
             </h2>

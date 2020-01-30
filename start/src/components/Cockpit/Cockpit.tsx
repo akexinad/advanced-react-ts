@@ -5,10 +5,15 @@ interface CockpitProps {
     profileListLength: number;
     showProfileList: boolean;
     toggleProfileList: (toggle: boolean) => void;
+    login: () => void;
 }
 
 interface StyledButtonProps {
     alt: string | undefined;
+}
+
+interface LoginButtonProps {
+    backgroundColor: string;
 }
 
 interface StyledH2Props {
@@ -29,6 +34,15 @@ const StyledButton = styled.button<StyledButtonProps>`
     }
 `;
 
+const LoginButton = styled.button<LoginButtonProps>`
+    background-color: ${({ backgroundColor }) => backgroundColor};
+    color: white;
+    font: inherit;
+    border: 1px solid black;
+    padding: 8px;
+    cursor: pointer;
+`;
+
 const StyledH2 = styled.h2<StyledH2Props>`
     color: ${({ profileListLength }) => {
         if (profileListLength <= 1) {
@@ -44,7 +58,8 @@ const StyledH2 = styled.h2<StyledH2Props>`
 const Cockpit: FC<CockpitProps> = ({
     profileListLength,
     showProfileList,
-    toggleProfileList
+    toggleProfileList,
+    login
 }) => {
     useEffect(() => {
         console.log("Cockpit.tsx: useEffect()");
@@ -76,11 +91,13 @@ const Cockpit: FC<CockpitProps> = ({
                 This class binding is working
             </StyledH2>
             <StyledButton
+                color="white"
                 alt={showProfileList ? "false" : undefined}
                 onClick={() => toggleProfileList(showProfileList)}
             >
                 {showProfileList ? "Hide Persons" : "Show Persons"}
             </StyledButton>
+            <LoginButton backgroundColor="blue" onClick={login}>Login Button</LoginButton>
         </Fragment>
     );
 };
