@@ -14,7 +14,7 @@ export interface TodoItem {
     text: string;
 }
 
-interface AppProps {
+export interface AppProps {
     appProp: string;
 }
 

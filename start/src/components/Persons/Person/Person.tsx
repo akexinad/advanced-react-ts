@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import styled from "styled-components";
 
 import { TodoItem } from "../../../containers/App/App";
+import WithClass from "../../../hoc/WithClasses";
 
 interface PersonProps {
     user: {
@@ -84,4 +85,8 @@ const Person: FC<PersonProps> = ({
     );
 };
 
-export default Person;
+const style = {
+    backgroundColor: "green"
+}
+
+export default WithClass(Person, style);

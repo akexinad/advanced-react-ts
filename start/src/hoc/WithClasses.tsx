@@ -1,9 +1,9 @@
 import React from 'react';
 
 const WithClass = (WrappedComponent: any, style: any) => {
-    return () => (
+    return (props: any) => (
         <div style={style}>
-            <WrappedComponent />
+            <WrappedComponent {...props} />
         </div>
     )
 }
