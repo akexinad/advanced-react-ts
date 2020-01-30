@@ -33,6 +33,7 @@ export interface AppState {
         make: string;
         model: string;
     }[];
+    randomCounter: number;
 }
 
 class App extends Component<AppProps, AppState> {
@@ -55,7 +56,8 @@ class App extends Component<AppProps, AppState> {
                 { make: "ferrari", model: "f40" },
                 { make: "lancia", model: "stratos" },
                 { make: "pagani", model: "zonda" }
-            ]
+            ],
+            randomCounter: 0
         };
     }
 
@@ -64,16 +66,18 @@ class App extends Component<AppProps, AppState> {
         return state;
     }
 
-    // componentDidMount = () => {
-    //     console.log("App.tsx: componentDidMount()");
-    //     this.setState({
-    //         profileList: [
-    //             { id: "001", name: "foo", age: 99 },
-    //             { id: "002", name: "bar", age: 99 },
-    //             { id: "003", name: "baz", age: 99 }
-    //         ]
-    //     });
-    // };
+    componentDidMount = () => {
+        console.log("App.tsx: componentDidMount()");
+        setTimeout(() => {
+
+            this.setState((prevState: AppState, props: AppProps) => {
+                return {
+                    randomCounter: prevState.randomCounter + 1
+                }
+            })
+            
+        }, 5000)
+    };
 
     deletePersonHandler = (id: string) => {
         const persons = [...this.state.profileList];
