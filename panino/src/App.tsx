@@ -8,7 +8,7 @@ const App: React.FC = () => {
         <div className={styles.App}>
             <h1>Panino</h1>
             <Layout>
-                <p>Layout component</p>
+                <h2>Layout component</h2>
             </Layout>
         </div>
     );

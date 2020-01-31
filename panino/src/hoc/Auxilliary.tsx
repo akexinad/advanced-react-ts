@@ -1,5 +1,9 @@
-import { PropsWithChildren, ExoticComponent } from "react";
+import { ReactElement, FC } from "react";
 
-const Aux = (props: PropsWithChildren<ExoticComponent | any>) => props.children;
+interface AuxProps {
+    children: ReactElement[];
+}
+
+const Aux: FC<AuxProps> = (props: ReactElement["props"]) => props.children;
 
 export default Aux;

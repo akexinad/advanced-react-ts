@@ -1,7 +1,11 @@
-import React, { ReactElement, Props, PropsWithChildren, FC, ReactNode } from "react";
+import React, { FC, ReactElement } from "react";
 import Aux from "../../hoc/Auxilliary";
 
-const Layout = (props: PropsWithChildren<ReactNode>) => (
+interface LayoutProps {
+    children: ReactElement;
+}
+
+const Layout: FC<LayoutProps> = (props: LayoutProps) => (
     <Aux>
         <div>Toolbar, SideDrawer, Backdrop</div>
         <main>{props.children}</main>        
