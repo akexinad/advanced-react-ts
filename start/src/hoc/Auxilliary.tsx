@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 interface AuxilliaryProps {
-    children: ReactElement[] | any;
+    children: ReactElement[];
 }
 
 const Auxilliary= (props: AuxilliaryProps) => {
