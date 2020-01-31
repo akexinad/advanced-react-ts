@@ -3,7 +3,8 @@ import React, {
     useState,
     useEffect,
     useRef,
-    MutableRefObject
+    MutableRefObject,
+    useContext
 } from "react";
 import styled from "styled-components";
 // import PropTypes from "prop-types";
@@ -47,6 +48,7 @@ const Person: FC<PersonProps> = ({
 }) => {
     const [newTodo, setNewTodo] = useState<string>("");
     const [profileName, setProfileName] = useState<string>(user.name);
+    const context = useContext(AuthContext);
 
     // let inputElement: HTMLInputElement | null;
     /**
@@ -99,18 +101,7 @@ const Person: FC<PersonProps> = ({
 
     return (
         <StyledDiv>
-            <AuthContext.Consumer>
-                {context => {
-                    return (
-                        <p>
-                            {context.authenticated
-                                ? "LOGGED IN"
-                                : "Please login"}
-                        </p>
-                    );
-                }}
-            </AuthContext.Consumer>
-
+            <p>{context.authenticated ? "LOGGED IN" : "Please login"}</p>
             <h2>
                 Hello my name is {profileName} I am {user.age} years old.
             </h2>

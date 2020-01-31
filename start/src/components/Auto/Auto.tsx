@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { AppState } from "../../containers/App/App";
+import AuthContext from "../../context/AuthContext";
 
 interface AutoProps {
     cars: {
@@ -9,6 +10,16 @@ interface AutoProps {
 }
 
 class Auto extends Component<AutoProps, AppState> {
+    /**
+     * This gives us access to the context OUTSIDE of the JSX
+     * and can can be found in this.context
+     */
+    static contextType = AuthContext;
+
+    componentDidMount = () => {
+        console.log(this.context);
+    };
+
     shouldComponentUpdate = (nextProps: AutoProps, nextState: AppState) => {
         console.log("Auto.tsx: shouldComponentUpdate()");
 
@@ -28,17 +39,26 @@ class Auto extends Component<AutoProps, AppState> {
     };
 
     render() {
+        console.log("AutoComponent:", this.context);
+        
         return (
             <Fragment>
-                <ul>
-                    {this.props.cars.map((car, index) => {
-                        return (
-                            <li key={index}>
-                                {car.make} {car.model}
-                            </li>
-                        );
-                    })}
-                </ul>
+                {this.context.authenticated ? (
+                    <ul>
+                        {this.props.cars.map((car, index) => {
+                            return (
+                                <li key={index}>
+                                    {car.make} {car.model}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                ) : (
+                    <p>
+                        You have to be logged in to see my beautiful car
+                        collection
+                    </p>
+                )}
             </Fragment>
         );
     }

@@ -177,8 +177,8 @@ class App extends Component<AppProps, AppState> {
                     <br />
                     <br />
                     <TodoList todos={this.state.todoList} />
-                    <Auto cars={this.state.cars} />
                     <button onClick={this.addCarHandler}>Add car</button>
+                <Auto cars={this.state.cars} />
                 </AuthContext.Provider>
             </StyledDiv>
         );
