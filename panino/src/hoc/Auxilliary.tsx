@@ -1,5 +1,5 @@
-import { ReactElement, Props, JSXElementConstructor, ReactNode } from "react";
+import { PropsWithChildren, ExoticComponent } from "react";
 
-const Aux = (props: Props) => props?.children;
+const Aux = (props: PropsWithChildren<ExoticComponent | any>) => props.children;
 
 export default Aux;
