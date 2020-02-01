@@ -32,8 +32,6 @@ const Burger: FC<BurgerIngredientProps> = ({ ingredients }) => {
         }
     }
 
-    console.log(totalIngredients);
-
     const renderBurgerIngredient = () => {
         if (totalIngredients.length === 0) {
             return <p>Please start adding ingredients</p>;
