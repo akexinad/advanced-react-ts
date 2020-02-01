@@ -20,7 +20,7 @@ interface Ingredients {
     meat: number;
 }
 
-export interface DisabledIngredients {
+export interface DisabledOptions {
     salad: boolean;
     bacon: boolean;
     cheese: boolean;
@@ -30,26 +30,30 @@ export interface DisabledIngredients {
 interface AppState {
     ingredients: Ingredients;
     totalPrice: number;
+    purchasable: boolean;
 }
 
 export default class BurgerBuilder extends Component {
     state: AppState = {
         ingredients: {
-            salad: 1,
-            bacon: 1,
-            cheese: 2,
-            meat: 2
+            salad: 0,
+            bacon: 0,
+            cheese: 0,
+            meat: 0
         },
-        // ingredients: {
-        //     salad: 0,
-        //     bacon: 0,
-        //     cheese: 0,
-        //     meat: 0
-        // },
-        totalPrice: 4
+        totalPrice: 4,
+        purchasable: false
     };
 
-    
+    updatePurchaseState = (updatedIngredients: Ingredients) => {
+        const sum = Object.values(updatedIngredients).reduce((sum, el) => {
+            return sum + el;
+        }, 0);
+
+        this.setState({
+            purchasable: sum > 0 ? true : false
+        });
+    };
 
     _addIngredient = (type: IngredientTypes) => {
         const oldCount: number = this.state.ingredients[type];
@@ -68,6 +72,8 @@ export default class BurgerBuilder extends Component {
             ingredients: updatedIngredients,
             totalPrice: newPrice
         });
+
+        this.updatePurchaseState(updatedIngredients);
     };
 
     _removeIngredient = (type: IngredientTypes) => {
@@ -102,16 +108,17 @@ export default class BurgerBuilder extends Component {
             ingredients: updatedIngredients,
             totalPrice: newPrice
         });
+
+        this.updatePurchaseState(updatedIngredients);
     };
 
     render() {
-        
-        const disabledIngredients: DisabledIngredients = {
+        const disabledIngredients: DisabledOptions = {
             salad: Boolean(this.state.ingredients.salad),
             bacon: Boolean(this.state.ingredients.bacon),
             cheese: Boolean(this.state.ingredients.cheese),
             meat: Boolean(this.state.ingredients.meat)
-        }
+        };
 
         return (
             <Aux>
@@ -122,6 +129,7 @@ export default class BurgerBuilder extends Component {
                     ingredientRemoved={this._removeIngredient}
                     disabledInfo={disabledIngredients}
                     price={this.state.totalPrice}
+                    purchasable={this.state.purchasable}
                 />
             </Aux>
         );

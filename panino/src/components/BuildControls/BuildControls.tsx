@@ -1,18 +1,20 @@
 import React, { FC } from "react";
 
-import styles from "./BuildControls.module.css";
 import BuildControl from "../BuildControl/BuildControl";
 import {
     IngredientLabels,
     IngredientTypes,
-    DisabledIngredients
+    DisabledOptions
 } from "../../containers/BurgerBuilder/BurgerBuilder";
+
+import styles from "./BuildControls.module.css";
 
 interface BuildControlsProps {
     ingredientAdded: (type: Control["type"]) => void;
     ingredientRemoved: (type: Control["type"]) => void;
-    disabledInfo: DisabledIngredients,
-    price: number
+    disabledInfo: DisabledOptions;
+    price: number;
+    purchasable: boolean;
 }
 
 type Control = {
@@ -33,10 +35,13 @@ const BuildControls: FC<BuildControlsProps> = ({
     ingredientAdded,
     ingredientRemoved,
     disabledInfo,
-    price
+    price,
+    purchasable
 }) => (
     <div className={styles.BuildControls}>
-        <p>Current Price: <strong>${price.toFixed(2)}</strong></p>
+        <p>
+            Current Price: <strong>${price.toFixed(2)}</strong>
+        </p>
         {controls.map(control => (
             <BuildControl
                 key={control.label}
@@ -46,6 +51,9 @@ const BuildControls: FC<BuildControlsProps> = ({
                 disabled={disabledInfo[control.type]}
             />
         ))}
+        <button disabled={!purchasable} className={styles.OrderButton}>
+            ORDER NOW
+        </button>
     </div>
 );
 

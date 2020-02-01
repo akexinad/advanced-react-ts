@@ -7,9 +7,8 @@ import BurgerBuilder from "../BurgerBuilder/BurgerBuilder";
 const App: React.FC = () => {
     return (
         <div className={styles.App}>
-            <h1>Panino</h1>
+            <h1>Oh Look! Panini!</h1>
             <Layout>
-                <h2>Layout component</h2>
                 <BurgerBuilder />
             </Layout>
         </div>
