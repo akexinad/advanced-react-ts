@@ -32,8 +32,6 @@ const Burger: FC<BurgerIngredientProps> = ({ ingredients }) => {
         }
     }
 
-    console.log(totalIngredients);
-
     return (
         <div className={styles.Burger}>
             <BurgerIngredient type={burgerIngredients.breadTop} />
