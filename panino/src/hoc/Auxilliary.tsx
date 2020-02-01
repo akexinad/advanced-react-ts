@@ -1,9 +1,11 @@
 import { ReactElement, FC } from "react";
 
 interface AuxProps {
-    children: ReactElement[];
+    children: ReactElement | ReactElement[];
 }
 
-const Aux: FC<AuxProps> = (props: ReactElement["props"]) => props.children;
+const Aux: FC<AuxProps> = (props: ReactElement["props"]) => {
+    return props.children;
+};
 
 export default Aux;
