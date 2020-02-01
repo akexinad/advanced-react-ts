@@ -11,7 +11,8 @@ import {
 interface BuildControlsProps {
     ingredientAdded: (type: Control["type"]) => void;
     ingredientRemoved: (type: Control["type"]) => void;
-    disabledInfo: DisabledIngredients
+    disabledInfo: DisabledIngredients,
+    price: number
 }
 
 type Control = {
@@ -31,9 +32,11 @@ const controls: Controls = [
 const BuildControls: FC<BuildControlsProps> = ({
     ingredientAdded,
     ingredientRemoved,
-    disabledInfo
+    disabledInfo,
+    price
 }) => (
     <div className={styles.BuildControls}>
+        <p>Current Price: <strong>${price.toFixed(2)}</strong></p>
         {controls.map(control => (
             <BuildControl
                 key={control.label}
