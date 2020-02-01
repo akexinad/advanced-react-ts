@@ -32,12 +32,22 @@ const Burger: FC<BurgerIngredientProps> = ({ ingredients }) => {
         }
     }
 
+    console.log(totalIngredients);
+
+    const renderBurgerIngredient = () => {
+        if (totalIngredients.length === 0) {
+            return <p>Please start adding ingredients</p>;
+        }
+
+        return totalIngredients.map((ingredient, index) => (
+            <BurgerIngredient key={index} type={ingredient} />
+        ));
+    };
+
     return (
         <div className={styles.Burger}>
             <BurgerIngredient type={burgerIngredients.breadTop} />
-            {totalIngredients.map((ingredient, index) => {
-                return <BurgerIngredient key={index} type={ingredient} />;
-            })}
+            {renderBurgerIngredient()}
             <BurgerIngredient type={burgerIngredients.breadBottom} />
         </div>
     );
