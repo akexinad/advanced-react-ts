@@ -1,8 +1,16 @@
 import React, { FC } from "react";
-import Aux from "../../hoc/Auxilliary";
 
 import styles from "./Burger.module.css";
 import BurgerIngredient from "../BurgerIngredient/BurgerIngredient";
+
+interface BurgerIngredientProps {
+    ingredients: {
+        salad: number;
+        bacon: number;
+        cheese: number;
+        meat: number;
+    };
+}
 
 const burgerIngredients = {
     breadTop: "bread-top",
@@ -11,15 +19,30 @@ const burgerIngredients = {
     cheese: "cheese",
     salad: "bacon",
     bacon: "bacon"
-}
+};
 
-const Burger: FC = () => {
-    return (<div className={styles.Burger}>
-        <BurgerIngredient type={burgerIngredients.breadTop}/>
-        <BurgerIngredient type={burgerIngredients.cheese}/>
-        <BurgerIngredient type={burgerIngredients.meat}/>
-        <BurgerIngredient type={burgerIngredients.breadBottom}/>
-    </div>);
+const Burger: FC<BurgerIngredientProps> = ({ ingredients }) => {
+    const totalIngredients: string[] = [];
+
+    for (const [ingredient, igQty] of Object.entries(ingredients)) {
+        let initalQty = 0;
+        while (initalQty < igQty) {
+            totalIngredients.push(ingredient);
+            initalQty++;
+        }
+    }
+
+    console.log(totalIngredients);
+
+    return (
+        <div className={styles.Burger}>
+            <BurgerIngredient type={burgerIngredients.breadTop} />
+            {totalIngredients.map((ingredient, index) => {
+                return <BurgerIngredient key={index} type={ingredient} />;
+            })}
+            <BurgerIngredient type={burgerIngredients.breadBottom} />
+        </div>
+    );
 };
 
 export default Burger;

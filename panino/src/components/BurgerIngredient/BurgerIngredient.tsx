@@ -30,7 +30,7 @@ const BurgerIngredient: FC<BurgerIngredientProps> = props => {
         case "salad":
             ingredient = <div className={styles.Salad}></div>;
             break;
-        case "Bacon":
+        case "bacon":
             ingredient = <div className={styles.Bacon}></div>;
             break;
         default:
