@@ -1,13 +1,12 @@
 import React, { FC } from "react";
-import Aux from "../../hoc/Auxilliary";
 
-interface BurgerIngredientsProps {
+import styles from "./BurgerIngredient.module.css";
+
+interface BurgerIngredientProps {
     type: string;
 }
 
-import styles from "./BurgerIngredients.module.css";
-
-const BurgerIngredients: FC<BurgerIngredientsProps> = props => {
+const BurgerIngredient: FC<BurgerIngredientProps> = props => {
     let ingredient: JSX.Element | null;
 
     switch (props.type) {
@@ -41,4 +40,4 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = props => {
     return ingredient;
 };
 
-export default BurgerIngredients;
+export default BurgerIngredient;
