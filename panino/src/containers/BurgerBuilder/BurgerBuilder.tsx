@@ -20,17 +20,14 @@ interface Ingredients {
     meat: number;
 }
 
-export interface DisabledOptions {
-    salad: boolean;
-    bacon: boolean;
-    cheese: boolean;
-    meat: boolean;
-}
-
 interface AppState {
     ingredients: Ingredients;
     totalPrice: number;
     purchasable: boolean;
+}
+
+export type DisabledInfo = {
+    [key in IngredientTypes]: boolean;
 }
 
 export default class BurgerBuilder extends Component {
@@ -54,6 +51,17 @@ export default class BurgerBuilder extends Component {
             purchasable: sum > 0 ? true : false
         });
     };
+
+    updateDisabledIngredients = (updatedIngredients: Ingredients) => {
+
+        const disabledIngredients: any = {};
+
+        for (let [ingredient, quantity] of Object.entries(updatedIngredients)) {
+            disabledIngredients[ingredient] = Boolean(quantity);
+        }
+
+        return disabledIngredients;
+    }
 
     _addIngredient = (type: IngredientTypes) => {
         const oldCount: number = this.state.ingredients[type];
@@ -113,13 +121,6 @@ export default class BurgerBuilder extends Component {
     };
 
     render() {
-        const disabledIngredients: DisabledOptions = {
-            salad: Boolean(this.state.ingredients.salad),
-            bacon: Boolean(this.state.ingredients.bacon),
-            cheese: Boolean(this.state.ingredients.cheese),
-            meat: Boolean(this.state.ingredients.meat)
-        };
-
         return (
             <Aux>
                 <h2>Burger Builder</h2>
@@ -127,7 +128,7 @@ export default class BurgerBuilder extends Component {
                 <BuildControls
                     ingredientAdded={this._addIngredient}
                     ingredientRemoved={this._removeIngredient}
-                    disabledInfo={disabledIngredients}
+                    disabledInfo={this.updateDisabledIngredients(this.state.ingredients)}
                     price={this.state.totalPrice}
                     purchasable={this.state.purchasable}
                 />

@@ -4,7 +4,7 @@ import BuildControl from "../BuildControl/BuildControl";
 import {
     IngredientLabels,
     IngredientTypes,
-    DisabledOptions
+    DisabledInfo
 } from "../../containers/BurgerBuilder/BurgerBuilder";
 
 import styles from "./BuildControls.module.css";
@@ -12,7 +12,7 @@ import styles from "./BuildControls.module.css";
 interface BuildControlsProps {
     ingredientAdded: (type: Control["type"]) => void;
     ingredientRemoved: (type: Control["type"]) => void;
-    disabledInfo: DisabledOptions;
+    disabledInfo: DisabledInfo;
     price: number;
     purchasable: boolean;
 }
