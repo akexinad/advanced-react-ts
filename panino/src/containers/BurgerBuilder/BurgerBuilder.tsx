@@ -26,6 +26,7 @@ interface AppState {
     ingredients: Ingredients;
     totalPrice: number;
     purchasable: boolean;
+    purchasing: boolean;
 }
 
 export type DisabledInfo = {
@@ -41,7 +42,8 @@ export default class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4,
-        purchasable: false
+        purchasable: false,
+        purchasing: false
     };
 
     updatePurchaseState = (updatedIngredients: Ingredients) => {
@@ -121,10 +123,19 @@ export default class BurgerBuilder extends Component {
         this.updatePurchaseState(updatedIngredients);
     };
 
+    _purchase = () => {
+        console.log("clicked");
+        
+        
+        this.setState({
+            purchasing: true
+        });
+    };
+
     render() {
         return (
             <Aux>
-                <Modal>
+                <Modal show={this.state.purchasing}>
                     <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <h2>Burger Builder</h2>
@@ -137,6 +148,7 @@ export default class BurgerBuilder extends Component {
                     )}
                     price={this.state.totalPrice}
                     purchasable={this.state.purchasable}
+                    ordered={this._purchase}
                 />
             </Aux>
         );

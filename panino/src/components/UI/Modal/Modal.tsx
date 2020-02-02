@@ -1,9 +1,21 @@
-import React, { PropsWithChildren, ReactNode } from "react";
+import React, { FC } from "react";
 
 import styles from "./Modal.module.css";
 
-const Modal = (props: PropsWithChildren<ReactNode>) => (
-    <div className={styles.Modal}>{props.children}</div>
+interface ModalProps {
+    show: boolean;
+}
+
+const Modal: FC<ModalProps> = props => (
+    <div
+        className={styles.Modal}
+        style={{
+            transform: props.show ? "translateY(0)" : "translateY(-100vh)",
+            opacity: props.show ? "1" : "0"
+        }}
+    >
+        {props.children}
+    </div>
 );
 
 export default Modal;

@@ -15,6 +15,7 @@ interface BuildControlsProps {
     disabledInfo: DisabledInfo;
     price: number;
     purchasable: boolean;
+    ordered: () => void;
 }
 
 type Control = {
@@ -36,7 +37,8 @@ const BuildControls: FC<BuildControlsProps> = ({
     ingredientRemoved,
     disabledInfo,
     price,
-    purchasable
+    purchasable,
+    ordered
 }) => (
     <div className={styles.BuildControls}>
         <p>
@@ -51,7 +53,7 @@ const BuildControls: FC<BuildControlsProps> = ({
                 disabled={disabledInfo[control.type]}
             />
         ))}
-        <button disabled={!purchasable} className={styles.OrderButton}>
+        <button onClick={ordered} disabled={!purchasable} className={styles.OrderButton}>
             ORDER NOW
         </button>
     </div>
