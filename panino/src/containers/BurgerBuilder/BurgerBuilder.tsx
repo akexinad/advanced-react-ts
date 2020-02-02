@@ -124,8 +124,6 @@ export default class BurgerBuilder extends Component {
     };
 
     _purchase = () => {
-        console.log("clicked");
-
         this.setState({
             purchasing: true
         });
@@ -140,7 +138,10 @@ export default class BurgerBuilder extends Component {
     render() {
         return (
             <Aux>
-                <Modal show={this.state.purchasing} modalClosed={this._purchaseCancelled}>
+                <Modal
+                    show={this.state.purchasing}
+                    modalClosed={this._purchaseCancelled}
+                >
                     <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <h2>Burger Builder</h2>

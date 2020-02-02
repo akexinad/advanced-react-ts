@@ -8,6 +8,10 @@ interface BackdropProps {
 }
 
 const Backdrop: FC<BackdropProps> = props =>
-    props.show ? <div onClick={props.clicked} className={styles.Backdrop}>{props.children}</div> : null;
+    props.show ? (
+        <div onClick={props.clicked} className={styles.Backdrop}>
+            {props.children}
+        </div>
+    ) : null;
 
 export default Backdrop;
