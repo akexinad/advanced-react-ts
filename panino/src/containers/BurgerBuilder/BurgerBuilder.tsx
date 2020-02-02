@@ -135,6 +135,10 @@ export default class BurgerBuilder extends Component {
         });
     };
 
+    _purchaseContinued = () => {
+        alert("You continue!");
+    };
+
     render() {
         return (
             <Aux>
@@ -142,7 +146,11 @@ export default class BurgerBuilder extends Component {
                     show={this.state.purchasing}
                     modalClosed={this._purchaseCancelled}
                 >
-                    <OrderSummary ingredients={this.state.ingredients} />
+                    <OrderSummary
+                        ingredients={this.state.ingredients}
+                        purchaseCancelled={this._purchaseCancelled}
+                        purchaseContinued={this._purchaseContinued}
+                    />
                 </Modal>
                 <h2>Burger Builder</h2>
                 <Burger ingredients={this.state.ingredients} />

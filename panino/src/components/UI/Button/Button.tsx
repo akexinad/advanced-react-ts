@@ -4,7 +4,7 @@ import styles from "./Button.module.css";
 
 interface ButtonProps {
     clicked: () => void;
-    btnType: any;
+    btnType: "Danger" | "Success";
 }
 
 const Button: FC<ButtonProps> = ({ children, clicked, btnType }) => (

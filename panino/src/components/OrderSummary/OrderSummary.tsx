@@ -1,12 +1,19 @@
 import React, { FC } from "react";
 import Aux from "../../hoc/Auxilliary";
 import { Ingredients } from "../../containers/BurgerBuilder/BurgerBuilder";
+import Button from "../UI/Button/Button";
 
 interface OrderSummaryProps {
     ingredients: Ingredients;
+    purchaseCancelled: () => void;
+    purchaseContinued: () => void;
 }
 
-const OrderSummary: FC<OrderSummaryProps> = ({ ingredients }) => {
+const OrderSummary: FC<OrderSummaryProps> = ({
+    ingredients,
+    purchaseCancelled,
+    purchaseContinued
+}) => {
     const ingredientSummary = Object.entries(ingredients).map(
         (ingredient, index) => (
             <li key={index}>
@@ -28,8 +35,12 @@ const OrderSummary: FC<OrderSummaryProps> = ({ ingredients }) => {
             <p>Delicious panino with the following ingredients</p>
             <ul>{ingredientSummary}</ul>
             <p>Continue to checkout?</p>
-            <button>CANCEL</button>
-            <button>CONTINUE</button>
+            <Button btnType="Danger" clicked={purchaseCancelled}>
+                CANCEL
+            </Button>
+            <Button btnType="Success" clicked={purchaseContinued}>
+                CONTINUE
+            </Button>
         </Aux>
     );
 };
