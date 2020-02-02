@@ -150,6 +150,7 @@ export default class BurgerBuilder extends Component {
                         ingredients={this.state.ingredients}
                         purchaseCancelled={this._purchaseCancelled}
                         purchaseContinued={this._purchaseContinued}
+                        price={this.state.totalPrice}
                     />
                 </Modal>
                 <h2>Burger Builder</h2>
