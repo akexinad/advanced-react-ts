@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Aux from "../../hoc/Auxilliary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/BuildControls/BuildControls";
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/OrderSummary/OrderSummary";
 
 export type IngredientLabels = "Salad" | "Bacon" | "Cheese" | "Meat";
 export type IngredientTypes = "salad" | "bacon" | "cheese" | "meat";
@@ -13,7 +15,7 @@ const INGREDIENT_PRICES = {
     bacon: 0.7
 };
 
-interface Ingredients {
+export interface Ingredients {
     salad: number;
     bacon: number;
     cheese: number;
@@ -28,7 +30,7 @@ interface AppState {
 
 export type DisabledInfo = {
     [key in IngredientTypes]: boolean;
-}
+};
 
 export default class BurgerBuilder extends Component {
     state: AppState = {
@@ -53,7 +55,6 @@ export default class BurgerBuilder extends Component {
     };
 
     updateDisabledIngredients = (updatedIngredients: Ingredients) => {
-
         const disabledIngredients: any = {};
 
         for (let [ingredient, quantity] of Object.entries(updatedIngredients)) {
@@ -61,7 +62,7 @@ export default class BurgerBuilder extends Component {
         }
 
         return disabledIngredients;
-    }
+    };
 
     _addIngredient = (type: IngredientTypes) => {
         const oldCount: number = this.state.ingredients[type];
@@ -123,12 +124,17 @@ export default class BurgerBuilder extends Component {
     render() {
         return (
             <Aux>
+                <Modal>
+                    <OrderSummary ingredients={this.state.ingredients} />
+                </Modal>
                 <h2>Burger Builder</h2>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
                     ingredientAdded={this._addIngredient}
                     ingredientRemoved={this._removeIngredient}
-                    disabledInfo={this.updateDisabledIngredients(this.state.ingredients)}
+                    disabledInfo={this.updateDisabledIngredients(
+                        this.state.ingredients
+                    )}
                     price={this.state.totalPrice}
                     purchasable={this.state.purchasable}
                 />
