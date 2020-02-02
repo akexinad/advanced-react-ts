@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import Aux from "../../hoc/Auxilliary";
+import Toolbar from "../Navigation/Toolbar/Toolbar";
 
 import classes from "./Layout.module.css";
 
@@ -9,7 +10,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = (props: ReactElement["props"]) => (
     <Aux>
-        <div>Toolbar, SideDrawer, Backdrop</div>
+        <Toolbar />
         <main className={classes.Content}>{props.children}</main>
     </Aux>
 );
