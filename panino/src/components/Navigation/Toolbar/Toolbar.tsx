@@ -8,7 +8,7 @@ import styles from "./Toolbar.module.css";
 const Toolbar: FC = () => (
     <header className={styles.Toolbar}>
         <div>MENU</div>
-        <Logo />
+        <Logo height="80%"/>
         <NavigationItems />
     </header>
 );
