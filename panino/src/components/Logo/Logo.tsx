@@ -8,8 +8,8 @@ interface LogoProps {
     height: string;
 }
 
-const Logo: FC<LogoProps> = () => (
-    <div className={styles.Logo}>
+const Logo: FC<LogoProps> = ({height}) => (
+    <div className={styles.Logo} style={{height}}>
         <img src={burgerLogo} alt="Burger Logo" />
     </div>
 );
