@@ -80,7 +80,7 @@ class App extends Component<AppProps, AppState> {
         }, 5000);
     };
 
-    deletePersonHandler = (id: string) => {
+    _deletePerson = (id: string) => {
         const persons = [...this.state.profileList];
         const personIndex = persons.findIndex(person => person.id === id);
         persons.splice(personIndex, 1);
@@ -89,7 +89,7 @@ class App extends Component<AppProps, AppState> {
         });
     };
 
-    addTodoHandler = (text: TodoItem["text"]) => {
+    _addTodo = (text: TodoItem["text"]) => {
         const id: TodoItem["id"] = "00" + (this.state.todoList.length + 1);
 
         const newItem = {
@@ -102,7 +102,7 @@ class App extends Component<AppProps, AppState> {
         });
     };
 
-    handleUsernameChange = (
+    _changeUsername = (
         value: React.ChangeEvent["target"]["nodeValue"],
         id: string
     ) => {
@@ -123,7 +123,7 @@ class App extends Component<AppProps, AppState> {
         });
     };
 
-    profileListToggleHandler = (toggle: boolean) => {
+    _toggleProfileList = (toggle: boolean) => {
         toggle = !toggle;
 
         this.setState({
@@ -131,7 +131,7 @@ class App extends Component<AppProps, AppState> {
         });
     };
 
-    addCarHandler = () => {
+    _addCar = () => {
         const newCar: AppState["cars"] = [
             {
                 make: "foo",
@@ -144,7 +144,7 @@ class App extends Component<AppProps, AppState> {
         });
     };
 
-    loginHandler = () => {
+    _login = () => {
         this.setState({
             authenticated: true
         });
@@ -157,27 +157,27 @@ class App extends Component<AppProps, AppState> {
                 <AuthContext.Provider
                     value={{
                         authenticated: this.state.authenticated,
-                        login: this.loginHandler
+                        login: this._login
                     }}
                 >
                     <Cockpit
                         profileListLength={this.state.profileList.length}
                         showProfileList={this.state.showPersons}
-                        toggleProfileList={this.profileListToggleHandler}
+                        toggleProfileList={this._toggleProfileList}
                     />
                     {this.state.showPersons ? (
                         <PersonList
                             profiles={this.state.profileList}
-                            deleteProfile={this.deletePersonHandler}
-                            changeProfileName={this.handleUsernameChange}
-                            addTodo={this.addTodoHandler}
+                            deleteProfile={this._deletePerson}
+                            changeProfileName={this._changeUsername}
+                            addTodo={this._addTodo}
                         />
                     ) : null}
                     <br />
                     <br />
                     <br />
                     <TodoList todos={this.state.todoList} />
-                    <button onClick={this.addCarHandler}>Add car</button>
+                    <button onClick={this._addCar}>Add car</button>
                 <Auto cars={this.state.cars} />
                 </AuthContext.Provider>
             </StyledDiv>
