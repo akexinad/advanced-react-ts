@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, Component } from "react";
+import React, { ReactElement, Component } from "react";
 import Aux from "../../hoc/Auxilliary";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
 
@@ -24,10 +24,19 @@ export default class Layout extends Component<LayoutProps, LayoutState> {
         });
     };
 
+    // If the new state depends on the condition on the old state, like a boolean change for example,
+    // passing the change in state as a function like so is the correct way of changing state due to
+    // it asynchronous nature.
+    _sideDrawerToggle = () => {
+        this.setState(prevState => {
+            return { showSideDrawer: !prevState.showSideDrawer };
+        });
+    };
+
     render() {
         return (
             <Aux>
-                <Toolbar />
+                <Toolbar drawToggleClicked={this._sideDrawerToggle} />
                 <SideDrawer
                     open={this.state.showSideDrawer}
                     closed={this._sideDrawerClosed}
