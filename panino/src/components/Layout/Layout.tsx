@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, Component } from "react";
 import Aux from "../../hoc/Auxilliary";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
 
@@ -9,12 +9,31 @@ interface LayoutProps {
     children: ReactElement | ReactElement[];
 }
 
-const Layout: FC<LayoutProps> = (props: ReactElement["props"]) => (
-    <Aux>
-        <Toolbar />
-        <SideDrawer />
-        <main className={classes.Content}>{props.children}</main>
-    </Aux>
-);
+interface LayoutState {
+    showSideDrawer: boolean;
+}
 
-export default Layout;
+export default class Layout extends Component<LayoutProps, LayoutState> {
+    state = {
+        showSideDrawer: true
+    };
+
+    _sideDrawerClosed = () => {
+        this.setState({
+            showSideDrawer: false
+        });
+    };
+
+    render() {
+        return (
+            <Aux>
+                <Toolbar />
+                <SideDrawer
+                    open={this.state.showSideDrawer}
+                    closed={this._sideDrawerClosed}
+                />
+                <main className={classes.Content}>{this.props.children}</main>
+            </Aux>
+        );
+    }
+}
