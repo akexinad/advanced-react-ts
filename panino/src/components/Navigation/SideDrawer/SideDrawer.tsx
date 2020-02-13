@@ -23,7 +23,9 @@ const SideDrawer: FC<SideDrawerProps> = ({ closed, open }) => {
         <Aux>
             <Backdrop show={open} clicked={closed} />
             <div className={attachedClasses.join(" ")}>
-                <Logo height="11%" />
+                <div className={styles.Logo}>
+                    <Logo />
+                </div>
                 <nav>
                     <NavigationItems />
                 </nav>

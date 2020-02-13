@@ -2,9 +2,9 @@ import React, { FC } from "react";
 
 import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
+import DrawerToggle from "../../DrawerToggle/DrawerToggle";
 
 import styles from "./Toolbar.module.css";
-import DrawerToggle from "../../DrawerToggle/DrawerToggle";
 
 interface ToolbarProps {
     drawToggleClicked: () => void;
@@ -13,7 +13,9 @@ interface ToolbarProps {
 const Toolbar: FC<ToolbarProps> = ({ drawToggleClicked }) => (
     <header className={styles.Toolbar}>
         <DrawerToggle clicked={drawToggleClicked} />
-        <Logo height="80%" />
+        <div className={styles.Logo}>
+            <Logo />
+        </div>
         <nav className={styles.DesktopOnly}>
             <NavigationItems />
         </nav>
