@@ -5,6 +5,8 @@ import BuildControls from "../../components/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 
+import styles from "./BurgerBuilder.module.css";
+
 export type IngredientLabels = "Salad" | "Bacon" | "Cheese" | "Meat";
 export type IngredientTypes = "salad" | "bacon" | "cheese" | "meat";
 
@@ -153,7 +155,7 @@ export default class BurgerBuilder extends Component {
                         price={this.state.totalPrice}
                     />
                 </Modal>
-                <h2>Burger Builder</h2>
+                <h1 className={styles.Heading}>Oh Look! Panini!</h1>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
                     ingredientAdded={this._addIngredient}
