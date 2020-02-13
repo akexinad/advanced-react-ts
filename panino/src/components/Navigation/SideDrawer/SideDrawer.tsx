@@ -13,13 +13,12 @@ interface SideDrawerProps {
 }
 
 const SideDrawer: FC<SideDrawerProps> = ({ closed, open }) => {
-
     let attachedClasses = [styles.SideDrawer, styles.Close];
-    
+
     if (open) {
         attachedClasses = [styles.SideDrawer, styles.Open];
     }
-    
+
     return (
         <Aux>
             <Backdrop show={open} clicked={closed} />

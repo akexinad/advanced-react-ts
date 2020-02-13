@@ -24,9 +24,13 @@ export default class Layout extends Component<LayoutProps, LayoutState> {
         });
     };
 
-    // If the new state depends on the condition on the old state, like a boolean change for example,
-    // passing the change in state as a function like so is the correct way of changing state due to
-    // it asynchronous nature.
+    /**
+     * REMEMBER!!!
+     * ===========
+     * If the new state depends on the condition on the old state, like a boolean change for
+     * passing the change in state as a function like so is the correct way of changing state
+     * its asynchronous nature.
+     */
     _sideDrawerToggle = () => {
         this.setState(prevState => {
             return { showSideDrawer: !prevState.showSideDrawer };
