@@ -1,9 +1,9 @@
 import React, { ReactElement, Component } from "react";
-import Aux from "../../hoc/Auxilliary";
-import Toolbar from "../Navigation/Toolbar/Toolbar";
+import Aux from "../Auxilliary/Auxilliary";
+import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 
 import classes from "./Layout.module.css";
-import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
+import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
 
 interface LayoutProps {
     children: ReactElement | ReactElement[];

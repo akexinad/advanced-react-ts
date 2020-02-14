@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Aux from "../../hoc/Auxilliary";
+import Aux from "../../hoc/Auxilliary/Auxilliary";
 import { Ingredients } from "../../containers/BurgerBuilder/BurgerBuilder";
 import Button from "../UI/Button/Button";
 

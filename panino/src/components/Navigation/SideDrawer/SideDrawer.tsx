@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
-import Aux from "../../../hoc/Auxilliary";
+import Aux from "../../../hoc/Auxilliary/Auxilliary";
 import Backdrop from "../../UI/Backdrop/Backdrop";
 
 import styles from "./SideDrawer.module.css";
