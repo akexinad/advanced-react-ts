@@ -8,7 +8,7 @@ import "./Blog.css";
 
 class Blog extends Component {
     state = {
-        posts: null
+        posts: []
     };
 
     componentDidMount = () => {
@@ -21,14 +21,15 @@ class Blog extends Component {
         });
     };
 
+    renderPosts = () =>
+        this.state.posts.map(post => (
+            <Post key={post.id} title={post.title} authorId={post.userId} />
+        ));
+
     render() {
         return (
             <div>
-                <section className="Posts">
-                    <Post />
-                    <Post />
-                    <Post />
-                </section>
+                <section className="Posts">{this.renderPosts()}</section>
                 <section>
                     <FullPost />
                 </section>
