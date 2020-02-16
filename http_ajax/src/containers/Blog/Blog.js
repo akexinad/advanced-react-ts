@@ -4,11 +4,13 @@ import axios from "axios";
 import Post from "../../components/Post/Post";
 import FullPost from "../../components/FullPost/FullPost";
 import NewPost from "../../components/NewPost/NewPost";
+
 import "./Blog.css";
 
 class Blog extends Component {
     state = {
-        posts: []
+        posts: [],
+        selectedPostId: null
     };
 
     componentDidMount = () => {
@@ -30,9 +32,20 @@ class Blog extends Component {
         });
     };
 
+    _postSelected = postId => {
+        this.setState({
+            selectedPostId: postId
+        });
+    };
+
     renderPosts = () =>
         this.state.posts.map(post => (
-            <Post key={post.id} title={post.title} author={post.author} />
+            <Post
+                key={post.id}
+                title={post.title}
+                author={post.author}
+                clicked={() => this._postSelected(post.id)}
+            />
         ));
 
     render() {
@@ -40,7 +53,7 @@ class Blog extends Component {
             <div>
                 <section className="Posts">{this.renderPosts()}</section>
                 <section>
-                    <FullPost />
+                    <FullPost postId={this.state.selectedPostId} />
                 </section>
                 <section>
                     <NewPost />
