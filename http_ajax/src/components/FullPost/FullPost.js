@@ -11,8 +11,10 @@ class FullPost extends Component {
         };
     }
 
-    componentDidMount = () => {
+    componentDidUpdate = () => {
         console.log(this.props);
+
+        if (!this.props.postId) return;
 
         axios
             .get(
@@ -29,8 +31,7 @@ class FullPost extends Component {
 
     render() {
         console.log(this.state);
-        
-        
+
         let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;
 
         if (this.props.postId) {
