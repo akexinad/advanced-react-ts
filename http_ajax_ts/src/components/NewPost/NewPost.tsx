@@ -34,13 +34,10 @@ const NewPost = () => {
             author: e.target.value
         });
 
-
     const _postData = () => {
-        axios
-            .post<IPost>(API_URL, post)
-            .then(res => console.log(res));
-    }
-        
+        axios.post<IPost>(API_URL, post).then(res => console.log(res));
+    };
+
     return (
         <div className={styles.NewPost}>
             <h1>Add a Post</h1>

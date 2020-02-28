@@ -13,20 +13,23 @@ interface FullPostProps {
 
 const FullPost: FC<FullPostProps> = ({ postId }) => {
     const [loadedPost, setLoadedPost] = useState<IPost | null>(null);
-    
+
     useEffect(() => {
         if (postId) {
             if (!loadedPost || (loadedPost && loadedPost.id !== postId)) {
                 axios
                     .get(API_URL + `/${postId}`)
                     .then((res: AxiosResponse<IPost>) => {
-                        console.log('res.data', res.data)
+                        console.log("res.data", res.data);
                         setLoadedPost(res.data);
-
                     });
             }
         }
     }, [postId, loadedPost]);
+
+    const _deletePost = () => {
+        axios.delete(API_URL + `/${postId}`).then(res => console.log(res));
+    };
 
     const renderPost = () => {
         let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;
@@ -41,7 +44,9 @@ const FullPost: FC<FullPostProps> = ({ postId }) => {
                     <h1>{loadedPost.title}</h1>
                     <p>{loadedPost.body}</p>
                     <div className={styles.Edit}>
-                        <button className={styles.Delete}>Delete</button>
+                        <button onClick={_deletePost} className={styles.Delete}>
+                            Delete
+                        </button>
                     </div>
                 </div>
             );
