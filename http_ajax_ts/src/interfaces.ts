@@ -1,4 +1,5 @@
-export interface Post {
+export interface IPost {
+    id: string;
     title: string;
     body: string;
     author: string;

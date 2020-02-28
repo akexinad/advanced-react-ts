@@ -1,29 +1,57 @@
 import React, { useState, useEffect, FC } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+
+import { IPost } from "../../interfaces";
+
 import NewPost from "../../components/NewPost/NewPost";
 import FullPost from "../../components/FullPost/FullPost";
+import Post from "../../components/Post/Post";
 
-
+import styles from "./Blog.module.css";
 
 const Blog: FC = () => {
-    const [posts, setPosts] = useState([]);
-    const [selectedPostId, setSelectedPostId] = useState(null);
+    const [posts, setPosts] = useState([{
+        id: "",
+        title: "",
+        body: "",
+        author: ""
+    }]);
+    const [selectedPostId, setSelectedPostId] = useState<IPost["id"]>("");
 
     useEffect(() => {
-        axios.get("https://jsonplaceholder.typicode.com/posts").then(res => {
-            console.log("res", res);
-        });
+        axios
+            .get("https://jsonplaceholder.typicode.com/posts")
+            .then((res: AxiosResponse<IPost[]>) => {
+                const posts = res.data.slice(0, 4);
+                const updatedPosts = posts.map(post => {
+                    return {
+                        ...post,
+                        author: "Fellini"
+                    };
+                });
+
+                setPosts(updatedPosts);
+            });
     }, []);
 
-    const renderPosts = () => {
+    const _postSelected = (postId: IPost["id"]) => {
+        setSelectedPostId(postId);
+    };
 
-        posts.map(post)
-        
-    }
+    const renderPosts = () =>
+        posts.map((post: IPost) => (
+            <Post
+                key={post.id}
+                id={post.id}
+                title={post.title}
+                author={post.author}
+                clicked={() => _postSelected(post.id)}
+            ></Post>
+        ));
 
     return (
         <div>
-            {/* <section className="Posts">{this.renderPosts()}</section> */}
+            <section className={styles.Posts}>{renderPosts()}</section>
             <section>
                 <h2>This is a full post</h2>
                 <FullPost postId={selectedPostId} />

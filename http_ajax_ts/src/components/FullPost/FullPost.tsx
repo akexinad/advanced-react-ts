@@ -1,20 +1,27 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import axios from "axios";
 
-import { Post } from "../../interfaces";
+import { IPost } from "../../interfaces";
 
 import styles from "./FullPost.module.css";
 
 interface FullPostProps {
-    postId: number | null;
+    postId: IPost["id"];
 }
 
 const FullPost: FC<FullPostProps> = ({ postId }) => {
-    const [selectedPost, setSelectedPost] = useState<Post>({
+    const [selectedPost, setSelectedPost] = useState<IPost>({
+        id: "",
         title: "",
         body: "",
         author: ""
     });
+
+    useEffect(() => {
+        axios
+            .get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+            .then(res => setSelectedPost(res.data));
+    }, []);
 
     return postId ? (
         <div className={styles.FullPost}>
