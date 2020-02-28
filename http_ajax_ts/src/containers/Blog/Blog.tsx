@@ -32,7 +32,7 @@ const Blog: FC = () => {
 
                 setPosts(updatedPosts);
             });
-    }, []);
+    }, [posts]);
 
     const _postSelected = (postId: IPost["id"]) => {
         setSelectedPostId(postId);

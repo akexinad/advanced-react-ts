@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 import { IPost } from "../../interfaces";
 
@@ -10,30 +10,45 @@ interface FullPostProps {
 }
 
 const FullPost: FC<FullPostProps> = ({ postId }) => {
-    const [selectedPost, setSelectedPost] = useState<IPost>({
-        id: "",
-        title: "",
-        body: "",
-        author: ""
-    });
-
+    const [loadedPost, setLoadedPost] = useState<IPost | null>(null);
+    
     useEffect(() => {
-        axios
-            .get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-            .then(res => setSelectedPost(res.data));
-    }, []);
+        if (postId) {
+            if (!loadedPost || (loadedPost && loadedPost.id !== postId)) {
+                axios
+                    .get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+                    .then((res: AxiosResponse<IPost>) => {
+                        console.log('res.data', res.data)
+                        setLoadedPost(res.data);
 
-    return postId ? (
-        <div className={styles.FullPost}>
-            <h1>{selectedPost.title}</h1>
-            <p>{selectedPost.body}</p>
-            <div className={styles.Edit}>
-                <button className={styles.Delete}>Delete</button>
-            </div>
-        </div>
-    ) : (
-        <p style={{ textAlign: "center" }}>Please select a Post!</p>
-    );
+                    });
+            }
+        }
+    }, [postId, loadedPost]);
+
+    const renderPost = () => {
+        let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;
+
+        if (postId) {
+            post = <p style={{ textAlign: "center" }}>Loading...!</p>;
+        }
+
+        if (loadedPost) {
+            post = (
+                <div className={styles.FullPost}>
+                    <h1>{loadedPost.title}</h1>
+                    <p>{loadedPost.body}</p>
+                    <div className={styles.Edit}>
+                        <button className={styles.Delete}>Delete</button>
+                    </div>
+                </div>
+            );
+        }
+
+        return post;
+    };
+
+    return renderPost();
 };
 
 export default FullPost;
