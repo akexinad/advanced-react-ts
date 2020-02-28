@@ -1,5 +1,9 @@
 import React, { useState, useEffect, FC } from "react";
 import axios from "axios";
+import NewPost from "../../components/NewPost/NewPost";
+import FullPost from "../../components/FullPost/FullPost";
+
+
 
 const Blog: FC = () => {
     const [posts, setPosts] = useState([]);
@@ -11,16 +15,21 @@ const Blog: FC = () => {
         });
     }, []);
 
+    const renderPosts = () => {
+
+        posts.map(post)
+        
+    }
+
     return (
         <div>
             {/* <section className="Posts">{this.renderPosts()}</section> */}
             <section>
                 <h2>This is a full post</h2>
-                {/* <FullPost postId={this.state.selectedPostId} /> */}
+                <FullPost postId={selectedPostId} />
             </section>
             <section>
-                {/* <NewPost /> */}
-                <h2>This is a new post</h2>
+                <NewPost />
             </section>
         </div>
     );
