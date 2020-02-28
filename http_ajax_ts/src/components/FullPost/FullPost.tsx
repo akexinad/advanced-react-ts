@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 
+import { API_URL } from "../../utils/api";
+
 import { IPost } from "../../interfaces";
 
 import styles from "./FullPost.module.css";
@@ -16,7 +18,7 @@ const FullPost: FC<FullPostProps> = ({ postId }) => {
         if (postId) {
             if (!loadedPost || (loadedPost && loadedPost.id !== postId)) {
                 axios
-                    .get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+                    .get(API_URL + `/${postId}`)
                     .then((res: AxiosResponse<IPost>) => {
                         console.log('res.data', res.data)
                         setLoadedPost(res.data);
