@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "../../utils/axios";
 
 import { IPost } from "../../interfaces";
 
@@ -25,9 +25,9 @@ const Blog: FC = () => {
     useEffect(() => {
         axios
             .get("/posts")
-            .then((res: AxiosResponse<IPost[]>) => {
-                const posts = res.data.slice(0, 4);
-                const updatedPosts = posts.map(post => {
+            .then(res => {
+                const posts: IPost[] = res.data.slice(0, 4);
+                const updatedPosts = posts.map((post: IPost) => {
                     return {
                         ...post,
                         author: "Fellini"
