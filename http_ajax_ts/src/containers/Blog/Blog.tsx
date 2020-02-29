@@ -26,7 +26,7 @@ const Blog: FC = () => {
 
     useEffect(() => {
         axios
-            .get(API_URL)
+            .get(API_URL + "adfgr")
             .then((res: AxiosResponse<IPost[]>) => {
                 const posts = res.data.slice(0, 4);
                 const updatedPosts = posts.map(post => {
@@ -39,7 +39,11 @@ const Blog: FC = () => {
                 setPosts(updatedPosts);
                 setError(false);
             })
-            .catch(error => setError(true));
+            .catch(error => {
+                setError(true)
+                console.error(error);
+            });
+
     }, [posts]);
 
     const _postSelected = (postId: IPost["id"]) => {
