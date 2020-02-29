@@ -31,6 +31,18 @@ axios.interceptors.response.use(
     }
 );
 
+
+/**
+ * 
+ * If you want to eject your interceptor, you can stor it in a variable and call
+ * the eject method:
+ * 
+ * const myInterceptor = axios.interceptors.request.use(() => return ruquest)
+ * 
+ * axios.interceptors.request.eject(myInterceptor)
+ * 
+ */
+
 ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
