@@ -21,7 +21,7 @@ const SideDrawer: FC<SideDrawerProps> = ({ closed, open }) => {
 
     return (
         <Aux>
-            <Backdrop show={open} clicked={closed} />
+            <Backdrop show={!open} clicked={closed} />
             <div className={attachedClasses.join(" ")}>
                 <div className={styles.Logo}>
                     <Logo />
