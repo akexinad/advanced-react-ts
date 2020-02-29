@@ -1,8 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import axios, { AxiosResponse } from "axios";
 
-import { API_URL } from "../../utils/api";
-
 import { IPost } from "../../interfaces";
 
 import NewPost from "../../components/NewPost/NewPost";
@@ -26,7 +24,7 @@ const Blog: FC = () => {
 
     useEffect(() => {
         axios
-            .get(API_URL + "adfgr")
+            .get("/posts")
             .then((res: AxiosResponse<IPost[]>) => {
                 const posts = res.data.slice(0, 4);
                 const updatedPosts = posts.map(post => {

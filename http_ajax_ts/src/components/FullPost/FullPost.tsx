@@ -1,8 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 
-import { API_URL } from "../../utils/api";
-
 import { IPost } from "../../interfaces";
 
 import styles from "./FullPost.module.css";
@@ -18,7 +16,7 @@ const FullPost: FC<FullPostProps> = ({ postId }) => {
         if (postId) {
             if (!loadedPost || (loadedPost && loadedPost.id !== postId)) {
                 axios
-                    .get(API_URL + `/${postId}`)
+                    .get(`/posts/${postId}`)
                     .then((res: AxiosResponse<IPost>) => {
                         console.log("res.data", res.data);
                         setLoadedPost(res.data);
@@ -28,7 +26,7 @@ const FullPost: FC<FullPostProps> = ({ postId }) => {
     }, [postId, loadedPost]);
 
     const _deletePost = () => {
-        axios.delete(API_URL + `/${postId}`).then(res => console.log(res));
+        axios.delete(`/posts/${postId}`).then(res => console.log(res));
     };
 
     const renderPost = () => {

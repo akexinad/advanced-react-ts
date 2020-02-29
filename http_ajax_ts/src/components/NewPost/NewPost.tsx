@@ -1,10 +1,9 @@
 import React, { useState, ChangeEvent } from "react";
 import axios from "axios";
 
-import { API_URL } from "../../utils/api";
+import { IPost } from "../../interfaces";
 
 import styles from "./NewPost.module.css";
-import { IPost } from "../../interfaces";
 
 const NewPost = () => {
     const [post, setPost] = useState({
@@ -35,7 +34,7 @@ const NewPost = () => {
         });
 
     const _postData = () => {
-        axios.post<IPost>(API_URL, post).then(res => console.log(res));
+        axios.post<IPost>("/posts", post).then(res => console.log(res));
     };
 
     return (
