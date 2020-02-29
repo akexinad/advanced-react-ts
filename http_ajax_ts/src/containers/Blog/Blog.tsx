@@ -12,12 +12,16 @@ import Post from "../../components/Post/Post";
 import styles from "./Blog.module.css";
 
 const Blog: FC = () => {
-    const [posts, setPosts] = useState([{
-        id: "",
-        title: "",
-        body: "",
-        author: ""
-    }]);
+    const [posts, setPosts] = useState([
+        {
+            id: "",
+            title: "",
+            body: "",
+            author: ""
+        }
+    ]);
+    const [error, setError] = useState(false);
+    
     const [selectedPostId, setSelectedPostId] = useState<IPost["id"]>("");
 
     useEffect(() => {
@@ -33,15 +37,22 @@ const Blog: FC = () => {
                 });
 
                 setPosts(updatedPosts);
-            });
+                setError(false);
+            })
+            .catch(error => setError(true));
     }, [posts]);
 
     const _postSelected = (postId: IPost["id"]) => {
         setSelectedPostId(postId);
     };
 
-    const renderPosts = () =>
-        posts.map((post: IPost) => (
+    const renderPosts = () => {
+
+        if (error) {
+            return <p style={{textAlign: "center"}}>There was error</p>
+        }
+    
+        return posts.map((post: IPost) => (
             <Post
                 key={post.id}
                 id={post.id}
@@ -50,6 +61,7 @@ const Blog: FC = () => {
                 clicked={() => _postSelected(post.id)}
             ></Post>
         ));
+    }
 
     return (
         <div>
