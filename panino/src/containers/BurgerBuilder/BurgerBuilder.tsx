@@ -6,6 +6,7 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 import styles from "./BurgerBuilder.module.css";
 
@@ -31,6 +32,7 @@ interface AppState {
     totalPrice: number;
     purchasable: boolean;
     purchasing: boolean;
+    loading: boolean;
 }
 
 export type DisabledInfo = {
@@ -47,7 +49,8 @@ export default class BurgerBuilder extends Component {
         },
         totalPrice: 4,
         purchasable: false,
-        purchasing: false
+        purchasing: false,
+        loading: false
     };
 
     updatePurchaseState = (updatedIngredients: Ingredients) => {
@@ -140,7 +143,12 @@ export default class BurgerBuilder extends Component {
     };
 
     _purchaseContinued = () => {
-        // alert("You continue!");
+        this.setState({
+            loading: true
+        });
+
+        console.log("this.state.purchasing", this.state.purchasing);
+
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
@@ -154,24 +162,51 @@ export default class BurgerBuilder extends Component {
                 email: "fellini@ex.it"
             },
             deliveryMethod: "fedex"
+        };
+
+        // axios
+        //     .post("/orders.json", order)
+        //     .then(() =>
+        //         this.setState({
+        //             loading: false,
+        //             purchasing: false
+        //         })
+        //     )
+        //     .catch(() =>
+        //         this.setState({
+        //             loading: false,
+        //             purchasing: false
+        //         })
+        //     );
+    };
+
+    renderOrderSummarySpinner = () => {
+        console.log("this.state.loading", this.state.loading);
+
+        if (this.state.loading) {
+            return <Spinner />;
         }
-        
-        axios.post('/orders.json', order).then(res => console.log(res));
+
+        return (
+            <OrderSummary
+                ingredients={this.state.ingredients}
+                purchaseCancelled={this._purchaseCancelled}
+                purchaseContinued={this._purchaseContinued}
+                price={this.state.totalPrice}
+            />
+        );
     };
 
     render() {
+        console.log("this.state.purchasing", this.state.purchasing);
+
         return (
             <Aux>
                 <Modal
                     show={this.state.purchasing}
                     modalClosed={this._purchaseCancelled}
                 >
-                    <OrderSummary
-                        ingredients={this.state.ingredients}
-                        purchaseCancelled={this._purchaseCancelled}
-                        purchaseContinued={this._purchaseContinued}
-                        price={this.state.totalPrice}
-                    />
+                    {this.renderOrderSummarySpinner()}
                 </Modal>
                 <h1 className={styles.Heading}>Oh Look! Panini!</h1>
                 <Burger ingredients={this.state.ingredients} />
