@@ -148,6 +148,7 @@ export default class BurgerBuilder extends Component {
         });
 
         const order = {
+            createdAt: new Date(),
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
             customer: {

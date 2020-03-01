@@ -1,4 +1,4 @@
-import React, { Component, Props } from "react";
+import React, { Component, Props, FC, memo } from "react";
 import Aux from "../../../hoc/Auxilliary/Auxilliary";
 import Backdrop from "../Backdrop/Backdrop";
 
@@ -9,66 +9,26 @@ interface ModalProps extends Props<any> {
     modalClosed: () => void;
 }
 
-export default class Modal extends Component<ModalProps> {
-    shouldComponentUpdate = (nextProps: any) => {
-        return (
-            nextProps.show !== this.props.show ||
-            // @ts-ignore
-            nextProps.children.type !== this.props.children.type
-        );
-    };
+const Modal: FC<ModalProps> = ({ show, modalClosed, children }) => {
+    return (
+        <Aux>
+            <Backdrop show={show} clicked={modalClosed} />
+            <div
+                className={styles.Modal}
+                style={{
+                    transform: show ? "translateY(0)" : "translateY(-100vh)",
+                    opacity: show ? "1" : "0"
+                }}
+            >
+                {children}
+            </div>
+        </Aux>
+    );
+};
 
-    render() {
-        return (
-            <Aux>
-                <Backdrop
-                    show={this.props.show}
-                    clicked={this.props.modalClosed}
-                />
-                <div
-                    className={styles.Modal}
-                    style={{
-                        transform: this.props.show
-                            ? "translateY(0)"
-                            : "translateY(-100vh)",
-                        opacity: this.props.show ? "1" : "0"
-                    }}
-                >
-                    {this.props.children}
-                </div>
-            </Aux>
-        );
-    }
-}
-
-// const Modal: FC<ModalProps> = memo(
-//     props => {
-//         return (
-//             <Aux>
-//                 <Backdrop show={props.show} clicked={props.modalClosed}>
-//                     <div
-//                         className={styles.Modal}
-//                         style={{
-//                             transform: props.show
-//                                 ? "translateY(0)"
-//                                 : "translateY(-100vh)",
-//                             opacity: props.show ? "1" : "0"
-//                         }}
-//                     >
-//                         {props.children}
-//                     </div>
-//                 </Backdrop>
-//             </Aux>
-//         );
-//     },
-//     (prevProps, nextProps) => {
-//         // console.log("nextProps", nextProps);
-//         // console.log("prevProps", prevProps);
-//         // console.log("prevProps.children", prevProps.children);
-//         // console.log("nextProps.children", nextProps.children);
-
-//         return prevProps.show === nextProps.show && prevProps.children === nextProps.children;
-//     }
-// );
-
-// export default Modal;
+export default memo(
+    Modal,
+    (prevProps, nextProps) =>
+        prevProps.show === nextProps.show &&
+        prevProps.children === nextProps.children
+);
