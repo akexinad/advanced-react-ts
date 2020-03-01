@@ -147,8 +147,6 @@ export default class BurgerBuilder extends Component {
             loading: true
         });
 
-        console.log("this.state.purchasing", this.state.purchasing);
-
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
@@ -164,30 +162,26 @@ export default class BurgerBuilder extends Component {
             deliveryMethod: "fedex"
         };
 
-        // axios
-        //     .post("/orders.json", order)
-        //     .then(() =>
-        //         this.setState({
-        //             loading: false,
-        //             purchasing: false
-        //         })
-        //     )
-        //     .catch(() =>
-        //         this.setState({
-        //             loading: false,
-        //             purchasing: false
-        //         })
-        //     );
+        axios
+            .post("/orders.json", order)
+            .then(() =>
+                this.setState({
+                    loading: false,
+                    purchasing: false
+                })
+            )
+            .catch(() =>
+                this.setState({
+                    loading: false,
+                    purchasing: false
+                })
+            );
     };
 
     renderOrderSummarySpinner = () => {
-        console.log("this.state.loading", this.state.loading);
-
-        if (this.state.loading) {
-            return <Spinner />;
-        }
-
-        return (
+        return this.state.loading ? (
+            <Spinner />
+        ) : (
             <OrderSummary
                 ingredients={this.state.ingredients}
                 purchaseCancelled={this._purchaseCancelled}
@@ -198,8 +192,6 @@ export default class BurgerBuilder extends Component {
     };
 
     render() {
-        console.log("this.state.purchasing", this.state.purchasing);
-
         return (
             <Aux>
                 <Modal
