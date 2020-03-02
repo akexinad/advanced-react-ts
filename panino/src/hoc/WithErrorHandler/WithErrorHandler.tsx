@@ -1,5 +1,5 @@
-import React, { Props, ComponentType, Component } from "react";
-import axios, { AxiosInstance, AxiosError } from "axios";
+import React, { ComponentType, Component } from "react";
+import { AxiosInstance, AxiosError } from "axios";
 
 import Aux from "../Auxilliary/Auxilliary";
 import Modal from "../../components/UI/Modal/Modal";
@@ -20,7 +20,11 @@ const WithErrorHandler = (
         };
 
         componentDidMount = () => {
+            console.log(WrappedComponent);
+
             axios.interceptors.request.use(req => {
+                console.log(req);
+
                 this.setState({
                     isError: false,
                     errorMsg: ""
@@ -29,38 +33,37 @@ const WithErrorHandler = (
                 return req;
             });
 
-            axios.interceptors.response.use(undefined, (error: AxiosError) => {
-                this.setState({
-                    isError: true,
-                    errorMsg: error.message
-                });
+            axios.interceptors.response.use(
+                res => res,
+                (error: AxiosError) => {
+                    this.setState({
+                        isError: true,
+                        errorMsg: error.message
+                    });
+                }
+            );
+        };
 
-                return;
+        _errorConfirmed = () => {
+            this.setState({
+                isError: false
             });
         };
 
         render() {
             return (
                 <Aux>
-                    <Modal show={this.state.isError} modalClosed={() => true}>
-                        THERE WAS ERROR!
-                        {this.state.errorMsg}
-                        <WrappedComponent {...this.props} />
+                    <Modal
+                        show={this.state.isError}
+                        modalClosed={this._errorConfirmed}
+                    >
+                        {this.state.isError ? this.state.errorMsg : "no error"}
                     </Modal>
+                    <WrappedComponent {...this.props} />
                 </Aux>
             );
         }
     };
 };
-// (props: Props<ComponentType["propTypes"]>) => {
-//     return (
-//         <Aux>
-//             <Modal>
-//                 THERE WAS ERROR!
-//                 <WrappedComponent {...props} />
-//             </Modal>
-//         </Aux>
-//     );
-// };
 
 export default WithErrorHandler;

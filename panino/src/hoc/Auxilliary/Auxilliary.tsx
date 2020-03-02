@@ -1,6 +1,6 @@
-import { FC, Props, ReactElement, ReactNode } from "react";
+import { FC, PropsWithChildren } from "react";
 
-const Aux: FC<Props<ReactElement["props"]>> = (props) => {
+const Aux: FC<PropsWithChildren<any>> = (props) => {
     return props.children;
 };
 

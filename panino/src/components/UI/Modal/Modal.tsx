@@ -1,4 +1,4 @@
-import React, { Component, Props, FC, memo, ReactPropTypes } from "react";
+import React, { FC, memo } from "react";
 import Aux from "../../../hoc/Auxilliary/Auxilliary";
 import Backdrop from "../Backdrop/Backdrop";
 
@@ -7,6 +7,7 @@ import styles from "./Modal.module.css";
 interface ModalProps {
     show: boolean;
     modalClosed: () => void;
+    children: any;
 }
 
 const Modal: FC<ModalProps> = ({ show, modalClosed, children }) => {

@@ -7,6 +7,7 @@ import BuildControls from "../../components/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
 
 import styles from "./BurgerBuilder.module.css";
 
@@ -168,7 +169,13 @@ class BurgerBuilder extends Component {
             .then(() =>
                 this.setState({
                     loading: false,
-                    purchasing: false
+                    purchasing: false,
+                    ingredients: {
+                        salad: 0,
+                        bacon: 0,
+                        cheese: 0,
+                        meat: 0
+                    }
                 })
             )
             .catch(() =>
@@ -218,4 +225,5 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default withErrorHandler(BurgerBuilder);
+export default WithErrorHandler(BurgerBuilder, axios);
+// export default BurgerBuilder;

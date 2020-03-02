@@ -1,4 +1,4 @@
-import React, { FC, useState, Props, ReactPropTypes, ReactType, Component } from "react";
+import React, { FC, useState, Component } from "react";
 
 import Aux from "../Auxilliary/Auxilliary";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
