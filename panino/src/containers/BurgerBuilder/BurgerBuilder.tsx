@@ -39,7 +39,7 @@ export type DisabledInfo = {
     [key in IngredientTypes]: boolean;
 };
 
-export default class BurgerBuilder extends Component {
+class BurgerBuilder extends Component {
     state: AppState = {
         ingredients: {
             salad: 0,
@@ -217,3 +217,5 @@ export default class BurgerBuilder extends Component {
         );
     }
 }
+
+export default withErrorHandler(BurgerBuilder);

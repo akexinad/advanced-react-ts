@@ -1,10 +1,10 @@
-import React, { Component, Props, FC, memo } from "react";
+import React, { Component, Props, FC, memo, ReactPropTypes } from "react";
 import Aux from "../../../hoc/Auxilliary/Auxilliary";
 import Backdrop from "../Backdrop/Backdrop";
 
 import styles from "./Modal.module.css";
 
-interface ModalProps extends Props<any> {
+interface ModalProps {
     show: boolean;
     modalClosed: () => void;
 }
