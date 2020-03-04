@@ -14,13 +14,9 @@ const WithErrorHandler = (
     axios: AxiosInstance
 ) => {
     return class extends Component<Component["props"], ErrorState> {
-        state = {
-            isError: false,
-            errorMsg: ""
-        };
 
-        componentDidMount = () => {
-            console.log(WrappedComponent);
+        constructor(props: Component["props"]) {
+            super(props);
 
             axios.interceptors.request.use(req => {
                 console.log(req);
@@ -42,6 +38,11 @@ const WithErrorHandler = (
                     });
                 }
             );
+        }
+
+        state = {
+            isError: false,
+            errorMsg: ""
         };
 
         _errorConfirmed = () => {

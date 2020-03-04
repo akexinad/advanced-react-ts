@@ -10,6 +10,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
 
 import styles from "./BurgerBuilder.module.css";
+import { AxiosError } from "axios";
 
 export type IngredientLabels = "Salad" | "Bacon" | "Cheese" | "Meat";
 export type IngredientTypes = "salad" | "bacon" | "cheese" | "meat";
@@ -34,6 +35,8 @@ interface AppState {
     purchasable: boolean;
     purchasing: boolean;
     loading: boolean;
+    isError: boolean;
+    errorMsg: string;
 }
 
 export type DisabledInfo = {
@@ -51,7 +54,26 @@ class BurgerBuilder extends Component {
         totalPrice: 4,
         purchasable: false,
         purchasing: false,
-        loading: false
+        loading: false,
+        isError: false,
+        errorMsg: ""
+    };
+
+    componentDidMount = () => {
+        this.setState({ loading: true });
+
+        axios
+            .get("/ingredients.jso")
+            .then(res =>
+                this.setState({ ingredients: res.data, loading: false })
+            )
+            .catch((err: AxiosError) =>
+                this.setState({
+                    loading: false,
+                    isError: true,
+                    errorMsg: err.message
+                })
+            );
     };
 
     updatePurchaseState = (updatedIngredients: Ingredients) => {
@@ -186,7 +208,7 @@ class BurgerBuilder extends Component {
             );
     };
 
-    renderOrderSummarySpinner = () => {
+    renderOrderSummaryOrSpinner = () => {
         return this.state.loading ? (
             <Spinner />
         ) : (
@@ -199,16 +221,18 @@ class BurgerBuilder extends Component {
         );
     };
 
-    render() {
-        return (
+    renderBuildControlsBurgerOrSpinner = () => {
+        if (this.state.isError)
+            return (
+                <h3 style={{ textAlign: "center", color: "red" }}>
+                    There was error: {this.state.errorMsg}
+                </h3>
+            );
+
+        return this.state.loading ? (
+            <Spinner />
+        ) : (
             <Aux>
-                <Modal
-                    show={this.state.purchasing}
-                    modalClosed={this._purchaseCancelled}
-                >
-                    {this.renderOrderSummarySpinner()}
-                </Modal>
-                <h1 className={styles.Heading}>Oh Look! Panini!</h1>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
                     ingredientAdded={this._addIngredient}
@@ -220,6 +244,21 @@ class BurgerBuilder extends Component {
                     purchasable={this.state.purchasable}
                     ordered={this._purchase}
                 />
+            </Aux>
+        );
+    };
+
+    render() {
+        return (
+            <Aux>
+                <Modal
+                    show={this.state.purchasing}
+                    modalClosed={this._purchaseCancelled}
+                >
+                    {this.renderOrderSummaryOrSpinner()}
+                </Modal>
+                <h1 className={styles.Heading}>Oh Look! Panini!</h1>
+                {this.renderBuildControlsBurgerOrSpinner()}
             </Aux>
         );
     }
