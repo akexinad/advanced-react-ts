@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { Route } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
 
@@ -19,7 +20,8 @@ const Blog: FC = () => {
                     </ul>
                 </nav>
             </header>
-            <Posts />
+            <Route path="/" render={() => <Posts />} />
+            <Route path="/home" exact render={() => <h1>home</h1>} />
         </div>
     );
 };
