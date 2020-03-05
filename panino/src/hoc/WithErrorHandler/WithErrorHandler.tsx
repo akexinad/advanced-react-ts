@@ -14,13 +14,10 @@ const WithErrorHandler = (
     axios: AxiosInstance
 ) => {
     return class extends Component<Component["props"], ErrorState> {
-
         constructor(props: Component["props"]) {
             super(props);
 
             axios.interceptors.request.use(req => {
-                console.log(req);
-
                 this.setState({
                     isError: false,
                     errorMsg: ""
