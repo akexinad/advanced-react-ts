@@ -66,7 +66,15 @@ const Blog: FC = () => {
     }
 
     return (
-        <div>
+        <div className={styles.Blog}>
+            <header>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/new-post">New Post</a></li>
+                    </ul>
+                </nav>
+            </header>
             <section className={styles.Posts}>{renderPosts()}</section>
             <section>
                 <h2>This is a full post</h2>
