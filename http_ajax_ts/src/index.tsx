@@ -34,7 +34,7 @@ axios.interceptors.response.use(
 
 /**
  * 
- * If you want to eject your interceptor, you can stor it in a variable and call
+ * If you want to eject your interceptor, you can store it in a variable and call
  * the eject method:
  * 
  * const myInterceptor = axios.interceptors.request.use(() => return ruquest)

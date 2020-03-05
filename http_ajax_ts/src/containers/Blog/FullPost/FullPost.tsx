@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 
-import { IPost } from "../../interfaces";
+import { IPost } from "../../../interfaces";
 
 import styles from "./FullPost.module.css";
 

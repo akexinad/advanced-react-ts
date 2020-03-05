@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import axios from "axios";
 
-import { IPost } from "../../interfaces";
+import { IPost } from "../../../interfaces";
 
 import styles from "./NewPost.module.css";
 
