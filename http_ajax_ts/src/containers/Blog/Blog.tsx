@@ -20,8 +20,9 @@ const Blog: FC = () => {
                     </ul>
                 </nav>
             </header>
-            <Route path="/" render={() => <Posts />} />
-            <Route path="/home" exact render={() => <h1>home</h1>} />
+            {/* <Route path="/" exact render={() => <Posts />} /> */}
+            <Route path="/home" render={() => <h1>home</h1>} />
+            <Route path="/posts" exact component={Posts}/>
         </div>
     );
 };
