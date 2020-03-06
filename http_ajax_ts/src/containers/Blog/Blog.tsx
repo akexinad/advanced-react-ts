@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Route } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
+import NewPost from "./NewPost/NewPost";
 
 import styles from "./Blog.module.css";
 
@@ -20,9 +21,8 @@ const Blog: FC = () => {
                     </ul>
                 </nav>
             </header>
-            {/* <Route path="/" exact render={() => <Posts />} /> */}
-            <Route path="/home" render={() => <h1>home</h1>} />
-            <Route path="/posts" exact component={Posts}/>
+            <Route path="/" exact component={Posts}/>
+            <Route path="/new-post" exact component={NewPost}/>
         </div>
     );
 };
