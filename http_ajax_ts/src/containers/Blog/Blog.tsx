@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
 import NewPost from "./NewPost/NewPost";
@@ -13,10 +13,14 @@ const Blog: FC = () => {
                 <nav>
                     <ul>
                         <li>
-                            <a href="/">Home</a>
+                            <Link to="/">Home</Link>
                         </li>
                         <li>
-                            <a href="/new-post">New Post</a>
+                            <Link to={{
+                                pathname: "/new-post",
+                                hash: "#submit",
+                                search: "?quick-submit=true"
+                            }}>New Post</Link>
                         </li>
                     </ul>
                 </nav>
