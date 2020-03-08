@@ -6,6 +6,11 @@ import NewPost from "./NewPost/NewPost";
 
 import styles from "./Blog.module.css";
 
+/**
+ * To style the links, you will have to use the NavLink object and not 
+ * the regular Link object provided by React. 
+ */
+
 const Blog: FC = () => {
     return (
         <div className={styles.Blog}>
