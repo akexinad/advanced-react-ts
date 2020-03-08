@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route, NavLink } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
 import NewPost from "./NewPost/NewPost";
@@ -13,20 +13,34 @@ const Blog: FC = () => {
                 <nav>
                     <ul>
                         <li>
-                            <Link to="/">Home</Link>
+                            <NavLink
+                                activeClassName={styles.active}
+                                to="/"
+                                exact
+                            >
+                                Home
+                            </NavLink>
                         </li>
                         <li>
-                            <Link to={{
-                                pathname: "/new-post",
-                                hash: "#submit",
-                                search: "?quick-submit=true"
-                            }}>New Post</Link>
+                            <NavLink
+                                activeStyle={{
+                                    color: "#f8923f",
+                                    textDecoration: "underline"
+                                }}
+                                to={{
+                                    pathname: "/new-post",
+                                    hash: "#submit",
+                                    search: "?quick-submit=true"
+                                }}
+                            >
+                                New Post
+                            </NavLink>
                         </li>
                     </ul>
                 </nav>
             </header>
-            <Route path="/" exact component={Posts}/>
-            <Route path="/new-post" exact component={NewPost}/>
+            <Route path="/" exact component={Posts} />
+            <Route path="/new-post" exact component={NewPost} />
         </div>
     );
 };
