@@ -1,13 +1,15 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState, useEffect } from "react";
+import { BrowserRouterProps } from "react-router-dom";
+
 import axios from "../../../utils/axios";
 
-import Post from '../../../components/Post/Post';
+import Post from "../../../components/Post/Post";
 
-import { IPost } from '../../../interfaces';
+import { IPost } from "../../../interfaces";
 
 import styles from "./Posts.module.css";
 
-const Posts: FC = () => {
+const Posts: FC<BrowserRouterProps> = (props: BrowserRouterProps) => {
     const [posts, setPosts] = useState([
         {
             id: "",
@@ -17,7 +19,7 @@ const Posts: FC = () => {
         }
     ]);
     const [error, setError] = useState(false);
-    const [selectedPostId, setSelectedPostId] = useState<IPost["id"]>("");
+    const [, setSelectedPostId] = useState<IPost["id"]>("");
 
     useEffect(() => {
         axios
@@ -38,7 +40,7 @@ const Posts: FC = () => {
                 setError(true);
                 console.error(error);
             });
-    }, [posts]);
+    }, []);
 
     const _postSelected = (postId: IPost["id"]) => {
         setSelectedPostId(postId);
@@ -60,11 +62,7 @@ const Posts: FC = () => {
         ));
     };
 
-    return (
-        <section className={styles.Posts}>
-            {renderPosts()}
-        </section>
-    )
-}
+    return <section className={styles.Posts}>{renderPosts()}</section>;
+};
 
 export default Posts;

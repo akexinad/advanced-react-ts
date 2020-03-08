@@ -1,16 +1,21 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, FC, useEffect } from "react";
 import axios from "axios";
+import { BrowserRouterProps } from "react-router-dom";
 
 import { IPost } from "../../../interfaces";
 
 import styles from "./NewPost.module.css";
 
-const NewPost = () => {
+const NewPost: FC<BrowserRouterProps> = (props) => {
     const [post, setPost] = useState({
         title: "",
         content: "",
         author: "Fellini"
     });
+
+    useEffect(() => {
+        console.log('props', props);
+    })
 
     const _updateTitle = (e: ChangeEvent<HTMLInputElement>) =>
         setPost({
