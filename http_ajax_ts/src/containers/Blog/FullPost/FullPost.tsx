@@ -1,16 +1,20 @@
 import React, { FC, useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
-import { BrowserRouterProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 
 import { IPost } from "../../../interfaces";
 
 import styles from "./FullPost.module.css";
 
-interface FullPostProps extends BrowserRouterProps {
+interface FullPostParams {
     postId: IPost["id"];
 }
 
-const FullPost: FC<FullPostProps> = ({ postId }) => {
+const FullPost: FC<RouteComponentProps<FullPostParams>> = ({
+    match: {
+        params: { postId }
+    }
+}) => {
     const [loadedPost, setLoadedPost] = useState<IPost | null>(null);
 
     useEffect(() => {
