@@ -1,11 +1,12 @@
 import React, { FC, useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
+import { BrowserRouterProps } from "react-router-dom";
 
 import { IPost } from "../../../interfaces";
 
 import styles from "./FullPost.module.css";
 
-interface FullPostProps {
+interface FullPostProps extends BrowserRouterProps {
     postId: IPost["id"];
 }
 

@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import { BrowserRouterProps } from "react-router-dom";
+import { BrowserRouterProps, Link } from "react-router-dom";
 
 import axios from "../../../utils/axios";
 
@@ -9,7 +9,7 @@ import { IPost } from "../../../interfaces";
 
 import styles from "./Posts.module.css";
 
-const Posts: FC<BrowserRouterProps> = (props: BrowserRouterProps) => {
+const Posts: FC<BrowserRouterProps> = () => {
     const [posts, setPosts] = useState([
         {
             id: "",
@@ -52,13 +52,14 @@ const Posts: FC<BrowserRouterProps> = (props: BrowserRouterProps) => {
         }
 
         return posts.map((post: IPost) => (
-            <Post
-                key={post.id}
-                id={post.id}
-                title={post.title}
-                author={post.author}
-                clicked={() => _postSelected(post.id)}
-            ></Post>
+            <Link key={post.id} to={post.id.toString()}>
+                <Post
+                    id={post.id}
+                    title={post.title}
+                    author={post.author}
+                    clicked={() => _postSelected(post.id)}
+                ></Post>
+            </Link>
         ));
     };
 
