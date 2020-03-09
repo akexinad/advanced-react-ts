@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Route, NavLink } from "react-router-dom";
+import { Route, NavLink, Switch } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
 import NewPost from "./NewPost/NewPost";
@@ -8,8 +8,8 @@ import FullPost from "./FullPost/FullPost";
 import styles from "./Blog.module.css";
 
 /**
- * To style the links, you will have to use the NavLink object and not 
- * the regular Link object provided by React. 
+ * To style the links, you will have to use the NavLink object and not
+ * the regular Link object provided by React.
  */
 
 const Blog: FC = () => {
@@ -45,9 +45,11 @@ const Blog: FC = () => {
                     </ul>
                 </nav>
             </header>
-            <Route path="/" exact component={Posts} />
-            <Route path="/new-post" component={NewPost} />
-            <Route path="/:postId" exact component={FullPost} />
+            <Switch>
+                <Route path="/" exact component={Posts} />
+                <Route path="/new-post" component={NewPost} />
+                <Route path="/:postId" exact component={FullPost} />
+            </Switch>
         </div>
     );
 };

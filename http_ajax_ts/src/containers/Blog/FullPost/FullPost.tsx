@@ -23,7 +23,6 @@ const FullPost: FC<RouteComponentProps<FullPostParams>> = ({
                 axios
                     .get(`/posts/${postId}`)
                     .then((res: AxiosResponse<IPost>) => {
-                        console.log("res.data", res.data);
                         setLoadedPost(res.data);
                     });
             }
