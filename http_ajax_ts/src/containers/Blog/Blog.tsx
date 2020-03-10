@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
@@ -13,7 +13,14 @@ import styles from "./Blog.module.css";
 
 const Blog: FC = () => {
     const [auth, setAuth] = useState(false);
-    
+
+    useEffect(() => {
+        setAuth(true);
+        return () => {
+            setAuth(false);
+        };
+    }, [auth]);
+
     return (
         <div className={styles.Blog}>
             <header>
@@ -47,7 +54,7 @@ const Blog: FC = () => {
                 </nav>
             </header>
             <Switch>
-                { auth ? <Route path="/new-post" component={NewPost} /> : null }
+                {auth ? <Route path="/new-post" component={NewPost} /> : null}
                 <Route path="/posts" component={Posts} />
                 <Redirect from="/" to="/posts" />
             </Switch>
