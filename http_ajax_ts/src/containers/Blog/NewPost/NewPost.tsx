@@ -1,21 +1,18 @@
 import React, { useState, ChangeEvent, FC, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouterProps } from "react-router-dom";
+import { BrowserRouterProps, Redirect } from "react-router-dom";
 
 import { IPost } from "../../../interfaces";
 
 import styles from "./NewPost.module.css";
 
-const NewPost: FC<BrowserRouterProps> = (props) => {
+const NewPost: FC = () => {
     const [post, setPost] = useState({
         title: "",
         content: "",
         author: "Fellini"
     });
-
-    useEffect(() => {
-        console.log('props', props);
-    })
+    const [submitted, setSubmitted] = useState(false);
 
     const _updateTitle = (e: ChangeEvent<HTMLInputElement>) =>
         setPost({
@@ -39,11 +36,17 @@ const NewPost: FC<BrowserRouterProps> = (props) => {
         });
 
     const _postData = () => {
-        axios.post<IPost>("/posts", post).then(res => console.log(res));
+        axios.post<IPost>("/posts", post).then(res => {
+            console.log(res);
+            setSubmitted(true);
+        });
     };
+
+    const renderRedirect = () => (submitted ? <Redirect to="/posts" /> : null);
 
     return (
         <div className={styles.NewPost}>
+            {renderRedirect()}
             <h1>Add a Post</h1>
             <label>Title</label>
             <input type="text" value={post.title} onChange={_updateTitle} />
