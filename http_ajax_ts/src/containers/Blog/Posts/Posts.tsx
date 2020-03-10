@@ -13,7 +13,7 @@ interface PostsParams {
     postId: IPost["id"];
 }
 
-const Posts: FC<RouteComponentProps<PostsParams>> = () => {
+const Posts: FC<RouteComponentProps<PostsParams>> = ({history}) => {
     const [posts, setPosts] = useState([
         {
             id: "",
@@ -47,6 +47,9 @@ const Posts: FC<RouteComponentProps<PostsParams>> = () => {
     }, []);
 
     const _postSelected = (postId: IPost["id"]) => {
+        history.push({
+            pathname: "/" + postId
+        });
         setSelectedPostId(postId);
     };
 
@@ -55,9 +58,10 @@ const Posts: FC<RouteComponentProps<PostsParams>> = () => {
             return <p style={{ textAlign: "center" }}>There was error</p>;
         }
 
-        return posts.map((post: IPost) => (
+        return posts.map((post: IPost, index) => (
             // <Link key={post.id} to={post.id.toString()}>
             <Post
+                key={index}
                 id={post.id}
                 title={post.title}
                 author={post.author}
