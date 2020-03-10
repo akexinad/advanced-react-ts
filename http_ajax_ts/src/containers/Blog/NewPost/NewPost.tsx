@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FC } from "react";
 import axios from "axios";
-import { Redirect, RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 
 import { IPost } from "../../../interfaces";
 
@@ -13,6 +13,10 @@ const NewPost: FC<RouteComponentProps> = ({ history }) => {
         author: "Fellini"
     });
     // const [submitted, setSubmitted] = useState(false);
+
+    /**
+     * You can also check for user authentication in useEffect
+     */
 
     const _updateTitle = (e: ChangeEvent<HTMLInputElement>) =>
         setPost({
