@@ -3,7 +3,6 @@ import { Route, NavLink, Switch } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
 import NewPost from "./NewPost/NewPost";
-import FullPost from "./FullPost/FullPost";
 
 import styles from "./Blog.module.css";
 
@@ -21,10 +20,10 @@ const Blog: FC = () => {
                         <li>
                             <NavLink
                                 activeClassName={styles.active}
-                                to="/"
+                                to="/posts"
                                 exact
                             >
-                                Home
+                                Posts
                             </NavLink>
                         </li>
                         <li>
@@ -46,9 +45,8 @@ const Blog: FC = () => {
                 </nav>
             </header>
             <Switch>
-                <Route path="/" exact component={Posts} />
                 <Route path="/new-post" component={NewPost} />
-                <Route path="/:postId" exact component={FullPost} />
+                <Route path="/posts" component={Posts} />
             </Switch>
         </div>
     );

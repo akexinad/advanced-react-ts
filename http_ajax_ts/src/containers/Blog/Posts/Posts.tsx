@@ -1,9 +1,10 @@
-import React, { FC, useState, useEffect } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import React, { FC, useState, useEffect, Fragment } from "react";
+import { Route, RouteComponentProps } from "react-router-dom";
 
 import axios from "../../../utils/axios";
 
 import Post from "../../../components/Post/Post";
+import FullPost from "../FullPost/FullPost";
 
 import { IPost } from "../../../interfaces";
 
@@ -13,7 +14,7 @@ interface PostsParams {
     postId: IPost["id"];
 }
 
-const Posts: FC<RouteComponentProps<PostsParams>> = ({history}) => {
+const Posts: FC<RouteComponentProps<PostsParams>> = ({history, match}) => {
     const [posts, setPosts] = useState([
         {
             id: "",
@@ -48,7 +49,7 @@ const Posts: FC<RouteComponentProps<PostsParams>> = ({history}) => {
 
     const _postSelected = (postId: IPost["id"]) => {
         history.push({
-            pathname: "/" + postId
+            pathname: match.url + "/" + postId
         });
         setSelectedPostId(postId);
     };
@@ -59,7 +60,6 @@ const Posts: FC<RouteComponentProps<PostsParams>> = ({history}) => {
         }
 
         return posts.map((post: IPost, index) => (
-            // <Link key={post.id} to={post.id.toString()}>
             <Post
                 key={index}
                 id={post.id}
@@ -67,11 +67,15 @@ const Posts: FC<RouteComponentProps<PostsParams>> = ({history}) => {
                 author={post.author}
                 clicked={() => _postSelected(post.id)}
             ></Post>
-            // </Link>
         ));
     };
 
-    return <section className={styles.Posts}>{renderPosts()}</section>;
+    return (
+        <Fragment>
+            <section className={styles.Posts}>{renderPosts()}</section>
+            <Route path={match.url + "/:postId"} exact component={FullPost} />
+        </Fragment>
+    );
 };
 
 export default Posts;
