@@ -49,7 +49,7 @@ const Posts: FC<RouteComponentProps<PostsParams>> = ({history, match}) => {
 
     const _postSelected = (postId: IPost["id"]) => {
         history.push({
-            pathname: match.url + "/" + postId
+            pathname: "/posts/" + postId
         });
         setSelectedPostId(postId);
     };
