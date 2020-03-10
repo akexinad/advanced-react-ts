@@ -1,18 +1,18 @@
-import React, { useState, ChangeEvent, FC, useEffect } from "react";
+import React, { useState, ChangeEvent, FC } from "react";
 import axios from "axios";
-import { BrowserRouterProps, Redirect } from "react-router-dom";
+import { Redirect, RouteComponentProps } from "react-router-dom";
 
 import { IPost } from "../../../interfaces";
 
 import styles from "./NewPost.module.css";
 
-const NewPost: FC = () => {
+const NewPost: FC<RouteComponentProps> = ({ history }) => {
     const [post, setPost] = useState({
         title: "",
         content: "",
         author: "Fellini"
     });
-    const [submitted, setSubmitted] = useState(false);
+    // const [submitted, setSubmitted] = useState(false);
 
     const _updateTitle = (e: ChangeEvent<HTMLInputElement>) =>
         setPost({
@@ -35,18 +35,33 @@ const NewPost: FC = () => {
             author: e.target.value
         });
 
+    /**
+     * Using the push mehtod to redirect the user to another page will add a page on 
+     * top of the stack, therefore the user will be able to go back to the previous page.
+     * 
+     * REPLACE and REDIRECT will replace the previous with the new one and thus you will
+     * not be able to return to the previous page.
+     */
+        
     const _postData = () => {
         axios.post<IPost>("/posts", post).then(res => {
             console.log(res);
-            setSubmitted(true);
+            history.push({
+                pathname: "posts/"
+            });
+            // OR
+            // history.replace({
+            //     pathname: "posts/"
+            // });
+            // setSubmitted(true);
         });
     };
 
-    const renderRedirect = () => (submitted ? <Redirect to="/posts" /> : null);
+    // const renderRedirect = () => (submitted ? <Redirect to="/posts" /> : null);
 
     return (
         <div className={styles.NewPost}>
-            {renderRedirect()}
+            {/* {renderRedirect()} */}
             <h1>Add a Post</h1>
             <label>Title</label>
             <input type="text" value={post.title} onChange={_updateTitle} />
