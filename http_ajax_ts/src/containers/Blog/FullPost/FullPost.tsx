@@ -19,7 +19,7 @@ const FullPost: FC<RouteComponentProps<FullPostParams>> = ({
 
     useEffect(() => {
         if (postId) {
-            if (!loadedPost || (loadedPost && loadedPost.id !== postId)) {
+            if (!loadedPost || (loadedPost && +loadedPost.id !== +postId)) {
                 axios
                     .get(`/posts/${postId}`)
                     .then((res: AxiosResponse<IPost>) => {
@@ -27,7 +27,8 @@ const FullPost: FC<RouteComponentProps<FullPostParams>> = ({
                     });
             }
         }
-    }, [postId, loadedPost]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [postId]);
 
     const _deletePost = () => {
         axios.delete(`/posts/${postId}`).then(res => console.log(res));
