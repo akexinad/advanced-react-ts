@@ -2,9 +2,14 @@ import React, { FC, useState, useEffect } from "react";
 import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
-import NewPost from "./NewPost/NewPost";
+// import NewPost from "./NewPost/NewPost";
+import AsyncComponent from "../../hoc/AsyncComponent";
 
 import styles from "./Blog.module.css";
+
+const AsyncNewPost = AsyncComponent(() => {
+    return import("./NewPost/NewPost");
+});
 
 /**
  * To style the links, you will have to use the NavLink object and not
@@ -54,7 +59,7 @@ const Blog: FC = () => {
                 </nav>
             </header>
             <Switch>
-                {auth ? <Route path="/new-post" component={NewPost} /> : null}
+                {auth ? <Route path="/new-post" component={AsyncNewPost} /> : null}
                 <Route path="/posts" component={Posts} />
                 {/* This is how you can handle routes without a path. */}
                 <Route render={() => <h1>Not found</h1>} />
