@@ -56,7 +56,9 @@ const Blog: FC = () => {
             <Switch>
                 {auth ? <Route path="/new-post" component={NewPost} /> : null}
                 <Route path="/posts" component={Posts} />
-                <Redirect from="/" to="/posts" />
+                {/* This is how you can handle routes without a path. */}
+                <Route render={() => <h1>Not found</h1>} />
+                {/* <Redirect from="/" to="/posts" /> */}
             </Switch>
         </div>
     );
