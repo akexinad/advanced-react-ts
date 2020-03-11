@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import React, { Component, Fragment } from "react";
+import { Route, Switch } from "react-router-dom";
 import Course from "../Course/Course";
 
 import "./Courses.css";
@@ -13,10 +13,10 @@ class Courses extends Component {
     ]
   };
 
-  _selectedCourse = courseId => {
-    console.log("this.props", this.props);
+  _selectedCourse = (courseId, courseTitle) => {
     this.props.history.push({
-      pathname: "/courses/" + courseId
+      pathname: "/courses/" + courseId,
+      search: "?title=" + courseTitle
     });
   };
 
@@ -28,7 +28,7 @@ class Courses extends Component {
           {this.state.courses.map(course => {
             return (
               <article
-                onClick={() => this._selectedCourse(course.id)}
+                onClick={() => this._selectedCourse(course.id, course.title)}
                 className="Course"
                 key={course.id}
               >
@@ -39,7 +39,6 @@ class Courses extends Component {
         </section>
         <Route
           path={this.props.match.url + "/:courseId"}
-          exact
           component={Course}
         />
       </div>

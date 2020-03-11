@@ -1,5 +1,11 @@
+.App a {
+    text-decoration: none;
+    color: black;
+}
+
 .App a:hover,
 .App a:active,
 .App a:active {
     color: red;
+    font-weight: bold;
 }
