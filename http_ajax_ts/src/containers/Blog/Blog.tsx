@@ -1,5 +1,5 @@
-import React, { FC, useState, useEffect } from "react";
-import { Route, NavLink, Switch, Redirect } from "react-router-dom";
+import React, { FC, useState, useEffect, Fragment } from "react";
+import { Route, NavLink, Switch } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
 // import NewPost from "./NewPost/NewPost";
@@ -59,10 +59,22 @@ const Blog: FC = () => {
                 </nav>
             </header>
             <Switch>
-                {auth ? <Route path="/new-post" component={AsyncNewPost} /> : null}
+                {auth ? (
+                    <Route path="/new-post" component={AsyncNewPost} />
+                ) : null}
                 <Route path="/posts" component={Posts} />
                 {/* This is how you can handle routes without a path. */}
-                <Route render={() => <h1>Not found</h1>} />
+                <Route
+                    render={() => (
+                        <Fragment>
+                            <h1 style={{color: "red"}}>...Not found...</h1>
+                            <h2>
+                                This is a way you can handle routes that do not exist or that
+                                come from a 404 error.
+                            </h2>
+                        </Fragment>
+                    )}
+                />
                 {/* <Redirect from="/" to="/posts" /> */}
             </Switch>
         </div>
