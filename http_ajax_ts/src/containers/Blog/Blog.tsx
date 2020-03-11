@@ -1,4 +1,11 @@
-import React, { FC, useState, useEffect, Fragment } from "react";
+import React, {
+    FC,
+    useState,
+    useEffect,
+    Fragment,
+    lazy,
+    Suspense
+} from "react";
 import { Route, NavLink, Switch } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
@@ -10,6 +17,8 @@ import styles from "./Blog.module.css";
 const AsyncNewPost = AsyncComponent(() => {
     return import("./NewPost/NewPost");
 });
+
+const NewPost = lazy(() => import("./NewPost/NewPost"));
 
 /**
  * To style the links, you will have to use the NavLink object and not
@@ -59,18 +68,26 @@ const Blog: FC = () => {
                 </nav>
             </header>
             <Switch>
-                {auth ? (
-                    <Route path="/new-post" component={AsyncNewPost} />
-                ) : null}
+                {/* {auth ? <Route path="/new-post" component={NewPost} /> : null} */}
+                <Route
+                    path="/new-post"
+                    render={() => (
+                        <Suspense fallback={<div>...Loading...</div>}>
+                        // @ts-ignore
+                            <NewPost />
+                        </Suspense>
+                    )}
+                />
                 <Route path="/posts" component={Posts} />
                 {/* This is how you can handle routes without a path. */}
                 <Route
                     render={() => (
                         <Fragment>
-                            <h1 style={{color: "red"}}>...Not found...</h1>
+                            <h1 style={{ color: "red" }}>...Not found...</h1>
                             <h2>
-                                This is a way you can handle routes that do not exist or that
-                                come from a 404 error.
+                                This is a way you can handle routes that do not
+                                exist or that do not come from a path or come
+                                from a 404 error.
                             </h2>
                         </Fragment>
                     )}

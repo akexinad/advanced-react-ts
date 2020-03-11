@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * With React 16 has its own Lazy loading. You don't need to make your own lazy loader.
+ */
+
 type Module = {
     default: React.Component;
 };

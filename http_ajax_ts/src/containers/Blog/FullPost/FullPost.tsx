@@ -28,7 +28,7 @@ const FullPost: FC<RouteComponentProps<FullPostParams>> = ({
             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [postId]);
+    }, [postId, loadedPost]);
 
     const _deletePost = () => {
         axios.delete(`/posts/${postId}`).then(res => console.log(res));
