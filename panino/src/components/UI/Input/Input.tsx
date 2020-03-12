@@ -1,23 +1,40 @@
-import React, { FC, InputHTMLAttributes, DetailedHTMLProps } from "react";
+import React, { FC } from "react";
 
-import styles from "./Input.module.css"
+import { IOrderForm } from "../../../interfaces";
+
+import styles from "./Input.module.css";
 
 interface InputProps {
-    type: "text" | "number",
-    name: string;
-    placeholder: string;
-    label?: string;
-    inputtype: "input" | "textarea";
+    elementType: IOrderForm["elementType"];
+    elementConfig: IOrderForm["elementConfig"];
+    value: IOrderForm["value"];
+    // type: "text" | "number",
+    // name: string;
+    // placeholder: string;
+    // label?: string;
+    // inputtype: "input" | "textarea";
 }
 
-const Input: FC<InputProps> = (props) => {
-    let inputElement: JSX.Element = <input className={styles.InputElement} { ...props } />;
+const Input: FC<InputProps> = ({ elementType, elementConfig, value }) => {
+    let inputElement: JSX.Element = (
+        <input
+            className={styles.InputElement}
+            {...elementConfig}
+            value={value}
+        />
+    );
 
-    switch (props.inputtype) {
+    switch (elementType) {
         case "input":
             return inputElement;
         case "textarea":
-            inputElement = <textarea className={styles.InputElement} { ...props } />;
+            inputElement = (
+                <textarea
+                    className={styles.InputElement}
+                    {...elementConfig}
+                    value={value}
+                />
+            );
             break;
         default:
             return inputElement;

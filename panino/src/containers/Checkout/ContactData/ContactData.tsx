@@ -2,7 +2,7 @@ import React, { useState, FC, FormEvent } from "react";
 import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
 
-import { IIngredients } from "../../../interfaces";
+import { IIngredients, ICustomer } from "../../../interfaces";
 
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -21,12 +21,64 @@ const ContactData: FC<ContactDataProps> = ({
     totalPrice,
     routeProps
 }) => {
-    const [contactDetails, setContactDetails] = useState({
-        name: "",
-        email: "",
+    const [orderFom, setOrderForm] = useState<ICustomer>({
+        name: {
+            elementType: "input",
+            elementConfig: {
+                type: "text",
+                placeholder: "Your Name"
+            },
+            value: ""
+        },
+        email: {
+            elementType: "input",
+            elementConfig: {
+                type: "email",
+                placeholder: "Your Email"
+            },
+            value: ""
+        },
         address: {
-            street: "",
-            postCode: ""
+            street: {
+                elementType: "input",
+                elementConfig: {
+                    type: "text",
+                    placeholder: "Street"
+                },
+                value: ""
+            },
+            zipCode: {
+                elementType: "input",
+                elementConfig: {
+                    type: "text",
+                    placeholder: "Zip Code"
+                },
+                value: ""
+            },
+            country: {
+                elementType: "input",
+                elementConfig: {
+                    type: "text",
+                    placeholder: "Country"
+                },
+                value: ""
+            }
+        },
+        deliveryMethod: {
+            elementType: "select",
+            elementConfig: {
+                options: [
+                    {
+                        value: "fastest",
+                        displayValue: "Fastest"
+                    },
+                    {
+                        value: "cheapest",
+                        displayValue: "Cheapest"
+                    }
+                ]
+            },
+            value: ""
         }
     });
     const [loading, setLoading] = useState(false);
@@ -55,7 +107,7 @@ const ContactData: FC<ContactDataProps> = ({
 
         axios
             .post("/orders.json", order)
-            .then(res => {
+            .then(() => {
                 setLoading(false);
                 routeProps.history.push("/");
             })
