@@ -1,16 +1,16 @@
 import React, { useState, FC, FormEvent } from "react";
 import axios from "../../../axios-orders";
+import { RouteComponentProps } from "react-router-dom";
 
-import { Ingredients } from "../../BurgerBuilder/BurgerBuilder";
+import { IIngredients } from "../../../interfaces";
 
 import Button from "../../../components/UI/Button/Button";
 
 import styles from "./ContactData.module.css";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import { RouteComponentProps } from "react-router-dom";
 
 interface ContactDataProps {
-    ingredients: Ingredients;
+    ingredients: IIngredients;
     totalPrice: number;
     routeProps: RouteComponentProps;
 }

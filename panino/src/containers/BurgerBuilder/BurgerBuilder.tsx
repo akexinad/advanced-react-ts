@@ -4,6 +4,8 @@ import { RouteComponentProps } from "react-router-dom";
 
 import axios from "../../axios-orders";
 
+import { IIngredients } from "../../interfaces";
+
 import Aux from "../../hoc/Auxilliary/Auxilliary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/BuildControls/BuildControls";
@@ -24,15 +26,8 @@ const INGREDIENT_PRICES = {
     bacon: 0.7
 };
 
-export interface Ingredients {
-    salad: number;
-    bacon: number;
-    cheese: number;
-    meat: number;
-}
-
 interface AppState {
-    ingredients: Ingredients;
+    ingredients: IIngredients;
     totalPrice: number;
     purchasable: boolean;
     purchasing: boolean;
@@ -78,7 +73,7 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
             );
     };
 
-    updatePurchaseState = (updatedIngredients: Ingredients) => {
+    updatePurchaseState = (updatedIngredients: IIngredients) => {
         const sum = Object.values(updatedIngredients).reduce((sum, el) => {
             return sum + el;
         }, 0);
@@ -88,7 +83,7 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
         });
     };
 
-    updateDisabledIngredients = (updatedIngredients: Ingredients) => {
+    updateDisabledIngredients = (updatedIngredients: IIngredients) => {
         const disabledIngredients: any = {};
 
         for (let [ingredient, quantity] of Object.entries(updatedIngredients)) {

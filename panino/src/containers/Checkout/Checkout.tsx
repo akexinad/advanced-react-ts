@@ -1,17 +1,17 @@
 import React, { FC, useState, useEffect, Fragment } from "react";
 import { RouteComponentProps, Route } from "react-router-dom";
 
-import { Ingredients } from "../BurgerBuilder/BurgerBuilder";
+import { IIngredients } from "../../interfaces";
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import ContactData from "./ContactData/ContactData";
 
 interface CheckoutProps extends RouteComponentProps {
-    ingredients: Ingredients;
+    ingredients: IIngredients;
 }
 
 const Checkout: FC<CheckoutProps> = ({ history, location, match }) => {
-    const [ingredients, setIngredients] = useState<Ingredients>({
+    const [ingredients, setIngredients] = useState<IIngredients>({
         salad: 0,
         bacon: 0,
         cheese: 0,

@@ -1,10 +1,11 @@
 import React, { FC } from "react";
-import { Ingredients } from "../../containers/BurgerBuilder/BurgerBuilder";
+
+import { IIngredients } from "../../interfaces";
 
 import styles from "./Order.module.css";
 
 interface OrderProps {
-    ingredients: Ingredients;
+    ingredients: IIngredients;
     price: number;
 }
 

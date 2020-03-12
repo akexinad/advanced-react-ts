@@ -1,21 +1,68 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from "react";
 
-import Order from '../../components/Order/Order';
+import axios from "../../axios-orders";
 
-const ingredients = {
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0
-}
+import { IOrder } from "../../interfaces";
+
+import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
+import Order from "../../components/Order/Order";
 
 const Orders: FC = () => {
+    const [orders, setOrders] = useState<IOrder[]>([
+        {
+            id: "",
+            createdAt: new Date(),
+            ingredients: ingredients,
+            price: 0,
+            customer: {
+                name: "",
+                address: {
+                    street: "",
+                    zipCode: "",
+                    country: ""
+                },
+                email: ""
+            },
+            deliveryMethod: "deliveroo"
+        }
+    ]);
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        axios
+            .get("orders.json")
+            .then(res => {
+                setLoading(false);
+
+                const response: { order: IOrder } = res.data;
+
+                const orders: IOrder[] = Object.entries(response).map(entry => {
+                    return {
+                        id: entry[0],
+                        ...entry[1]
+                    };
+                });
+
+                setOrders(orders);
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
+    }, []);
+
     return (
         <div>
-            <Order ingredients={ingredients} price={1234} />
-            <Order ingredients={ingredients} price={1234} />
+            {orders.map(order => (
+                <Order
+                    key={order.id}
+                    ingredients={order.ingredients}
+                    price={order.price}
+                />
+            ))}
         </div>
-    )
-}
+    );
+};
 
-export default Orders;
+export default WithErrorHandler(Orders, axios);

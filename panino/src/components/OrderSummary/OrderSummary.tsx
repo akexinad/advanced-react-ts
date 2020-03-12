@@ -1,10 +1,12 @@
 import React, { FC } from "react";
+
+import { IIngredients } from "../../interfaces";
+
 import Aux from "../../hoc/Auxilliary/Auxilliary";
-import { Ingredients } from "../../containers/BurgerBuilder/BurgerBuilder";
 import Button from "../UI/Button/Button";
 
 interface OrderSummaryProps {
-    ingredients: Ingredients;
+    ingredients: IIngredients;
     purchaseCancelled: () => void;
     purchaseContinued: () => void;
     price: number;

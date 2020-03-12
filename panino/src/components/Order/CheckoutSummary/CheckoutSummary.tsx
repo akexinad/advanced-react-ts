@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { Ingredients } from "../../../containers/BurgerBuilder/BurgerBuilder";
+import { IIngredients } from "../../../interfaces";
 
 import Burger from "../../Burger/Burger";
 import Button from "../../UI/Button/Button";
@@ -8,7 +8,7 @@ import Button from "../../UI/Button/Button";
 import styles from "./CheckoutSummary.module.css";
 
 interface CheckoutSummaryProps {
-    ingredients: Ingredients;
+    ingredients: IIngredients;
     cancelled: () => void;
     continued: () => void;
 }
