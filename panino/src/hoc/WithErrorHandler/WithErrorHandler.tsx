@@ -1,23 +1,28 @@
-import React, { ComponentType, Component } from "react";
+import React, { Component, ReactNode, ReactType } from "react";
 import { AxiosInstance, AxiosError } from "axios";
 
 import Aux from "../Auxilliary/Auxilliary";
 import Modal from "../../components/UI/Modal/Modal";
+import { RouteComponentProps } from "react-router-dom";
 
 interface ErrorState {
     isError: boolean;
     errorMsg: AxiosError["message"];
 }
 
+interface WrappedComponentProps extends RouteComponentProps {
+    children?: ReactNode;
+}
+
 const WithErrorHandler = (
-    WrappedComponent: ComponentType,
+    WrappedComponent: ReactType,
     axios: AxiosInstance
 ) => {
-    return class extends Component<Component["props"], ErrorState> {
+    return class extends Component<ReactType<WrappedComponentProps>, ErrorState> {
         private reqInterceptor: number;
         private resInterceptor: number;
 
-        constructor(props: Component["props"]) {
+        constructor(props: ReactType<WrappedComponentProps>) {
             super(props);
 
             const reqInterceptor = axios.interceptors.request.use(req => {

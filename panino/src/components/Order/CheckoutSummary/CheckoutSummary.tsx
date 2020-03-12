@@ -26,7 +26,7 @@ const CheckoutSummary: FC<CheckoutSummaryProps> = ({ ingredients }) => {
                 CANCEL
             </Button>
             <Button btnType="Success" clicked={_click}>
-                CANCEL
+                CONTINUE
             </Button>
         </div>
     );

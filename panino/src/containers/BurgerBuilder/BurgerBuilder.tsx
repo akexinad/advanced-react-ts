@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { AxiosError } from "axios";
+import { RouteComponentProps } from "react-router-dom";
+
 import axios from "../../axios-orders";
 
 import Aux from "../../hoc/Auxilliary/Auxilliary";
@@ -10,7 +13,6 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
 
 import styles from "./BurgerBuilder.module.css";
-import { AxiosError } from "axios";
 
 export type IngredientLabels = "Salad" | "Bacon" | "Cheese" | "Meat";
 export type IngredientTypes = "salad" | "bacon" | "cheese" | "meat";
@@ -43,7 +45,7 @@ export type DisabledInfo = {
     [key in IngredientTypes]: boolean;
 };
 
-class BurgerBuilder extends Component {
+class BurgerBuilder extends Component<RouteComponentProps, AppState> {
     state: AppState = {
         ingredients: {
             salad: 0,
@@ -60,6 +62,8 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount = () => {
+        console.log('this.props', this.props)
+        
         this.setState({ loading: true });
 
         axios
@@ -186,26 +190,30 @@ class BurgerBuilder extends Component {
             deliveryMethod: "fedex"
         };
 
-        axios
-            .post("/orders.json", order)
-            .then(() =>
-                this.setState({
-                    loading: false,
-                    purchasing: false,
-                    ingredients: {
-                        salad: 0,
-                        bacon: 0,
-                        cheese: 0,
-                        meat: 0
-                    }
-                })
-            )
-            .catch(() =>
-                this.setState({
-                    loading: false,
-                    purchasing: false
-                })
-            );
+        // axios
+        //     .post("/orders.json", order)
+        //     .then(() =>
+        //         this.setState({
+        //             loading: false,
+        //             purchasing: false,
+        //             ingredients: {
+        //                 salad: 0,
+        //                 bacon: 0,
+        //                 cheese: 0,
+        //                 meat: 0
+        //             }
+        //         })
+        //     )
+        //     .catch(() =>
+        //         this.setState({
+        //             loading: false,
+        //             purchasing: false
+        //         })
+        //     );
+
+        this.props.history.push({
+            pathname: "/checkout"
+        })
     };
 
     renderOrderSummaryOrSpinner = () => {
