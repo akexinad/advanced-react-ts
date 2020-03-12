@@ -6,6 +6,7 @@ import BurgerBuilder from "../BurgerBuilder/BurgerBuilder";
 import Checkout from "../Checkout/Checkout";
 
 import styles from "./App.module.css";
+import Orders from "../Orders/Orders";
 
 const App: React.FC = () => {
     return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
             <Layout>
                 <Switch>
                     <Route path="/checkout" component={Checkout} />
+                    <Route path="/orders" exact component={Orders} />
                     <Route path="/" exact component={BurgerBuilder} />
                 </Switch>
             </Layout>
