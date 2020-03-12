@@ -6,19 +6,19 @@ import { IOrder } from "../../interfaces";
 
 import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
 import Order from "../../components/Order/Order";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 const Orders: FC = () => {
-    const [ingredients, setIngredients] = useState({
-        salad: 0,
-        bacon: 0,
-        cheese: 0,
-        meat: 0
-    });
     const [orders, setOrders] = useState<IOrder[]>([
         {
             id: "",
             createdAt: new Date(),
-            ingredients: ingredients,
+            ingredients: {
+                salad: 0,
+                bacon: 0,
+                cheese: 0,
+                meat: 0
+            },
             price: 0,
             customer: {
                 name: "",
@@ -58,17 +58,19 @@ const Orders: FC = () => {
             });
     }, []);
 
-    return (
-        <div>
-            {orders.map(order => (
-                <Order
-                    key={order.id}
-                    ingredients={order.ingredients}
-                    price={order.price}
-                />
-            ))}
-        </div>
-    );
+    const renderSpinnerOrOrders = () => {
+        if (loading) return <Spinner />;
+
+        return orders.map(order => (
+            <Order
+                key={order.id}
+                ingredients={order.ingredients}
+                price={+order.price.toFixed(2)}
+            />
+        ));
+    };
+
+    return <div>{renderSpinnerOrOrders()}</div>;
 };
 
 export default WithErrorHandler(Orders, axios);

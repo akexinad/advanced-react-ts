@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
 
 import { IIngredients } from "../../interfaces";
 
@@ -9,15 +9,51 @@ interface OrderProps {
     price: number;
 }
 
-const Order: FC<OrderProps> = ({ ingredients, price }) => {
+interface IIngredientDetails {
+    ingredient: string;
+    quantity: number;
+}
 
+const Order: FC<OrderProps> = ({ ingredients, price }) => {
     const renderIngredients = () => {
-        
-    }
-    
+        const ingredientsList: IIngredientDetails[] = [];
+
+        Object.entries(ingredients).forEach(entry =>
+            ingredientsList.push({
+                ingredient: entry[0],
+                quantity: entry[1]
+            })
+        );
+
+        console.log("ingredientsList", ingredientsList);
+
+        return (
+            <ul>
+                {ingredientsList.map((ingredient, index) => {
+                    return (
+                        <span
+                            key={index}
+                            style={{
+                                textTransform: "capitalize",
+                                display: "inline-block",
+                                margin: "0 8px",
+                                border: "1px solid #ccc",
+                                padding: "5px"
+                            }}
+                        >
+                            {ingredient.ingredient}:{" "}
+                            <strong>{ingredient.quantity}</strong>
+                        </span>
+                    );
+                })}
+            </ul>
+        );
+    };
+
     return (
         <div className={styles.Order}>
-            <p>INGREDIENTS</p>
+            <h4>INGREDIENTS</h4>
+            {renderIngredients()}
             <p>
                 Price: <strong>EUR {price}</strong>
             </p>
