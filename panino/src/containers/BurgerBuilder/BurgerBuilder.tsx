@@ -62,8 +62,6 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
     };
 
     componentDidMount = () => {
-        console.log("this.props", this.props);
-
         this.setState({ loading: true });
 
         axios

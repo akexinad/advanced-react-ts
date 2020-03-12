@@ -6,8 +6,8 @@ import styles from "./NavigationItems.module.css";
 
 const NavigationItems = () => (
     <ul className={styles.NavigationItems}>
-        <NavigationItem link="/" active>Burger Builder</ NavigationItem>
-        <NavigationItem link="/" active={false}>Checkout</ NavigationItem>
+        <NavigationItem link="/">Burger Builder</ NavigationItem>
+        <NavigationItem link="/orders">Orders</ NavigationItem>
     </ul>
 )
 

@@ -9,7 +9,7 @@ interface OrderProps {
 }
 
 const Order: FC<OrderProps> = ({ ingredients, price }) => {
-    
+
     const renderIngredients = () => {
         
     }
