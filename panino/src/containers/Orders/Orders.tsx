@@ -8,6 +8,12 @@ import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
 import Order from "../../components/Order/Order";
 
 const Orders: FC = () => {
+    const [ingredients, setIngredients] = useState({
+        salad: 0,
+        bacon: 0,
+        cheese: 0,
+        meat: 0
+    });
     const [orders, setOrders] = useState<IOrder[]>([
         {
             id: "",
