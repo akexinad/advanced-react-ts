@@ -62,8 +62,8 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
     };
 
     componentDidMount = () => {
-        console.log('this.props', this.props)
-        
+        console.log("this.props", this.props);
+
         this.setState({ loading: true });
 
         axios
@@ -211,9 +211,24 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
         //         })
         //     );
 
+        const queryParams = [];
+
+        for (let [ingredient, quantity] of Object.entries(
+            this.state.ingredients
+        )) {
+            queryParams.push(
+                encodeURIComponent(ingredient) +
+                    "=" +
+                    encodeURIComponent(quantity)
+            );
+        }
+
+        const queryString = queryParams.join("&");
+
         this.props.history.push({
-            pathname: "/checkout"
-        })
+            pathname: "/checkout",
+            search: "?" + queryString
+        });
     };
 
     renderOrderSummaryOrSpinner = () => {
