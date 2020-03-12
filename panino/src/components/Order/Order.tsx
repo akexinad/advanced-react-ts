@@ -25,8 +25,6 @@ const Order: FC<OrderProps> = ({ ingredients, price }) => {
             })
         );
 
-        console.log("ingredientsList", ingredientsList);
-
         return (
             <ul>
                 {ingredientsList.map((ingredient, index) => {

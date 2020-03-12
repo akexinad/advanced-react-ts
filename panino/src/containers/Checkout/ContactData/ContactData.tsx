@@ -5,9 +5,10 @@ import { RouteComponentProps } from "react-router-dom";
 import { IIngredients } from "../../../interfaces";
 
 import Button from "../../../components/UI/Button/Button";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 
 import styles from "./ContactData.module.css";
-import Spinner from "../../../components/UI/Spinner/Spinner";
 
 interface ContactDataProps {
     ingredients: IIngredients;
@@ -69,27 +70,27 @@ const ContactData: FC<ContactDataProps> = ({
 
         return (
             <form>
-                <input
-                    className={styles.Input}
+                <Input
                     type="text"
+                    inputtype="input"
                     name="name"
                     placeholder="Your Name"
                 />
-                <input
-                    className={styles.Input}
+                <Input
                     type="text"
+                    inputtype="input"
                     name="email"
                     placeholder="Your Email"
                 />
-                <input
-                    className={styles.Input}
+                <Input
                     type="text"
+                    inputtype="input"
                     name="street"
                     placeholder="Your Street"
                 />
-                <input
-                    className={styles.Input}
+                <Input
                     type="text"
+                    inputtype="input"
                     name="postCode"
                     placeholder="Your Post Code"
                 />
