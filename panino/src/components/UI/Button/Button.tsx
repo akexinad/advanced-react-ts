@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, FormEvent } from "react";
 
 import styles from "./Button.module.css";
 
 interface ButtonProps {
-    clicked: () => void;
+    clicked: (e: FormEvent) => void;
     btnType: "Danger" | "Success";
 }
 

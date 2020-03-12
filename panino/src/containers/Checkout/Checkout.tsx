@@ -12,11 +12,12 @@ interface CheckoutProps extends RouteComponentProps {
 
 const Checkout: FC<CheckoutProps> = ({ history, location, match }) => {
     const [ingredients, setIngredients] = useState<Ingredients>({
-        salad: 1,
-        bacon: 1,
-        cheese: 1,
-        meat: 1
+        salad: 0,
+        bacon: 0,
+        cheese: 0,
+        meat: 0
     });
+    const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
         const query = new URLSearchParams(location.search);
@@ -24,11 +25,15 @@ const Checkout: FC<CheckoutProps> = ({ history, location, match }) => {
         const ingredientsFromParams: any = {};
 
         for (let param of query.entries()) {
-            ingredientsFromParams[param[0]] = param[1];
+            if (param[0] === "price") {
+                setTotalPrice(+param[1]);
+            } else {
+                ingredientsFromParams[param[0]] = param[1];
+            }
         }
 
         setIngredients(ingredientsFromParams);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const _checkoutCancelled = () => {
@@ -46,7 +51,10 @@ const Checkout: FC<CheckoutProps> = ({ history, location, match }) => {
                 cancelled={_checkoutCancelled}
                 continued={_checkoutContinued}
             />
-            <Route path={match.path + "/contact-data"} component={ContactData} />
+            <Route
+                path={match.path + "/contact-data"}
+                render={(routeProps) => <ContactData routeProps={routeProps} ingredients={ingredients} totalPrice={totalPrice} />}
+            />
         </Fragment>
     );
 };

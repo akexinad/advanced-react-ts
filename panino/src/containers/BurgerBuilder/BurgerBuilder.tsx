@@ -174,43 +174,6 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
             loading: true
         });
 
-        const order = {
-            createdAt: new Date(),
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: "Fellini",
-                address: {
-                    street: "123 fake st",
-                    zipCode: "12345",
-                    country: "italy"
-                },
-                email: "fellini@ex.it"
-            },
-            deliveryMethod: "fedex"
-        };
-
-        // axios
-        //     .post("/orders.json", order)
-        //     .then(() =>
-        //         this.setState({
-        //             loading: false,
-        //             purchasing: false,
-        //             ingredients: {
-        //                 salad: 0,
-        //                 bacon: 0,
-        //                 cheese: 0,
-        //                 meat: 0
-        //             }
-        //         })
-        //     )
-        //     .catch(() =>
-        //         this.setState({
-        //             loading: false,
-        //             purchasing: false
-        //         })
-        //     );
-
         const queryParams = [];
 
         for (let [ingredient, quantity] of Object.entries(
@@ -223,7 +186,12 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
             );
         }
 
+        // We need to also pass the total price.
+        queryParams.push("price=" + this.state.totalPrice);
+
         const queryString = queryParams.join("&");
+
+
 
         this.props.history.push({
             pathname: "/checkout",
