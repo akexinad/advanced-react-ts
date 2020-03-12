@@ -1,14 +1,16 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, Fragment } from "react";
+import { RouteComponentProps, Route } from "react-router-dom";
+
+import { Ingredients } from "../BurgerBuilder/BurgerBuilder";
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
-import { Ingredients, IngredientTypes } from "../BurgerBuilder/BurgerBuilder";
-import { RouteComponentProps } from "react-router-dom";
+import ContactData from "./ContactData/ContactData";
 
 interface CheckoutProps extends RouteComponentProps {
     ingredients: Ingredients;
 }
 
-const Checkout: FC<CheckoutProps> = ({ history, location }) => {
+const Checkout: FC<CheckoutProps> = ({ history, location, match }) => {
     const [ingredients, setIngredients] = useState<Ingredients>({
         salad: 1,
         bacon: 1,
@@ -26,7 +28,8 @@ const Checkout: FC<CheckoutProps> = ({ history, location }) => {
         }
 
         setIngredients(ingredientsFromParams);
-    }, [location]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const _checkoutCancelled = () => {
         history.goBack();
@@ -37,11 +40,14 @@ const Checkout: FC<CheckoutProps> = ({ history, location }) => {
     };
 
     return (
-        <CheckoutSummary
-            ingredients={ingredients}
-            cancelled={_checkoutCancelled}
-            continued={_checkoutContinued}
-        />
+        <Fragment>
+            <CheckoutSummary
+                ingredients={ingredients}
+                cancelled={_checkoutCancelled}
+                continued={_checkoutContinued}
+            />
+            <Route path={match.path + "/contact-data"} component={ContactData} />
+        </Fragment>
     );
 };
 
