@@ -9,12 +9,11 @@ import styles from "./CheckoutSummary.module.css";
 
 interface CheckoutSummaryProps {
     ingredients: Ingredients;
+    cancelled: () => void;
+    continued: () => void;
 }
 
-const CheckoutSummary: FC<CheckoutSummaryProps> = ({ ingredients }) => {
-    const _click = () => {
-        console.log("Hello");
-    };
+const CheckoutSummary: FC<CheckoutSummaryProps> = ({ ingredients, cancelled, continued }) => {
 
     return (
         <div className={styles.CheckoutSummary}>
@@ -22,10 +21,10 @@ const CheckoutSummary: FC<CheckoutSummaryProps> = ({ ingredients }) => {
             <div className={styles.Container}>
                 <Burger ingredients={ingredients} />
             </div>
-            <Button btnType="Danger" clicked={_click}>
+            <Button btnType="Danger" clicked={cancelled}>
                 CANCEL
             </Button>
-            <Button btnType="Success" clicked={_click}>
+            <Button btnType="Success" clicked={continued}>
                 CONTINUE
             </Button>
         </div>
