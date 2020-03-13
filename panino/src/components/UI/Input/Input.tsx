@@ -32,6 +32,21 @@ const Input: FC<InputProps> = ({ elementType, elementConfig, value }) => {
                 />
             );
             break;
+        case "select":
+            inputElement = (
+                <select
+                    className={styles.InputElement}
+                    {...elementConfig}
+                    value={value}
+                >
+                    {elementConfig.options?.map((option, index) => (
+                        <option key={index} value={option.value}>
+                            {option.displayValue}
+                        </option>
+                    ))}
+                </select>
+            );
+            break;
         default:
             return inputElement;
     }

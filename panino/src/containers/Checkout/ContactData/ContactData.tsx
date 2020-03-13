@@ -147,8 +147,6 @@ const ContactData: FC<ContactDataProps> = ({
             return orderFormArray;
         });
 
-        console.log('orderFormArray', orderFormArray)
-
         return orderFormArray.map(item => (
             <Input
                 key={item.id}
@@ -157,7 +155,6 @@ const ContactData: FC<ContactDataProps> = ({
                 value={item.config.value}
             />
         ));
-
     };
 
     const renderSpinnerOrForm = () => {
