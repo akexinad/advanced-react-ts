@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, ChangeEvent } from "react";
 
 import { IOrderForm } from "../../../interfaces";
 
@@ -9,14 +9,25 @@ interface InputProps {
     elementType: IOrderForm["elementType"];
     elementConfig: IOrderForm["elementConfig"];
     value: IOrderForm["value"];
+    changed: (
+        e: ChangeEvent<
+            HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+        >
+    ) => void;
 }
 
-const Input: FC<InputProps> = ({ elementType, elementConfig, value }) => {
+const Input: FC<InputProps> = ({
+    elementType,
+    elementConfig,
+    value,
+    changed
+}) => {
     let inputElement: JSX.Element = (
         <input
             className={styles.InputElement}
             {...elementConfig}
             value={value}
+            onChange={changed}
         />
     );
 
@@ -29,6 +40,7 @@ const Input: FC<InputProps> = ({ elementType, elementConfig, value }) => {
                     className={styles.InputElement}
                     {...elementConfig}
                     value={value}
+                    onChange={changed}
                 />
             );
             break;
@@ -38,6 +50,7 @@ const Input: FC<InputProps> = ({ elementType, elementConfig, value }) => {
                     className={styles.InputElement}
                     {...elementConfig}
                     value={value}
+                    onChange={changed}
                 >
                     {elementConfig.options?.map((option, index) => (
                         <option key={index} value={option.value}>

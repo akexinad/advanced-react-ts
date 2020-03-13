@@ -1,4 +1,4 @@
-import React, { useState, FC, FormEvent, useEffect, Fragment } from "react";
+import React, { useState, FC, FormEvent, ChangeEvent } from "react";
 import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -15,6 +15,14 @@ interface ContactDataProps {
     totalPrice: number;
     routeProps: RouteComponentProps;
 }
+
+type InputIdentifier =
+    | "name"
+    | "email"
+    | "street"
+    | "zipCode"
+    | "country"
+    | "deliveryMethod";
 
 const ContactData: FC<ContactDataProps> = ({
     ingredients,
@@ -117,6 +125,35 @@ const ContactData: FC<ContactDataProps> = ({
             });
     };
 
+    const _inputChanged = (
+        e: ChangeEvent<
+            HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+        >,
+        inputIdentifier: string
+    ) => {
+        console.log(e.target.value);
+
+        const updatedOrderForm = { ...orderForm };
+
+        if (
+            inputIdentifier === "street" ||
+            inputIdentifier === "zipCode" ||
+            inputIdentifier === "country"
+        ) {
+            updatedOrderForm.address[inputIdentifier].value = e.target.value;
+            setOrderForm(updatedOrderForm);
+        }
+
+        if (
+            inputIdentifier === "name" ||
+            inputIdentifier === "email" ||
+            inputIdentifier === "deliveryMethod"
+        ) {
+            updatedOrderForm[inputIdentifier].value = e.target.value;
+            setOrderForm(updatedOrderForm);
+        }
+    };
+
     const renderOrderForm = () => {
         const orderFormArray: {
             id: string;
@@ -153,6 +190,7 @@ const ContactData: FC<ContactDataProps> = ({
                 elementType={item.config.elementType}
                 elementConfig={item.config.elementConfig}
                 value={item.config.value}
+                changed={e => _inputChanged(e, item.id)}
             />
         ));
     };
