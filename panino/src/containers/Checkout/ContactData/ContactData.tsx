@@ -1,8 +1,8 @@
-import React, { useState, FC, FormEvent } from "react";
+import React, { useState, FC, FormEvent, useEffect, Fragment } from "react";
 import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
 
-import { IIngredients, ICustomer } from "../../../interfaces";
+import { IIngredients, ICustomer, IOrderForm } from "../../../interfaces";
 
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -21,7 +21,7 @@ const ContactData: FC<ContactDataProps> = ({
     totalPrice,
     routeProps
 }) => {
-    const [orderFom, setOrderForm] = useState<ICustomer>({
+    const [orderForm, setOrderForm] = useState<ICustomer>({
         name: {
             elementType: "input",
             elementConfig: {
@@ -117,35 +117,52 @@ const ContactData: FC<ContactDataProps> = ({
             });
     };
 
+    const renderOrderForm = () => {
+        const orderFormArray: {
+            id: string;
+            config: IOrderForm;
+        }[] = [];
+
+        Object.entries(orderForm).map(([id, config]) => {
+            if (id === "address") {
+                const addressEntries: [string, IOrderForm][] = Object.entries(
+                    config
+                );
+
+                addressEntries.map(([id, config]) => {
+                    orderFormArray.push({
+                        id,
+                        config
+                    });
+
+                    return orderFormArray;
+                });
+            }
+
+            orderFormArray.push({
+                id,
+                config
+            });
+
+            return orderFormArray;
+        });
+
+        return orderFormArray.map(item => (
+            <Input
+                key={item.id}
+                elementType={item.config.elementType}
+                elementConfig={item.config.elementConfig}
+                value={item.config.value}
+            />
+        ));
+    };
+
     const renderSpinnerOrForm = () => {
         if (loading) return <Spinner />;
 
         return (
             <form>
-                <Input
-                    type="text"
-                    inputtype="input"
-                    name="name"
-                    placeholder="Your Name"
-                />
-                <Input
-                    type="text"
-                    inputtype="input"
-                    name="email"
-                    placeholder="Your Email"
-                />
-                <Input
-                    type="text"
-                    inputtype="input"
-                    name="street"
-                    placeholder="Your Street"
-                />
-                <Input
-                    type="text"
-                    inputtype="input"
-                    name="postCode"
-                    placeholder="Your Post Code"
-                />
+                {renderOrderForm()}
                 <Button btnType="Success" clicked={e => _submitOrder(e)}>
                     ORDER
                 </Button>

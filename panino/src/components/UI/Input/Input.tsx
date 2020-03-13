@@ -5,14 +5,10 @@ import { IOrderForm } from "../../../interfaces";
 import styles from "./Input.module.css";
 
 interface InputProps {
+    key: JSX.Element["key"];
     elementType: IOrderForm["elementType"];
     elementConfig: IOrderForm["elementConfig"];
     value: IOrderForm["value"];
-    // type: "text" | "number",
-    // name: string;
-    // placeholder: string;
-    // label?: string;
-    // inputtype: "input" | "textarea";
 }
 
 const Input: FC<InputProps> = ({ elementType, elementConfig, value }) => {
@@ -42,7 +38,7 @@ const Input: FC<InputProps> = ({ elementType, elementConfig, value }) => {
 
     return (
         <div className={styles.Input}>
-            <label className={styles.Label}>{props.label}</label>
+            <label className={styles.Label}></label>
             {inputElement}
         </div>
     );
