@@ -3,7 +3,12 @@ import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
 import produce from "immer";
 
-import { IIngredients, ICustomer, IOrderForm } from "../../../interfaces";
+import {
+    IIngredients,
+    ICustomer,
+    INewOrder,
+    IOrderFormConfig
+} from "../../../interfaces";
 
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -92,40 +97,6 @@ const ContactData: FC<ContactDataProps> = ({
     });
     const [loading, setLoading] = useState(false);
 
-    const _submitOrder = (e: FormEvent) => {
-        e.preventDefault();
-        console.log("ingredients", ingredients);
-
-        setLoading(true);
-
-        const order = {
-            createdAt: new Date(),
-            ingredients: ingredients,
-            price: totalPrice,
-            customer: {
-                name: "Fellini",
-                address: {
-                    street: "123 fake st",
-                    zipCode: "12345",
-                    country: "italy"
-                },
-                email: "fellini@ex.it"
-            },
-            deliveryMethod: "fedex"
-        };
-
-        axios
-            .post("/orders.json", order)
-            .then(() => {
-                setLoading(false);
-                routeProps.history.push("/");
-            })
-            .catch(err => {
-                console.error(err);
-                setLoading(false);
-            });
-    };
-
     const _inputChanged = (
         e: ChangeEvent<
             HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -146,7 +117,9 @@ const ContactData: FC<ContactDataProps> = ({
             ) {
                 draft[inputIdentifier].value = e.target.value;
             } else {
-                console.warn(`inputIdentifier ${inputIdentifier} does not exist on the orderForm object.`);
+                console.warn(
+                    `inputIdentifier ${inputIdentifier} does not exist on the orderForm object.`
+                );
                 return;
             }
         });
@@ -154,15 +127,45 @@ const ContactData: FC<ContactDataProps> = ({
         setOrderForm(updatedOrderForm);
     };
 
+    const _submitOrder = (e: FormEvent) => {
+        e.preventDefault();
+        console.log("ingredients", ingredients);
+
+        setLoading(true);
+
+        const newOrder: INewOrder = {
+            createdAt: new Date(),
+            ingredients: ingredients,
+            price: totalPrice,
+            name: orderForm.name.value,
+            street: orderForm.address.street.value,
+            zipCode: orderForm.address.zipCode.value,
+            country: orderForm.address.country.value,
+            email: orderForm.email.value,
+            deliveryMethod: orderForm.deliveryMethod.value
+        };
+
+        axios
+            .post("/orders.json", newOrder)
+            .then(() => {
+                setLoading(false);
+                routeProps.history.push("/");
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
+    };
+
     const renderOrderForm = () => {
         const orderFormArray: {
             id: string;
-            config: IOrderForm;
+            config: IOrderFormConfig;
         }[] = [];
 
         Object.entries(orderForm).map(([id, config]) => {
             if (id === "address") {
-                const addressEntries: [string, IOrderForm][] = Object.entries(
+                const addressEntries: [string, IOrderFormConfig][] = Object.entries(
                     config
                 );
 
@@ -199,9 +202,9 @@ const ContactData: FC<ContactDataProps> = ({
         if (loading) return <Spinner />;
 
         return (
-            <form>
+            <form onSubmit={_submitOrder}>
                 {renderOrderForm()}
-                <Button btnType="Success" clicked={e => _submitOrder(e)}>
+                <Button btnType="Success" clicked={e => (e)}>
                     ORDER
                 </Button>
             </form>

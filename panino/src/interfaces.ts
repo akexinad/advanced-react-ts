@@ -10,7 +10,7 @@ type HTMLConfigTypes = "text" | "number" | "email";
 
 type DeliveryMethod = "deliveroo" | "uber eats" | "fedex" | "auspost";
 
-export interface IOrderForm {
+export interface IOrderFormConfig {
     elementType: HTMLElementTypes;
     elementConfig: {
         options?: [
@@ -30,14 +30,14 @@ export interface IOrderForm {
 }
 
 export interface ICustomer {
-    name: IOrderForm;
-    email: IOrderForm;
+    name: IOrderFormConfig;
+    email: IOrderFormConfig;
     address: {
-        street: IOrderForm;
-        zipCode: IOrderForm;
-        country: IOrderForm;
+        street: IOrderFormConfig;
+        zipCode: IOrderFormConfig;
+        country: IOrderFormConfig;
     };
-    deliveryMethod: IOrderForm;
+    deliveryMethod: IOrderFormConfig;
 }
 
 export interface IOrder {
@@ -49,10 +49,22 @@ export interface IOrder {
         name: ICustomer["name"]["value"];
         address: {
             street: ICustomer["address"]["street"]["value"];
-            zipCode: ICustomer["address"]["zipCode"]["value"]
-            country: ICustomer["address"]["country"]["value"]
-        }
+            zipCode: ICustomer["address"]["zipCode"]["value"];
+            country: ICustomer["address"]["country"]["value"];
+        };
         email: ICustomer["email"]["value"];
     };
     deliveryMethod: DeliveryMethod;
+}
+
+export interface INewOrder {
+    createdAt: Date;
+    ingredients: IIngredients;
+    name: ICustomer["name"]["value"];
+    email: ICustomer["email"]["value"];
+    street: ICustomer["address"]["street"]["value"];
+    zipCode: ICustomer["address"]["zipCode"]["value"];
+    country: ICustomer["address"]["country"]["value"];
+    deliveryMethod: ICustomer["deliveryMethod"]["value"];
+    price: number;
 }

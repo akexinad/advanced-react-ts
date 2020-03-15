@@ -1,14 +1,14 @@
 import React, { FC, ChangeEvent } from "react";
 
-import { IOrderForm } from "../../../interfaces";
+import { IOrderFormConfig } from "../../../interfaces";
 
 import styles from "./Input.module.css";
 
 interface InputProps {
     key: JSX.Element["key"];
-    elementType: IOrderForm["elementType"];
-    elementConfig: IOrderForm["elementConfig"];
-    value: IOrderForm["value"];
+    elementType: IOrderFormConfig["elementType"];
+    elementConfig: IOrderFormConfig["elementConfig"];
+    value: IOrderFormConfig["value"];
     changed: (
         e: ChangeEvent<
             HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
