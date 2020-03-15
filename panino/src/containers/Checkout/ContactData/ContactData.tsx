@@ -1,6 +1,7 @@
 import React, { useState, FC, FormEvent, ChangeEvent } from "react";
 import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
+import produce from "immer";
 
 import { IIngredients, ICustomer, IOrderForm } from "../../../interfaces";
 
@@ -131,27 +132,26 @@ const ContactData: FC<ContactDataProps> = ({
         >,
         inputIdentifier: string
     ) => {
-        console.log(e.target.value);
+        const updatedOrderForm = produce(orderForm, draft => {
+            if (
+                inputIdentifier === "street" ||
+                inputIdentifier === "zipCode" ||
+                inputIdentifier === "country"
+            ) {
+                draft.address[inputIdentifier].value = e.target.value;
+            } else if (
+                inputIdentifier === "name" ||
+                inputIdentifier === "email" ||
+                inputIdentifier === "deliveryMethod"
+            ) {
+                draft[inputIdentifier].value = e.target.value;
+            } else {
+                console.warn(`inputIdentifier ${inputIdentifier} does not exist on the orderForm object.`);
+                return;
+            }
+        });
 
-        const updatedOrderForm = { ...orderForm };
-
-        if (
-            inputIdentifier === "street" ||
-            inputIdentifier === "zipCode" ||
-            inputIdentifier === "country"
-        ) {
-            updatedOrderForm.address[inputIdentifier].value = e.target.value;
-            setOrderForm(updatedOrderForm);
-        }
-
-        if (
-            inputIdentifier === "name" ||
-            inputIdentifier === "email" ||
-            inputIdentifier === "deliveryMethod"
-        ) {
-            updatedOrderForm[inputIdentifier].value = e.target.value;
-            setOrderForm(updatedOrderForm);
-        }
+        setOrderForm(updatedOrderForm);
     };
 
     const renderOrderForm = () => {
