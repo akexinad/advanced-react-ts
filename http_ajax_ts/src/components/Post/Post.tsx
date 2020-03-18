@@ -5,7 +5,7 @@ import { IPost } from "../../interfaces";
 
 import styles from "./Post.module.css";
 
-interface PostProps extends RouteComponentProps {
+export interface PostProps extends RouteComponentProps {
     id: IPost["id"];
     title: IPost["title"];
     author: IPost["author"];

@@ -3,20 +3,18 @@ import React, {
     useState,
     useEffect,
     Fragment,
-    lazy,
-    Suspense
 } from "react";
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
 import NewPost from "./NewPost/NewPost";
-import AsyncComponent from "../../hoc/AsyncComponent";
+// import AsyncComponent from "../../hoc/AsyncComponent";
 
 import styles from "./Blog.module.css";
 
-const AsyncNewPost = AsyncComponent(() => {
-    return import("./NewPost/NewPost");
-});
+// const AsyncNewPost = AsyncComponent(() => {
+//     return import("./NewPost/NewPost");
+// });
 
 // const NewPost = lazy(() => import("./NewPost/NewPost"));
 
@@ -79,6 +77,7 @@ const Blog: FC = () => {
                     )}
                 /> */}
                 <Route path="/posts" component={Posts} />
+                <Redirect from="/" exact to="/posts" />
                 {/* This is how you can handle routes without a path. */}
                 <Route
                     render={() => (
@@ -92,7 +91,6 @@ const Blog: FC = () => {
                         </Fragment>
                     )}
                 />
-                {/* <Redirect from="/" to="/posts" /> */}
             </Switch>
         </div>
     );
