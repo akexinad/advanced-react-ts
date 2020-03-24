@@ -1,11 +1,11 @@
-import React, { FC, ChangeEvent } from "react";
+import React, { FC, ChangeEvent, ClassAttributes } from "react";
 
 import { IOrderFormConfig } from "../../../interfaces";
 
 import styles from "./Input.module.css";
 
-interface InputProps {
-    key: JSX.Element["key"];
+interface InputProps extends ClassAttributes<HTMLInputElement> {
+    // key: JSX.Element["key"];
     elementType: IOrderFormConfig["elementType"];
     elementConfig: IOrderFormConfig["elementConfig"];
     value: IOrderFormConfig["value"];

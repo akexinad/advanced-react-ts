@@ -2,6 +2,7 @@ import React, { useState, FC, FormEvent, ChangeEvent } from "react";
 import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
 import produce from "immer";
+import { useForm } from 'react-hook-form'
 
 import {
     IIngredients,
@@ -122,6 +123,7 @@ const ContactData: FC<ContactDataProps> = ({
         }
     });
     const [loading, setLoading] = useState(false);
+    const { register, handleSubmit, watch, errors } = useForm();
 
     const checkValidity = (
         value: IOrderFormConfig["value"],
@@ -178,8 +180,8 @@ const ContactData: FC<ContactDataProps> = ({
         setOrderForm(updatedOrderForm);
     };
 
-    const _submitOrder = (e: FormEvent) => {
-        e.preventDefault();
+    const _submitOrder = () => {
+        // e.preventDefault();
         console.log("ingredients", ingredients);
 
         setLoading(true);
@@ -246,6 +248,7 @@ const ContactData: FC<ContactDataProps> = ({
                 elementConfig={item.config.elementConfig}
                 value={item.config.value}
                 changed={e => _inputChanged(e, item.id)}
+                ref={register}
             />
         ));
     };
@@ -254,7 +257,7 @@ const ContactData: FC<ContactDataProps> = ({
         if (loading) return <Spinner />;
 
         return (
-            <form onSubmit={_submitOrder}>
+            <form onSubmit={handleSubmit(_submitOrder)}>
                 {renderOrderForm()}
                 <Button btnType="Success" clicked={e => e}>
                     ORDER
@@ -267,6 +270,7 @@ const ContactData: FC<ContactDataProps> = ({
         <div className={styles.ContactData}>
             <h4>Enter Your Contact Details</h4>
             {renderSpinnerOrForm()}
+            <input type="text" />
         </div>
     );
 };
