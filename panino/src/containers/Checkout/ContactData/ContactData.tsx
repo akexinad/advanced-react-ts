@@ -42,7 +42,11 @@ const ContactData: FC<ContactDataProps> = ({
                 type: "text",
                 placeholder: "Your Name"
             },
-            value: ""
+            value: "",
+            validation: {
+                required: true
+            },
+            valid: false
         },
         email: {
             elementType: "input",
@@ -50,7 +54,11 @@ const ContactData: FC<ContactDataProps> = ({
                 type: "email",
                 placeholder: "Your Email"
             },
-            value: ""
+            value: "",
+            validation: {
+                required: true
+            },
+            valid: false
         },
         address: {
             street: {
@@ -59,7 +67,11 @@ const ContactData: FC<ContactDataProps> = ({
                     type: "text",
                     placeholder: "Street"
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             zipCode: {
                 elementType: "input",
@@ -67,7 +79,13 @@ const ContactData: FC<ContactDataProps> = ({
                     type: "text",
                     placeholder: "Zip Code"
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5
+                },
+                valid: false
             },
             country: {
                 elementType: "input",
@@ -75,7 +93,11 @@ const ContactData: FC<ContactDataProps> = ({
                     type: "text",
                     placeholder: "Country"
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true
+                },
+                valid: false
             }
         },
         deliveryMethod: {
@@ -92,10 +114,29 @@ const ContactData: FC<ContactDataProps> = ({
                     }
                 ]
             },
-            value: ""
+            value: "",
+            validation: {
+                required: true
+            },
+            valid: false
         }
     });
     const [loading, setLoading] = useState(false);
+
+    const checkValidity = (
+        value: IOrderFormConfig["value"],
+        rules: IOrderFormConfig["validation"]
+    ) => {
+        if (rules.required && value.trim() !== "") {
+            return true;
+        }
+
+        if (rules.minLength && value.length > rules.minLength) {
+            return true;
+        }
+
+        return false;
+    };
 
     const _inputChanged = (
         e: ChangeEvent<
@@ -109,12 +150,20 @@ const ContactData: FC<ContactDataProps> = ({
                 inputIdentifier === "zipCode" ||
                 inputIdentifier === "country"
             ) {
+                draft.address[inputIdentifier].valid = checkValidity(
+                    e.target.value,
+                    draft.address[inputIdentifier].validation
+                );
                 draft.address[inputIdentifier].value = e.target.value;
             } else if (
                 inputIdentifier === "name" ||
                 inputIdentifier === "email" ||
                 inputIdentifier === "deliveryMethod"
             ) {
+                draft[inputIdentifier].valid = checkValidity(
+                    e.target.value,
+                    draft[inputIdentifier].validation
+                );
                 draft[inputIdentifier].value = e.target.value;
             } else {
                 console.warn(
@@ -123,6 +172,8 @@ const ContactData: FC<ContactDataProps> = ({
                 return;
             }
         });
+
+        console.log("updatedOrderForm", updatedOrderForm);
 
         setOrderForm(updatedOrderForm);
     };
@@ -165,9 +216,10 @@ const ContactData: FC<ContactDataProps> = ({
 
         Object.entries(orderForm).map(([id, config]) => {
             if (id === "address") {
-                const addressEntries: [string, IOrderFormConfig][] = Object.entries(
-                    config
-                );
+                const addressEntries: [
+                    string,
+                    IOrderFormConfig
+                ][] = Object.entries(config);
 
                 return addressEntries.map(([id, config]) => {
                     orderFormArray.push({
@@ -204,7 +256,7 @@ const ContactData: FC<ContactDataProps> = ({
         return (
             <form onSubmit={_submitOrder}>
                 {renderOrderForm()}
-                <Button btnType="Success" clicked={e => (e)}>
+                <Button btnType="Success" clicked={e => e}>
                     ORDER
                 </Button>
             </form>

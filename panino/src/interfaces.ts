@@ -27,6 +27,12 @@ export interface IOrderFormConfig {
         placeholder?: string;
     };
     value: string;
+    validation: {
+        required: true;
+        minLength?: number;
+        maxLength?: number;
+    };
+    valid: boolean;
 }
 
 export interface ICustomer {
