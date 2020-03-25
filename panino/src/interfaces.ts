@@ -28,7 +28,14 @@ export interface IOrderFormConfig {
     };
     value: string;
     validation: {
-        required: true;
+        name:
+            | "userName"
+            | "email"
+            | "street"
+            | "zipCode"
+            | "country"
+            | "deliveryMethod";
+        required: boolean;
         minLength?: number;
         maxLength?: number;
     };
@@ -73,4 +80,14 @@ export interface INewOrder {
     country: ICustomer["address"]["country"]["value"];
     deliveryMethod: ICustomer["deliveryMethod"]["value"];
     price: number;
+}
+
+export interface IReactHookFormOrderData {
+    userName: IOrderFormConfig["value"];
+    email: IOrderFormConfig["value"];
+    street: IOrderFormConfig["value"];
+    zipCode: IOrderFormConfig["value"];
+    country: IOrderFormConfig["value"];
+    deliveryMethod: IOrderFormConfig["value"];
+    required: boolean;
 }

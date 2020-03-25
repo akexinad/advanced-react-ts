@@ -1,14 +1,15 @@
-import React, { useState, FC, ChangeEvent } from "react";
+import React, { useState, FC, ChangeEvent, Fragment } from "react";
 import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
 import produce from "immer";
-import { useForm } from 'react-hook-form'
+import { useForm } from "react-hook-form";
 
 import {
     IIngredients,
     ICustomer,
     INewOrder,
-    IOrderFormConfig
+    IOrderFormConfig,
+    IReactHookFormOrderData
 } from "../../../interfaces";
 
 import Button from "../../../components/UI/Button/Button";
@@ -45,6 +46,7 @@ const ContactData: FC<ContactDataProps> = ({
             },
             value: "",
             validation: {
+                name: "userName",
                 required: true
             },
             valid: false
@@ -57,6 +59,7 @@ const ContactData: FC<ContactDataProps> = ({
             },
             value: "",
             validation: {
+                name: "email",
                 required: true
             },
             valid: false
@@ -70,6 +73,7 @@ const ContactData: FC<ContactDataProps> = ({
                 },
                 value: "",
                 validation: {
+                    name: "street",
                     required: true
                 },
                 valid: false
@@ -82,6 +86,7 @@ const ContactData: FC<ContactDataProps> = ({
                 },
                 value: "",
                 validation: {
+                    name: "zipCode",
                     required: true,
                     minLength: 5,
                     maxLength: 5
@@ -96,7 +101,8 @@ const ContactData: FC<ContactDataProps> = ({
                 },
                 value: "",
                 validation: {
-                    required: true
+                    name: "country",
+                    required: false
                 },
                 valid: false
             }
@@ -117,13 +123,14 @@ const ContactData: FC<ContactDataProps> = ({
             },
             value: "",
             validation: {
+                name: "deliveryMethod",
                 required: true
             },
             valid: false
         }
     });
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, watch, errors } = useForm<IReactHookFormOrderData>();
 
     const checkValidity = (
         value: IOrderFormConfig["value"],
@@ -180,9 +187,11 @@ const ContactData: FC<ContactDataProps> = ({
         setOrderForm(updatedOrderForm);
     };
 
-    const _submitOrder = () => {
+    const _handleSubmit = (data: IReactHookFormOrderData) => {
         // e.preventDefault();
         console.log("ingredients", ingredients);
+
+        console.log('data', data)
 
         setLoading(true);
 
@@ -190,24 +199,24 @@ const ContactData: FC<ContactDataProps> = ({
             createdAt: new Date(),
             ingredients: ingredients,
             price: totalPrice,
-            name: orderForm.name.value,
-            street: orderForm.address.street.value,
-            zipCode: orderForm.address.zipCode.value,
-            country: orderForm.address.country.value,
-            email: orderForm.email.value,
+            name: data.userName,
+            street: data.street,
+            zipCode: data.zipCode,
+            country: data.country,
+            email: data.email,
             deliveryMethod: orderForm.deliveryMethod.value
         };
 
-        axios
-            .post("/orders.json", newOrder)
-            .then(() => {
-                setLoading(false);
-                routeProps.history.push("/");
-            })
-            .catch(err => {
-                console.error(err);
-                setLoading(false);
-            });
+        // axios
+        //     .post("/orders.json", newOrder)
+        //     .then(() => {
+        //         setLoading(false);
+        //         routeProps.history.push("/");
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //         setLoading(false);
+        //     });
     };
 
     const renderOrderForm = () => {
@@ -241,23 +250,97 @@ const ContactData: FC<ContactDataProps> = ({
             return orderFormArray;
         });
 
-        return orderFormArray.map(item => (
-            <Input
-                key={item.id}
-                elementType={item.config.elementType}
-                elementConfig={item.config.elementConfig}
-                value={item.config.value}
-                changed={e => _inputChanged(e, item.id)}
-                ref={register}
-            />
-        ));
+        return orderFormArray.map((item, index) => {
+            let inputElement: JSX.Element = (
+                <Fragment key={index}>
+                    <input
+                        name={item.config.validation.name}
+                        ref={register({
+                            required: item.config.validation.required,
+                            minLength: item.config.validation.minLength,
+                            maxLength: item.config.validation.maxLength
+                        })}
+                        className={styles.InputElement}
+                        {...item.config.elementConfig}
+                        value={item.config.value}
+                        onChange={e => _inputChanged(e, item.id)}
+                    />
+                    {errors[item.config.validation.name] &&
+                        errors.required && <p>There was error</p>}
+                </Fragment>
+            );
+
+            switch (item.config.elementType) {
+                case "input":
+                    return inputElement;
+                case "textarea":
+                    inputElement = (
+                        <textarea
+                            key={index}
+                            name={item.config.validation.name}
+                            ref={register({
+                                required: item.config.validation.required,
+                                minLength: item.config.validation.minLength,
+                                maxLength: item.config.validation.maxLength
+                            })}
+                            className={styles.InputElement}
+                            {...item.config.elementConfig}
+                            value={item.config.value}
+                            onChange={e => _inputChanged(e, item.id)}
+                        />
+                    );
+                    break;
+                case "select":
+                    console.log("SELECT ME");
+                    
+                    inputElement = (
+                        <select
+                            key={index}
+                            name={item.config.validation.name}
+                            ref={register({
+                                required: item.config.validation.required,
+                                minLength: item.config.validation.minLength,
+                                maxLength: item.config.validation.maxLength
+                            })}
+                            className={styles.InputElement}
+                            {...item.config.elementConfig}
+                            value={item.config.value}
+                            onChange={e => _inputChanged(e, item.id)}
+                        >
+                            {item.config.elementConfig.options?.map(
+                                (option, index) => (
+                                    <option key={index} value={option.value}>
+                                        {option.displayValue}
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    );
+                    break;
+                default:
+                    return inputElement;
+            }
+
+            return inputElement;
+        });
+
+        // return orderFormArray.map(item => (
+        //     <Input
+        //         key={item.id}
+        //         elementType={item.config.elementType}
+        //         elementConfig={item.config.elementConfig}
+        //         value={item.config.value}
+        //         changed={e => _inputChanged(e, item.id)}
+        //         ref={register}
+        //     />
+        // ));
     };
 
     const renderSpinnerOrForm = () => {
         if (loading) return <Spinner />;
 
         return (
-            <form onSubmit={handleSubmit(_submitOrder)}>
+            <form onSubmit={handleSubmit(_handleSubmit)}>
                 {renderOrderForm()}
                 <Button btnType="Success" clicked={e => e}>
                     ORDER
@@ -270,7 +353,6 @@ const ContactData: FC<ContactDataProps> = ({
         <div className={styles.ContactData}>
             <h4>Enter Your Contact Details</h4>
             {renderSpinnerOrForm()}
-            <input type="text" />
         </div>
     );
 };
