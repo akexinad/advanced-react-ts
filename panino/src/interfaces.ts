@@ -39,7 +39,6 @@ export interface IOrderFormConfig {
         minLength?: number;
         maxLength?: number;
     };
-    valid: boolean;
 }
 
 export interface ICustomer {

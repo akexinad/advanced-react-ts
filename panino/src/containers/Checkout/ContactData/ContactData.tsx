@@ -48,8 +48,7 @@ const ContactData: FC<ContactDataProps> = ({
             validation: {
                 name: "userName",
                 required: true
-            },
-            valid: false
+            }
         },
         email: {
             elementType: "input",
@@ -61,8 +60,7 @@ const ContactData: FC<ContactDataProps> = ({
             validation: {
                 name: "email",
                 required: true
-            },
-            valid: false
+            }
         },
         address: {
             street: {
@@ -75,8 +73,7 @@ const ContactData: FC<ContactDataProps> = ({
                 validation: {
                     name: "street",
                     required: true
-                },
-                valid: false
+                }
             },
             zipCode: {
                 elementType: "input",
@@ -90,8 +87,7 @@ const ContactData: FC<ContactDataProps> = ({
                     required: true,
                     minLength: 5,
                     maxLength: 5
-                },
-                valid: false
+                }
             },
             country: {
                 elementType: "input",
@@ -103,8 +99,7 @@ const ContactData: FC<ContactDataProps> = ({
                 validation: {
                     name: "country",
                     required: false
-                },
-                valid: false
+                }
             }
         },
         deliveryMethod: {
@@ -125,27 +120,13 @@ const ContactData: FC<ContactDataProps> = ({
             validation: {
                 name: "deliveryMethod",
                 required: true
-            },
-            valid: false
+            }
         }
     });
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, watch, errors } = useForm<IReactHookFormOrderData>();
-
-    const checkValidity = (
-        value: IOrderFormConfig["value"],
-        rules: IOrderFormConfig["validation"]
-    ) => {
-        if (rules.required && value.trim() !== "") {
-            return true;
-        }
-
-        if (rules.minLength && value.length > rules.minLength) {
-            return true;
-        }
-
-        return false;
-    };
+    const { register, handleSubmit, watch, errors } = useForm<
+        IReactHookFormOrderData
+    >();
 
     const _inputChanged = (
         e: ChangeEvent<
@@ -159,20 +140,12 @@ const ContactData: FC<ContactDataProps> = ({
                 inputIdentifier === "zipCode" ||
                 inputIdentifier === "country"
             ) {
-                draft.address[inputIdentifier].valid = checkValidity(
-                    e.target.value,
-                    draft.address[inputIdentifier].validation
-                );
                 draft.address[inputIdentifier].value = e.target.value;
             } else if (
                 inputIdentifier === "name" ||
                 inputIdentifier === "email" ||
                 inputIdentifier === "deliveryMethod"
             ) {
-                draft[inputIdentifier].valid = checkValidity(
-                    e.target.value,
-                    draft[inputIdentifier].validation
-                );
                 draft[inputIdentifier].value = e.target.value;
             } else {
                 console.warn(
@@ -191,7 +164,7 @@ const ContactData: FC<ContactDataProps> = ({
         // e.preventDefault();
         console.log("ingredients", ingredients);
 
-        console.log('data', data)
+        console.log("data", data);
 
         setLoading(true);
 
@@ -265,8 +238,9 @@ const ContactData: FC<ContactDataProps> = ({
                         value={item.config.value}
                         onChange={e => _inputChanged(e, item.id)}
                     />
-                    {errors[item.config.validation.name] &&
-                        errors.required && <p>There was error</p>}
+                    {errors[item.config.validation.name] && errors.required && (
+                        <p>There was error</p>
+                    )}
                 </Fragment>
             );
 
@@ -292,7 +266,7 @@ const ContactData: FC<ContactDataProps> = ({
                     break;
                 case "select":
                     console.log("SELECT ME");
-                    
+
                     inputElement = (
                         <select
                             key={index}
