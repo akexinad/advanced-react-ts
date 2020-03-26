@@ -179,16 +179,16 @@ const ContactData: FC<ContactDataProps> = ({
             deliveryMethod: orderForm.deliveryMethod.value
         };
 
-        // axios
-        //     .post("/orders.json", newOrder)
-        //     .then(() => {
-        //         setLoading(false);
-        //         routeProps.history.push("/");
-        //     })
-        //     .catch(err => {
-        //         console.error(err);
-        //         setLoading(false);
-        //     });
+        axios
+            .post("/orders.json", newOrder)
+            .then(() => {
+                setLoading(false);
+                routeProps.history.push("/");
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
     };
 
     const renderOrderForm = () => {
@@ -297,16 +297,6 @@ const ContactData: FC<ContactDataProps> = ({
             return inputElement;
         });
 
-        // return orderFormArray.map(item => (
-        //     <Input
-        //         key={item.id}
-        //         elementType={item.config.elementType}
-        //         elementConfig={item.config.elementConfig}
-        //         value={item.config.value}
-        //         changed={e => _inputChanged(e, item.id)}
-        //         ref={register}
-        //     />
-        // ));
     };
 
     const renderSpinnerOrForm = () => {
