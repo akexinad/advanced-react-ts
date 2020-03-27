@@ -50,7 +50,7 @@ export const orderFormDefinition: IOrderForm = {
             elementType: "input",
             elementConfig: {
                 type: "text",
-                placeholder: "Street"
+                placeholder: "Your Street Address"
             },
             validation: {
                 name: "street",
@@ -67,7 +67,8 @@ export const orderFormDefinition: IOrderForm = {
                 name: "zipCode",
                 required: true,
                 minLength: 5,
-                maxLength: 5
+                maxLength: 5,
+                pattern: /^[0-9]*$/
             }
         },
         country: {
@@ -85,6 +86,7 @@ export const orderFormDefinition: IOrderForm = {
     deliveryMethod: {
         elementType: "select",
         elementConfig: {
+            placeholder: "Your delivery method",
             options: [
                 {
                     value: "fastest",

@@ -1,20 +1,22 @@
-import React, { useState, FC, Fragment } from "react";
-import axios from "../../../axios-orders";
+import React, { useState, FC, Fragment, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, ValidationOptions } from "react-hook-form";
+import axios from "../../../axios-orders";
 
 import {
     IIngredients,
     INewOrder,
     IOrderFormConfig,
     IReactHookFormOrderData,
-    IOrderForm
+    IOrderForm,
+    IOrderFormConfigItem
 } from "../../../interfaces";
+
+import { orderFormDefinition } from "../../../utils/definitions";
+import { reactHookFormErrorMsg } from "../../../utils/hookFormErrors";
 
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-
-import { orderFormDefinition } from "../../../utils/definitions";
 
 import styles from "./ContactData.module.css";
 
@@ -35,10 +37,19 @@ const ContactData: FC<ContactDataProps> = ({
         IReactHookFormOrderData
     >();
 
-    const orderFormArray: {
-        id: string;
-        config: IOrderFormConfig;
-    }[] = [];
+    useEffect(() => {
+        const ingredientQty = Object.values(ingredients).reduce(
+            (sum, value) => sum + value,
+            0
+        );
+
+        if (ingredientQty === 0) {
+            console.error("No ingredients selected");
+            routeProps.history.push("/");
+        }
+    }, [ingredients, routeProps]);
+
+    const orderFormArray: Array<IOrderFormConfigItem> = [];
 
     Object.entries(orderForm).map(([id, config]) => {
         if (id === "address") {
@@ -99,34 +110,22 @@ const ContactData: FC<ContactDataProps> = ({
         if (!orderFormArray) return;
 
         return orderFormArray.map((item, index) => {
+            const validationOptios: ValidationOptions = {
+                pattern: item.config.validation.pattern,
+                minLength: item.config.validation.minLength,
+                maxLength: item.config.validation.maxLength,
+                required: item.config.validation.required
+            };
+
             let inputElement: JSX.Element = (
                 <Fragment key={index}>
                     <input
                         name={item.config.validation.name}
-                        ref={register({
-                            required: item.config.validation.required,
-                            minLength: item.config.validation.minLength,
-                            maxLength: item.config.validation.maxLength
-                        })}
+                        ref={register(validationOptios)}
                         className={styles.InputElement}
                         {...item.config.elementConfig}
                     />
-                    {errors[item.config.validation.name] && (
-                        <p className={styles.Error}>
-                            <strong>
-                                Your {item.config.validation.name} is required!
-                            </strong>
-                        </p>
-                    )}
-                    {errors[item.config.validation.name]?.type ===
-                        "minLength" && (
-                        <p className={styles.Error}>
-                            <strong>
-                                {item.config.validation.name} must be{" "}
-                                {item.config.validation.minLength} characters
-                            </strong>
-                        </p>
-                    )}
+                    {reactHookFormErrorMsg(errors, item, styles)}
                 </Fragment>
             );
 
@@ -138,11 +137,7 @@ const ContactData: FC<ContactDataProps> = ({
                         <textarea
                             key={index}
                             name={item.config.validation.name}
-                            ref={register({
-                                required: item.config.validation.required,
-                                minLength: item.config.validation.minLength,
-                                maxLength: item.config.validation.maxLength
-                            })}
+                            ref={register(validationOptios)}
                             className={styles.InputElement}
                             {...item.config.elementConfig}
                         />
@@ -150,25 +145,29 @@ const ContactData: FC<ContactDataProps> = ({
                     break;
                 case "select":
                     inputElement = (
-                        <select
-                            key={index}
-                            name={item.config.validation.name}
-                            ref={register({
-                                required: item.config.validation.required,
-                                minLength: item.config.validation.minLength,
-                                maxLength: item.config.validation.maxLength
-                            })}
-                            className={styles.InputElement}
-                            {...item.config.elementConfig}
-                        >
-                            {item.config.elementConfig.options?.map(
-                                (option, index) => (
-                                    <option key={index} value={option.value}>
-                                        {option.displayValue}
-                                    </option>
-                                )
-                            )}
-                        </select>
+                        <Fragment key={index}>
+                            <select
+                                name={item.config.validation.name}
+                                ref={register(validationOptios)}
+                                className={styles.InputElement}
+                                {...item.config.elementConfig}
+                            >
+                                <option value="">
+                                    {item.config.elementConfig.placeholder}
+                                </option>
+                                {item.config.elementConfig.options?.map(
+                                    (option, index) => (
+                                        <option
+                                            key={index}
+                                            value={option.value}
+                                        >
+                                            {option.displayValue}
+                                        </option>
+                                    )
+                                )}
+                            </select>
+                            {reactHookFormErrorMsg(errors, item, styles)}
+                        </Fragment>
                     );
                     break;
                 default:

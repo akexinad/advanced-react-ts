@@ -7,8 +7,24 @@ export interface IIngredients {
 
 type HTMLElementTypes = "input" | "label" | "select" | "textarea";
 type HTMLConfigTypes = "text" | "number" | "email";
+type FormNames =
+    | "name"
+    | "email"
+    | "street"
+    | "zipCode"
+    | "country"
+    | "deliveryMethod";
 
 type DeliveryMethod = "deliveroo" | "uber eats" | "fedex" | "auspost";
+
+export interface ICSSStyles {
+    readonly [key: string]: string;
+}
+
+export interface IOrderFormConfigItem {
+    id: string;
+    config: IOrderFormConfig;
+}
 
 export interface IOrderFormConfig {
     elementType: HTMLElementTypes;
@@ -26,18 +42,12 @@ export interface IOrderFormConfig {
         type?: HTMLConfigTypes;
         placeholder?: string;
     };
-    // value: string;
     validation: {
-        name:
-            | "name"
-            | "email"
-            | "street"
-            | "zipCode"
-            | "country"
-            | "deliveryMethod";
+        name: FormNames;
         required: boolean;
         minLength?: number;
         maxLength?: number;
+        pattern?: RegExp;
     };
 }
 
