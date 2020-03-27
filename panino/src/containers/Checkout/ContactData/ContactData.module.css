@@ -1,3 +1,12 @@
+.Error {
+    color: #bf1650;
+}
+
+.Error::before {
+    display: inline;
+    content: "⚠ ";
+}
+
 .ContactData {
     margin: 20px auto;
     width: 80%;

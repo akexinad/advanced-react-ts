@@ -1,10 +1,12 @@
 import React, { FC } from "react";
 
-import { IIngredients } from "../../interfaces";
+import { IIngredients, IOrder } from "../../interfaces";
 
 import styles from "./Order.module.css";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-interface OrderProps {
+interface OrderProps extends RouteComponentProps {
+    orderId: IOrder["id"];
     ingredients: IIngredients;
     price: number;
 }
@@ -14,9 +16,17 @@ interface IIngredientDetails {
     quantity: number;
 }
 
-const Order: FC<OrderProps> = ({ ingredients, price }) => {
+const Order: FC<OrderProps> = ({ orderId, ingredients, price, history, match, location }) => {
     const renderIngredients = () => {
         const ingredientsList: IIngredientDetails[] = [];
+
+        if (!ingredients) {
+            console.error(
+                `Ingredients for order id ${orderId} is null or undefined.`
+            );
+            history.goBack();
+            return;
+        }
 
         Object.entries(ingredients).forEach(entry =>
             ingredientsList.push({
@@ -59,4 +69,4 @@ const Order: FC<OrderProps> = ({ ingredients, price }) => {
     );
 };
 
-export default Order;
+export default withRouter(Order);

@@ -29,13 +29,13 @@ export interface IOrderFormConfig {
     value: string;
     validation: {
         name:
-            | "userName"
+            | "name"
             | "email"
             | "street"
             | "zipCode"
             | "country"
             | "deliveryMethod";
-        required: boolean;
+        required: "required";
         minLength?: number;
         maxLength?: number;
     };
@@ -82,11 +82,10 @@ export interface INewOrder {
 }
 
 export interface IReactHookFormOrderData {
-    userName: IOrderFormConfig["value"];
+    name: IOrderFormConfig["value"];
     email: IOrderFormConfig["value"];
     street: IOrderFormConfig["value"];
     zipCode: IOrderFormConfig["value"];
     country: IOrderFormConfig["value"];
     deliveryMethod: IOrderFormConfig["value"];
-    required: boolean;
 }

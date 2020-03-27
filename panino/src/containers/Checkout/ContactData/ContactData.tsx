@@ -45,8 +45,8 @@ const ContactData: FC<ContactDataProps> = ({
             },
             value: "",
             validation: {
-                name: "userName",
-                required: true
+                name: "name",
+                required: "required"
             }
         },
         email: {
@@ -58,7 +58,7 @@ const ContactData: FC<ContactDataProps> = ({
             value: "",
             validation: {
                 name: "email",
-                required: true
+                required: "required"
             }
         },
         address: {
@@ -71,7 +71,7 @@ const ContactData: FC<ContactDataProps> = ({
                 value: "",
                 validation: {
                     name: "street",
-                    required: true
+                    required: "required"
                 }
             },
             zipCode: {
@@ -83,7 +83,7 @@ const ContactData: FC<ContactDataProps> = ({
                 value: "",
                 validation: {
                     name: "zipCode",
-                    required: true,
+                    required: "required",
                     minLength: 5,
                     maxLength: 5
                 }
@@ -97,7 +97,7 @@ const ContactData: FC<ContactDataProps> = ({
                 value: "",
                 validation: {
                     name: "country",
-                    required: false
+                    required: "required"
                 }
             }
         },
@@ -118,7 +118,7 @@ const ContactData: FC<ContactDataProps> = ({
             value: "",
             validation: {
                 name: "deliveryMethod",
-                required: true
+                required: "required"
             }
         }
     });
@@ -154,8 +154,6 @@ const ContactData: FC<ContactDataProps> = ({
             }
         });
 
-        console.log("updatedOrderForm", updatedOrderForm);
-
         setOrderForm(updatedOrderForm);
     };
 
@@ -171,7 +169,7 @@ const ContactData: FC<ContactDataProps> = ({
             createdAt: new Date(),
             ingredients: ingredients,
             price: totalPrice,
-            name: data.userName,
+            name: data.name,
             street: data.street,
             zipCode: data.zipCode,
             country: data.country,
@@ -237,9 +235,15 @@ const ContactData: FC<ContactDataProps> = ({
                         value={item.config.value}
                         onChange={e => _inputChanged(e, item.id)}
                     />
-                    {errors[item.config.validation.name] && errors.required && (
-                        <p>There was error</p>
-                    )}
+                    {errors[item.config.validation.name] &&
+                        errors[item.config.validation.name]?.type ===
+                            "required" && (
+                            <p className={styles.Error}>
+                                <strong>
+                                    Your {item.config.validation.name} is required!
+                                </strong>
+                            </p>
+                        )}
                 </Fragment>
             );
 
@@ -264,8 +268,6 @@ const ContactData: FC<ContactDataProps> = ({
                     );
                     break;
                 case "select":
-                    console.log("SELECT ME");
-
                     inputElement = (
                         <select
                             key={index}
@@ -296,7 +298,6 @@ const ContactData: FC<ContactDataProps> = ({
 
             return inputElement;
         });
-
     };
 
     const renderSpinnerOrForm = () => {

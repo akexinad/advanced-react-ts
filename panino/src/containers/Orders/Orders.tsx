@@ -64,6 +64,7 @@ const Orders: FC = () => {
         return orders.map(order => (
             <Order
                 key={order.id}
+                orderId={order.id}
                 ingredients={order.ingredients}
                 price={+order.price.toFixed(2)}
             />
