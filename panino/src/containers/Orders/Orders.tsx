@@ -7,32 +7,10 @@ import { IOrder } from "../../interfaces";
 import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
 import Order from "../../components/Order/Order";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import { orderDefinition } from "../../utils/definitions";
 
 const Orders: FC = () => {
-    const [orders, setOrders] = useState<IOrder[]>([
-        {
-            id: "",
-            createdAt: new Date(),
-            ingredients: {
-                salad: 0,
-                bacon: 0,
-                cheese: 0,
-                meat: 0
-            },
-            price: 0,
-            customer: {
-                name: "",
-                address: {
-                    street: "",
-                    zipCode: "",
-                    country: ""
-                },
-                email: ""
-            },
-            deliveryMethod: "deliveroo"
-        }
-    ]);
-
+    const [orders, setOrders] = useState<IOrder[]>([orderDefinition]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

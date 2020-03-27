@@ -1,13 +1,34 @@
-import { IOrderForm } from "../interfaces";
+import { IOrderForm, IOrder } from "../interfaces";
 
-export const orderFormDefinition: IOrderForm= {
+export const orderDefinition: IOrder = {
+    id: "",
+    createdAt: new Date(),
+    ingredients: {
+        salad: 0,
+        bacon: 0,
+        cheese: 0,
+        meat: 0
+    },
+    price: 0,
+    customer: {
+        name: "",
+        address: {
+            street: "",
+            zipCode: "",
+            country: ""
+        },
+        email: ""
+    },
+    deliveryMethod: "deliveroo"
+};
+
+export const orderFormDefinition: IOrderForm = {
     name: {
         elementType: "input",
         elementConfig: {
             type: "text",
             placeholder: "Your Name"
         },
-        // value: "",
         validation: {
             name: "name",
             required: true
@@ -19,7 +40,6 @@ export const orderFormDefinition: IOrderForm= {
             type: "email",
             placeholder: "Your Email"
         },
-        // value: "",
         validation: {
             name: "email",
             required: true
@@ -32,7 +52,6 @@ export const orderFormDefinition: IOrderForm= {
                 type: "text",
                 placeholder: "Street"
             },
-            // value: "",
             validation: {
                 name: "street",
                 required: true
@@ -44,7 +63,6 @@ export const orderFormDefinition: IOrderForm= {
                 type: "text",
                 placeholder: "Zip Code"
             },
-            // value: "",
             validation: {
                 name: "zipCode",
                 required: true,
@@ -58,7 +76,6 @@ export const orderFormDefinition: IOrderForm= {
                 type: "text",
                 placeholder: "Country"
             },
-            // value: "",
             validation: {
                 name: "country",
                 required: true
@@ -79,10 +96,9 @@ export const orderFormDefinition: IOrderForm= {
                 }
             ]
         },
-        // value: "",
         validation: {
             name: "deliveryMethod",
             required: true
         }
     }
-}
+};
