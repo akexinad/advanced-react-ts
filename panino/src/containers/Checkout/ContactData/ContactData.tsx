@@ -1,4 +1,4 @@
-import React, { useState, FC, ChangeEvent, Fragment } from "react";
+import React, { useState, FC, Fragment } from "react";
 import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
 import produce from "immer";
@@ -6,14 +6,16 @@ import { useForm } from "react-hook-form";
 
 import {
     IIngredients,
-    ICustomer,
     INewOrder,
     IOrderFormConfig,
-    IReactHookFormOrderData
+    IReactHookFormOrderData,
+    IOrderForm
 } from "../../../interfaces";
 
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+
+import { orderFormDefinition } from "../../../utils/definitions";
 
 import styles from "./ContactData.module.css";
 
@@ -23,142 +25,47 @@ interface ContactDataProps {
     routeProps: RouteComponentProps;
 }
 
-type InputIdentifier =
-    | "name"
-    | "email"
-    | "street"
-    | "zipCode"
-    | "country"
-    | "deliveryMethod";
-
 const ContactData: FC<ContactDataProps> = ({
     ingredients,
     totalPrice,
     routeProps
 }) => {
-    const [orderForm, setOrderForm] = useState<ICustomer>({
-        name: {
-            elementType: "input",
-            elementConfig: {
-                type: "text",
-                placeholder: "Your Name"
-            },
-            value: "",
-            validation: {
-                name: "name",
-                required: "required"
-            }
-        },
-        email: {
-            elementType: "input",
-            elementConfig: {
-                type: "email",
-                placeholder: "Your Email"
-            },
-            value: "",
-            validation: {
-                name: "email",
-                required: "required"
-            }
-        },
-        address: {
-            street: {
-                elementType: "input",
-                elementConfig: {
-                    type: "text",
-                    placeholder: "Street"
-                },
-                value: "",
-                validation: {
-                    name: "street",
-                    required: "required"
-                }
-            },
-            zipCode: {
-                elementType: "input",
-                elementConfig: {
-                    type: "text",
-                    placeholder: "Zip Code"
-                },
-                value: "",
-                validation: {
-                    name: "zipCode",
-                    required: "required",
-                    minLength: 5,
-                    maxLength: 5
-                }
-            },
-            country: {
-                elementType: "input",
-                elementConfig: {
-                    type: "text",
-                    placeholder: "Country"
-                },
-                value: "",
-                validation: {
-                    name: "country",
-                    required: "required"
-                }
-            }
-        },
-        deliveryMethod: {
-            elementType: "select",
-            elementConfig: {
-                options: [
-                    {
-                        value: "fastest",
-                        displayValue: "Fastest"
-                    },
-                    {
-                        value: "cheapest",
-                        displayValue: "Cheapest"
-                    }
-                ]
-            },
-            value: "",
-            validation: {
-                name: "deliveryMethod",
-                required: "required"
-            }
-        }
-    });
+    const [orderForm] = useState<IOrderForm>(orderFormDefinition);
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, watch, errors } = useForm<
         IReactHookFormOrderData
     >();
 
-    const _inputChanged = (
-        e: ChangeEvent<
-            HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-        >,
-        inputIdentifier: string
-    ) => {
-        const updatedOrderForm = produce(orderForm, draft => {
-            if (
-                inputIdentifier === "street" ||
-                inputIdentifier === "zipCode" ||
-                inputIdentifier === "country"
-            ) {
-                draft.address[inputIdentifier].value = e.target.value;
-            } else if (
-                inputIdentifier === "name" ||
-                inputIdentifier === "email" ||
-                inputIdentifier === "deliveryMethod"
-            ) {
-                draft[inputIdentifier].value = e.target.value;
-            } else {
-                console.warn(
-                    `inputIdentifier ${inputIdentifier} does not exist on the orderForm object.`
-                );
-                return;
-            }
+    const orderFormArray: {
+        id: string;
+        config: IOrderFormConfig;
+    }[] = [];
+
+    Object.entries(orderForm).map(([id, config]) => {
+        if (id === "address") {
+            const addressEntries: [string, IOrderFormConfig][] = Object.entries(
+                config
+            );
+
+            return addressEntries.map(([id, config]) => {
+                orderFormArray.push({
+                    id,
+                    config
+                });
+
+                return orderFormArray;
+            });
+        }
+
+        orderFormArray.push({
+            id,
+            config
         });
 
-        setOrderForm(updatedOrderForm);
-    };
+        return orderFormArray;
+    });
 
     const _handleSubmit = (data: IReactHookFormOrderData) => {
-        // e.preventDefault();
         console.log("ingredients", ingredients);
 
         console.log("data", data);
@@ -174,51 +81,23 @@ const ContactData: FC<ContactDataProps> = ({
             zipCode: data.zipCode,
             country: data.country,
             email: data.email,
-            deliveryMethod: orderForm.deliveryMethod.value
+            deliveryMethod: data.deliveryMethod
         };
 
-        axios
-            .post("/orders.json", newOrder)
-            .then(() => {
-                setLoading(false);
-                routeProps.history.push("/");
-            })
-            .catch(err => {
-                console.error(err);
-                setLoading(false);
-            });
+        // axios
+        //     .post("/orders.json", newOrder)
+        //     .then(() => {
+        //         setLoading(false);
+        //         routeProps.history.push("/");
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //         setLoading(false);
+        //     });
     };
 
     const renderOrderForm = () => {
-        const orderFormArray: {
-            id: string;
-            config: IOrderFormConfig;
-        }[] = [];
-
-        Object.entries(orderForm).map(([id, config]) => {
-            if (id === "address") {
-                const addressEntries: [
-                    string,
-                    IOrderFormConfig
-                ][] = Object.entries(config);
-
-                return addressEntries.map(([id, config]) => {
-                    orderFormArray.push({
-                        id,
-                        config
-                    });
-
-                    return orderFormArray;
-                });
-            }
-
-            orderFormArray.push({
-                id,
-                config
-            });
-
-            return orderFormArray;
-        });
+        if (!orderFormArray) return;
 
         return orderFormArray.map((item, index) => {
             let inputElement: JSX.Element = (
@@ -232,18 +111,23 @@ const ContactData: FC<ContactDataProps> = ({
                         })}
                         className={styles.InputElement}
                         {...item.config.elementConfig}
-                        value={item.config.value}
-                        onChange={e => _inputChanged(e, item.id)}
                     />
-                    {errors[item.config.validation.name] &&
-                        errors[item.config.validation.name]?.type ===
-                            "required" && (
-                            <p className={styles.Error}>
-                                <strong>
-                                    Your {item.config.validation.name} is required!
-                                </strong>
-                            </p>
-                        )}
+                    {errors[item.config.validation.name] && (
+                        <p className={styles.Error}>
+                            <strong>
+                                Your {item.config.validation.name} is required!
+                            </strong>
+                        </p>
+                    )}
+                    {errors[item.config.validation.name]?.type ===
+                        "minLength" && (
+                        <p className={styles.Error}>
+                            <strong>
+                                {item.config.validation.name} must be{" "}
+                                {item.config.validation.minLength} characters
+                            </strong>
+                        </p>
+                    )}
                 </Fragment>
             );
 
@@ -262,8 +146,6 @@ const ContactData: FC<ContactDataProps> = ({
                             })}
                             className={styles.InputElement}
                             {...item.config.elementConfig}
-                            value={item.config.value}
-                            onChange={e => _inputChanged(e, item.id)}
                         />
                     );
                     break;
@@ -279,8 +161,6 @@ const ContactData: FC<ContactDataProps> = ({
                             })}
                             className={styles.InputElement}
                             {...item.config.elementConfig}
-                            value={item.config.value}
-                            onChange={e => _inputChanged(e, item.id)}
                         >
                             {item.config.elementConfig.options?.map(
                                 (option, index) => (
@@ -317,6 +197,101 @@ const ContactData: FC<ContactDataProps> = ({
         <div className={styles.ContactData}>
             <h4>Enter Your Contact Details</h4>
             {renderSpinnerOrForm()}
+            {/* {loading ? (
+                <Spinner />
+            ) : (
+                <form onSubmit={handleSubmit(_handleSubmit)}>
+                    {orderFormArray.map((item, index) => {
+                        let inputElement: JSX.Element = (
+                            <Fragment key={index}>
+                                <input
+                                    name={item.config.validation.name}
+                                    ref={register({
+                                        required:
+                                            item.config.validation.required,
+                                        minLength:
+                                            item.config.validation.minLength,
+                                        maxLength:
+                                            item.config.validation.maxLength
+                                    })}
+                                    className={styles.InputElement}
+                                    {...item.config.elementConfig}
+                                />
+                                {errors[item.config.validation.name] && (
+                                    <p className={styles.Error}>
+                                        <strong>
+                                            Your {item.config.validation.name}{" "}
+                                            is required!
+                                        </strong>
+                                    </p>
+                                )}
+                            </Fragment>
+                        );
+
+                        switch (item.config.elementType) {
+                            case "input":
+                                return inputElement;
+                            case "textarea":
+                                inputElement = (
+                                    <textarea
+                                        key={index}
+                                        name={item.config.validation.name}
+                                        ref={register({
+                                            required:
+                                                item.config.validation.required,
+                                            minLength:
+                                                item.config.validation
+                                                    .minLength,
+                                            maxLength:
+                                                item.config.validation.maxLength
+                                        })}
+                                        className={styles.InputElement}
+                                        {...item.config.elementConfig}
+                                    />
+                                );
+                                break;
+                            case "select":
+                                inputElement = (
+                                    <select
+                                        key={index}
+                                        name={item.config.validation.name}
+                                        ref={register({
+                                            required:
+                                                item.config.validation.required,
+                                            minLength:
+                                                item.config.validation
+                                                    .minLength,
+                                            maxLength:
+                                                item.config.validation.maxLength
+                                        })}
+                                        className={styles.InputElement}
+                                        {...item.config.elementConfig}
+                                    >
+                                        {item.config.elementConfig.options?.map(
+                                            (option, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={option.value}
+                                                >
+                                                    {option.displayValue}
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                );
+                                break;
+                            default:
+                                return inputElement;
+                        }
+
+                        return inputElement;
+                    })}
+
+                    <Button btnType="Success" clicked={e => e}>
+                        ORDER
+                    </Button>
+                </form>
+            )} */}
         </div>
     );
 };

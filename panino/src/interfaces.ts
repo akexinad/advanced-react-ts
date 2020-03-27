@@ -26,7 +26,7 @@ export interface IOrderFormConfig {
         type?: HTMLConfigTypes;
         placeholder?: string;
     };
-    value: string;
+    // value: string;
     validation: {
         name:
             | "name"
@@ -35,13 +35,13 @@ export interface IOrderFormConfig {
             | "zipCode"
             | "country"
             | "deliveryMethod";
-        required: "required";
+        required: boolean;
         minLength?: number;
         maxLength?: number;
     };
 }
 
-export interface ICustomer {
+export interface IOrderForm {
     name: IOrderFormConfig;
     email: IOrderFormConfig;
     address: {
@@ -58,13 +58,13 @@ export interface IOrder {
     ingredients: IIngredients;
     price: number;
     customer: {
-        name: ICustomer["name"]["value"];
+        name: string;
         address: {
-            street: ICustomer["address"]["street"]["value"];
-            zipCode: ICustomer["address"]["zipCode"]["value"];
-            country: ICustomer["address"]["country"]["value"];
+            street: string;
+            zipCode: string;
+            country: string;
         };
-        email: ICustomer["email"]["value"];
+        email: string;
     };
     deliveryMethod: DeliveryMethod;
 }
@@ -72,20 +72,20 @@ export interface IOrder {
 export interface INewOrder {
     createdAt: Date;
     ingredients: IIngredients;
-    name: ICustomer["name"]["value"];
-    email: ICustomer["email"]["value"];
-    street: ICustomer["address"]["street"]["value"];
-    zipCode: ICustomer["address"]["zipCode"]["value"];
-    country: ICustomer["address"]["country"]["value"];
-    deliveryMethod: ICustomer["deliveryMethod"]["value"];
+    name: string;
+    email: string;
+    street: string;
+    zipCode: string;
+    country: string;
+    deliveryMethod: string;
     price: number;
 }
 
 export interface IReactHookFormOrderData {
-    name: IOrderFormConfig["value"];
-    email: IOrderFormConfig["value"];
-    street: IOrderFormConfig["value"];
-    zipCode: IOrderFormConfig["value"];
-    country: IOrderFormConfig["value"];
-    deliveryMethod: IOrderFormConfig["value"];
+    name: string;
+    email: string;
+    street: string;
+    zipCode: string;
+    country: string;
+    deliveryMethod: string;
 }

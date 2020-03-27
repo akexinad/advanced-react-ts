@@ -5,10 +5,9 @@ import { IOrderFormConfig } from "../../../interfaces";
 import styles from "./Input.module.css";
 
 interface InputProps extends ClassAttributes<HTMLInputElement> {
-    // key: JSX.Element["key"];
     elementType: IOrderFormConfig["elementType"];
     elementConfig: IOrderFormConfig["elementConfig"];
-    value: IOrderFormConfig["value"];
+    value: string;
     changed: (
         e: ChangeEvent<
             HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
