@@ -1,7 +1,6 @@
 import React, { useState, FC, Fragment } from "react";
 import axios from "../../../axios-orders";
 import { RouteComponentProps } from "react-router-dom";
-import produce from "immer";
 import { useForm } from "react-hook-form";
 
 import {
@@ -32,7 +31,7 @@ const ContactData: FC<ContactDataProps> = ({
 }) => {
     const [orderForm] = useState<IOrderForm>(orderFormDefinition);
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, watch, errors } = useForm<
+    const { register, handleSubmit, errors } = useForm<
         IReactHookFormOrderData
     >();
 
@@ -84,16 +83,16 @@ const ContactData: FC<ContactDataProps> = ({
             deliveryMethod: data.deliveryMethod
         };
 
-        // axios
-        //     .post("/orders.json", newOrder)
-        //     .then(() => {
-        //         setLoading(false);
-        //         routeProps.history.push("/");
-        //     })
-        //     .catch(err => {
-        //         console.error(err);
-        //         setLoading(false);
-        //     });
+        axios
+            .post("/orders.json", newOrder)
+            .then(() => {
+                setLoading(false);
+                routeProps.history.push("/");
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
     };
 
     const renderOrderForm = () => {
@@ -197,101 +196,6 @@ const ContactData: FC<ContactDataProps> = ({
         <div className={styles.ContactData}>
             <h4>Enter Your Contact Details</h4>
             {renderSpinnerOrForm()}
-            {/* {loading ? (
-                <Spinner />
-            ) : (
-                <form onSubmit={handleSubmit(_handleSubmit)}>
-                    {orderFormArray.map((item, index) => {
-                        let inputElement: JSX.Element = (
-                            <Fragment key={index}>
-                                <input
-                                    name={item.config.validation.name}
-                                    ref={register({
-                                        required:
-                                            item.config.validation.required,
-                                        minLength:
-                                            item.config.validation.minLength,
-                                        maxLength:
-                                            item.config.validation.maxLength
-                                    })}
-                                    className={styles.InputElement}
-                                    {...item.config.elementConfig}
-                                />
-                                {errors[item.config.validation.name] && (
-                                    <p className={styles.Error}>
-                                        <strong>
-                                            Your {item.config.validation.name}{" "}
-                                            is required!
-                                        </strong>
-                                    </p>
-                                )}
-                            </Fragment>
-                        );
-
-                        switch (item.config.elementType) {
-                            case "input":
-                                return inputElement;
-                            case "textarea":
-                                inputElement = (
-                                    <textarea
-                                        key={index}
-                                        name={item.config.validation.name}
-                                        ref={register({
-                                            required:
-                                                item.config.validation.required,
-                                            minLength:
-                                                item.config.validation
-                                                    .minLength,
-                                            maxLength:
-                                                item.config.validation.maxLength
-                                        })}
-                                        className={styles.InputElement}
-                                        {...item.config.elementConfig}
-                                    />
-                                );
-                                break;
-                            case "select":
-                                inputElement = (
-                                    <select
-                                        key={index}
-                                        name={item.config.validation.name}
-                                        ref={register({
-                                            required:
-                                                item.config.validation.required,
-                                            minLength:
-                                                item.config.validation
-                                                    .minLength,
-                                            maxLength:
-                                                item.config.validation.maxLength
-                                        })}
-                                        className={styles.InputElement}
-                                        {...item.config.elementConfig}
-                                    >
-                                        {item.config.elementConfig.options?.map(
-                                            (option, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={option.value}
-                                                >
-                                                    {option.displayValue}
-                                                </option>
-                                            )
-                                        )}
-                                    </select>
-                                );
-                                break;
-                            default:
-                                return inputElement;
-                        }
-
-                        return inputElement;
-                    })}
-
-                    <Button btnType="Success" clicked={e => e}>
-                        ORDER
-                    </Button>
-                </form>
-            )} */}
         </div>
     );
 };
