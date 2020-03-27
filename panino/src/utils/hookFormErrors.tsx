@@ -18,7 +18,8 @@ export const reactHookFormErrorMsg = (
         return (
             <p className={styles.Error}>
                 <strong>
-                    {item.config.elementConfig.placeholder} must only contain numbers.
+                    {item.config.elementConfig.placeholder} must only contain
+                    numbers.
                 </strong>
             </p>
         );
@@ -44,6 +45,6 @@ export const reactHookFormErrorMsg = (
             </p>
         );
     }
-    
+
     return false;
 };
