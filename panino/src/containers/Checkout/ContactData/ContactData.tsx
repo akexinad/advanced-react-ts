@@ -31,6 +31,9 @@ const ContactData: FC<ContactDataProps> = ({
     totalPrice,
     routeProps
 }) => {
+    const [orderFormArray, setOrderFormArray] = useState<
+        Array<IOrderFormConfigItem>
+    >([]);
     const [orderForm] = useState<IOrderForm>(orderFormDefinition);
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, errors } = useForm<
@@ -47,33 +50,36 @@ const ContactData: FC<ContactDataProps> = ({
             console.error("No ingredients selected");
             routeProps.history.push("/");
         }
-    }, [ingredients, routeProps]);
 
-    const orderFormArray: Array<IOrderFormConfigItem> = [];
+        const orderFormArrayCOPY: Array<IOrderFormConfigItem> = [];
 
-    Object.entries(orderForm).map(([id, config]) => {
-        if (id === "address") {
-            const addressEntries: [string, IOrderFormConfig][] = Object.entries(
-                config
-            );
+        Object.entries(orderForm).map(([id, config]) => {
+            if (id === "address") {
+                const addressEntries: [
+                    string,
+                    IOrderFormConfig
+                ][] = Object.entries(config);
 
-            return addressEntries.map(([id, config]) => {
-                orderFormArray.push({
-                    id,
-                    config
+                return addressEntries.map(([id, config]) => {
+                    orderFormArrayCOPY.push({
+                        id,
+                        config
+                    });
+
+                    return orderFormArrayCOPY;
                 });
+            }
 
-                return orderFormArray;
+            orderFormArrayCOPY.push({
+                id,
+                config
             });
-        }
 
-        orderFormArray.push({
-            id,
-            config
+            setOrderFormArray(orderFormArrayCOPY);
+
+            return orderFormArrayCOPY;
         });
-
-        return orderFormArray;
-    });
+    }, [ingredients, routeProps, orderForm]);
 
     const _handleSubmit = (data: IReactHookFormOrderData) => {
         console.log("ingredients", ingredients);
