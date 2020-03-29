@@ -132,6 +132,8 @@ const ContactData: FC<ContactDataProps> = ({
         if (!orderFormArray) return;
 
         return orderFormArray.map((item, index) => {
+            const elementType = item.config.elementType;
+            
             const validationOptios: ValidationOptions = {
                 pattern: item.config.validation.pattern,
                 minLength: item.config.validation.minLength,
@@ -159,51 +161,46 @@ const ContactData: FC<ContactDataProps> = ({
                 </Fragment>
             );
 
-            switch (item.config.elementType) {
-                case "input":
-                    return inputElement;
-                case "textarea":
-                    inputElement = (
-                        <textarea
-                            key={index}
+            if (elementType === "textarea") {
+                inputElement = (
+                    <textarea
+                        key={index}
+                        name={item.config.validation.name}
+                        ref={register(validationOptios)}
+                        className={styles.InputElement}
+                        style={errorStyling}
+                        {...item.config.elementConfig}
+                    />
+                );
+            }
+
+            if (elementType === "select") {
+                inputElement = (
+                    <Fragment key={index}>
+                        <select
                             name={item.config.validation.name}
                             ref={register(validationOptios)}
                             className={styles.InputElement}
-                            style={errorStyling}
                             {...item.config.elementConfig}
-                        />
-                    );
-                    break;
-                case "select":
-                    inputElement = (
-                        <Fragment key={index}>
-                            <select
-                                name={item.config.validation.name}
-                                ref={register(validationOptios)}
-                                className={styles.InputElement}
-                                {...item.config.elementConfig}
-                                style={errorStyling}
-                            >
-                                <option value="">
-                                    {item.config.elementConfig.placeholder}
-                                </option>
-                                {item.config.elementConfig.options?.map(
-                                    (option, index) => (
-                                        <option
-                                            key={index}
-                                            value={option.value}
-                                        >
-                                            {option.displayValue}
-                                        </option>
-                                    )
-                                )}
-                            </select>
-                            {reactHookFormErrors(errors, item, styles)}
-                        </Fragment>
-                    );
-                    break;
-                default:
-                    return inputElement;
+                            style={errorStyling}
+                        >
+                            <option value="">
+                                {item.config.elementConfig.placeholder}
+                            </option>
+                            {item.config.elementConfig.options?.map(
+                                (option, index) => (
+                                    <option
+                                        key={index}
+                                        value={option.value}
+                                    >
+                                        {option.displayValue}
+                                    </option>
+                                )
+                            )}
+                        </select>
+                        {reactHookFormErrors(errors, item, styles)}
+                    </Fragment>
+                );
             }
 
             return inputElement;
