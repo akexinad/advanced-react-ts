@@ -132,19 +132,19 @@ const ContactData: FC<ContactDataProps> = ({
         if (!orderFormArray) return;
 
         return orderFormArray.map((item, index) => {
-            let errorStyling: HTMLAttributes<HTMLInputElement>["style"] = {};
-
-            if (errors[item.config.validation.name]) {
-                errorStyling.border = "1px solid red";
-                errorStyling.backgroundColor = "#fda49a";
-            }
-
             const validationOptios: ValidationOptions = {
                 pattern: item.config.validation.pattern,
                 minLength: item.config.validation.minLength,
                 maxLength: item.config.validation.maxLength,
                 required: item.config.validation.required
             };
+
+            let errorStyling: HTMLAttributes<HTMLInputElement>["style"] = {};
+
+            if (errors[item.config.validation.name]) {
+                errorStyling.border = "1px solid red";
+                errorStyling.backgroundColor = "#fda49a";
+            }
 
             let inputElement: JSX.Element = (
                 <Fragment key={index}>
