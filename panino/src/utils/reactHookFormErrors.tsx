@@ -7,7 +7,7 @@ import {
     ICSSStyles
 } from "../interfaces";
 
-export const reactHookFormErrorMsg = (
+export default (
     errors: NestDataObject<IReactHookFormOrderData, FieldError>,
     item: IOrderFormConfigItem,
     styles: ICSSStyles

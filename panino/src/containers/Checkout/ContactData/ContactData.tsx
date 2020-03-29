@@ -1,4 +1,10 @@
-import React, { useState, FC, Fragment, useEffect } from "react";
+import React, {
+    useState,
+    FC,
+    Fragment,
+    useEffect,
+    HTMLAttributes
+} from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useForm, ValidationOptions } from "react-hook-form";
 import axios from "../../../axios-orders";
@@ -13,7 +19,7 @@ import {
 } from "../../../interfaces";
 
 import { orderFormDefinition } from "../../../utils/definitions";
-import { reactHookFormErrorMsg } from "../../../utils/hookFormErrors";
+import reactHookFormErrors from "../../../utils/reactHookFormErrors";
 
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -39,6 +45,7 @@ const ContactData: FC<ContactDataProps> = ({
     const { register, handleSubmit, errors } = useForm<
         IReactHookFormOrderData
     >();
+    const [validData, setValidData] = useState(false);
 
     useEffect(() => {
         const ingredientQty = Object.values(ingredients).reduce(
@@ -82,10 +89,6 @@ const ContactData: FC<ContactDataProps> = ({
     }, [ingredients, routeProps, orderForm]);
 
     const _handleSubmit = (data: IReactHookFormOrderData) => {
-        console.log("ingredients", ingredients);
-
-        console.log("data", data);
-
         setLoading(true);
 
         const newOrder: INewOrder = {
@@ -99,6 +102,19 @@ const ContactData: FC<ContactDataProps> = ({
             email: data.email,
             deliveryMethod: data.deliveryMethod
         };
+
+        const dataValues = Object.values(newOrder);
+
+        if (dataValues.includes(undefined)) setValidData(false);
+
+        if (!validData) {
+            console.error(
+                "There are data values that are undefined. See data object:",
+                newOrder
+            );
+            setLoading(false);
+            return;
+        }
 
         axios
             .post("/orders.json", newOrder)
@@ -116,6 +132,13 @@ const ContactData: FC<ContactDataProps> = ({
         if (!orderFormArray) return;
 
         return orderFormArray.map((item, index) => {
+            let errorStyling: HTMLAttributes<HTMLInputElement>["style"] = {};
+
+            if (errors[item.config.validation.name]) {
+                errorStyling.border = "1px solid red";
+                errorStyling.backgroundColor = "#fda49a";
+            }
+
             const validationOptios: ValidationOptions = {
                 pattern: item.config.validation.pattern,
                 minLength: item.config.validation.minLength,
@@ -129,9 +152,10 @@ const ContactData: FC<ContactDataProps> = ({
                         name={item.config.validation.name}
                         ref={register(validationOptios)}
                         className={styles.InputElement}
+                        style={errorStyling}
                         {...item.config.elementConfig}
                     />
-                    {reactHookFormErrorMsg(errors, item, styles)}
+                    {reactHookFormErrors(errors, item, styles)}
                 </Fragment>
             );
 
@@ -145,6 +169,7 @@ const ContactData: FC<ContactDataProps> = ({
                             name={item.config.validation.name}
                             ref={register(validationOptios)}
                             className={styles.InputElement}
+                            style={errorStyling}
                             {...item.config.elementConfig}
                         />
                     );
@@ -157,6 +182,7 @@ const ContactData: FC<ContactDataProps> = ({
                                 ref={register(validationOptios)}
                                 className={styles.InputElement}
                                 {...item.config.elementConfig}
+                                style={errorStyling}
                             >
                                 <option value="">
                                     {item.config.elementConfig.placeholder}
@@ -172,7 +198,7 @@ const ContactData: FC<ContactDataProps> = ({
                                     )
                                 )}
                             </select>
-                            {reactHookFormErrorMsg(errors, item, styles)}
+                            {reactHookFormErrors(errors, item, styles)}
                         </Fragment>
                     );
                     break;

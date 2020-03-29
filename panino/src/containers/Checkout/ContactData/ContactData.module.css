@@ -33,6 +33,7 @@
 .InputElement {
     outline: none;
     border: 1px solid #ccc;
+    border-radius: 4px;
     background-color: white;
     font: inherit;
     padding: 6px 10px;
