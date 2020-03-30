@@ -61,9 +61,11 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
 
         axios
             .get("/ingredients.json")
-            .then(res =>
-                this.setState({ ingredients: res.data, loading: false })
-            )
+            .then(res => {
+                if (!res.data) return this.setState({ loading: false });
+
+                this.setState({ ingredients: res.data, loading: false });
+            })
             .catch((err: AxiosError) =>
                 this.setState({
                     loading: false,
@@ -183,8 +185,6 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
         queryParams.push("price=" + this.state.totalPrice);
 
         const queryString = queryParams.join("&");
-
-
 
         this.props.history.push({
             pathname: "/checkout",
