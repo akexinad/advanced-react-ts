@@ -44,6 +44,12 @@ const store = createStore(rootReducer);
 
 // console.log(store.getState());
 
+// Subscription
+
+store.subscribe(() => {
+  console.log("subscription", store.getState());
+});
+
 // Dispatching an action
 
 store.dispatch({ type: INCREMENT_COUNTER });
