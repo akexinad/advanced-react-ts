@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { INCREMENT, DECREMENT, ADD_FIVE, SUBTRACT_FIVE } from "../../store/reducer";
+import {
+    INCREMENT,
+    DECREMENT,
+    ADD_FIVE,
+    SUBTRACT_FIVE
+} from "../../store/reducer";
 
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
@@ -76,11 +81,13 @@ const mapDispatchToProps = dispatch => {
             }),
         onAddFive: () =>
             dispatch({
-                type: ADD_FIVE
+                type: ADD_FIVE,
+                payload: 5
             }),
         onSubtractFive: () =>
             dispatch({
-                type: SUBTRACT_FIVE
+                type: SUBTRACT_FIVE,
+                payload: 5
             })
     };
 };
