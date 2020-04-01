@@ -13,22 +13,18 @@ const reducer = (state = initialState, action) => {
             return {
                 counter: state.counter + 1
             };
-            break;
         case DECREMENT:
             return {
                 counter: state.counter - 1
             };
-            break;
         case ADD_FIVE:
             return {
                 counter: state.counter + action.payload
             };
-            break;
         case SUBTRACT_FIVE:
             return {
                 counter: state.counter - action.payload
             };
-            break;
         default:
             return state;
     }
