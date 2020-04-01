@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { INCREMENT, DECREMENT } from "../../store/reducer";
+import { INCREMENT, DECREMENT, ADD_FIVE, SUBTRACT_FIVE } from "../../store/reducer";
 
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
@@ -46,15 +46,12 @@ class Counter extends Component {
                 />
                 <CounterControl
                     label="Decrement"
-                    clicked={() => this.counterChangedHandler("dec")}
+                    clicked={this.props.onDecrementCounter}
                 />
-                <CounterControl
-                    label="Add 5"
-                    clicked={() => this.counterChangedHandler("add", 5)}
-                />
+                <CounterControl label="Add 5" clicked={this.props.onAddFive} />
                 <CounterControl
                     label="Subtract 5"
-                    clicked={() => this.counterChangedHandler("sub", 5)}
+                    clicked={this.props.onSubtractFive}
                 />
             </div>
         );
@@ -76,6 +73,14 @@ const mapDispatchToProps = dispatch => {
         onDecrementCounter: () =>
             dispatch({
                 type: DECREMENT
+            }),
+        onAddFive: () =>
+            dispatch({
+                type: ADD_FIVE
+            }),
+        onSubtractFive: () =>
+            dispatch({
+                type: SUBTRACT_FIVE
             })
     };
 };
