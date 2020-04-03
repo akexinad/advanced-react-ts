@@ -5,7 +5,9 @@ import {
     INCREMENT,
     DECREMENT,
     ADD_FIVE,
-    SUBTRACT_FIVE
+    SUBTRACT_FIVE,
+    STORE_RESULT,
+    DELETE_RESULT
 } from "../../store/reducer";
 
 import CounterControl from "../../components/CounterControl/CounterControl";
@@ -58,6 +60,15 @@ class Counter extends Component {
                     label="Subtract 5"
                     clicked={this.props.onSubtractFive}
                 />
+                <hr />
+                <button onClick={this.props.onStoreResult}>Store Result</button>
+                <ul>
+                    {this.props.storedResults.map(item => (
+                        <li key={item.id} onClick={this.props.onDeleteResult}>
+                            {item.value}
+                        </li>
+                    ))}
+                </ul>
             </div>
         );
     }
@@ -65,7 +76,8 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
     return {
-        ctr: state.counter
+        ctr: state.counter,
+        storedResults: state.results
     };
 };
 
@@ -88,7 +100,9 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: SUBTRACT_FIVE,
                 payload: 5
-            })
+            }),
+        onStoreResult: () => dispatch({ type: STORE_RESULT }),
+        onDeleteResult: () => dispatch({ type: DELETE_RESULT })
     };
 };
 
