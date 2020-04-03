@@ -42,6 +42,15 @@ const reducer = (state = initialState, action) => {
                     value: state.counter
                 })
             };
+        case DELETE_RESULT:
+            const updated = state.results.filter(
+                item => item.id !== action.payload
+            );
+
+            return {
+                ...state,
+                results: updated
+            };
         default:
             return state;
     }
