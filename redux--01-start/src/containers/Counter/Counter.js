@@ -8,7 +8,7 @@ import {
     SUBTRACT_FIVE,
     STORE_RESULT,
     DELETE_RESULT
-} from "../../store/reducer";
+} from "../../store/actions";
 
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
