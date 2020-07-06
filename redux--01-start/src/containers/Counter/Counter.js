@@ -14,6 +14,10 @@ import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
 
 class Counter extends Component {
+    /*
+
+    NOW WE ARE USING REDUX TO HANDLE OUR STATE
+    
     state = {
         counter: 0
     };
@@ -43,6 +47,8 @@ class Counter extends Component {
         }
     };
 
+    */
+
     render() {
         return (
             <div>
@@ -61,7 +67,7 @@ class Counter extends Component {
                     clicked={this.props.onSubtractFive}
                 />
                 <hr />
-                <button onClick={this.props.onStoreResult}>Store Result</button>
+                <button onClick={() => this.props.onStoreResult(this.props.ctr)}>Store Result</button>
                 <ul>
                     {this.props.storedResults.map((item, index) => (
                         <li
@@ -79,8 +85,8 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
     return {
-        ctr: state.counter,
-        storedResults: state.results
+        ctr: state.ctr.counter,
+        storedResults: state.res.results
     };
 };
 
@@ -104,7 +110,7 @@ const mapDispatchToProps = dispatch => {
                 type: SUBTRACT_FIVE,
                 payload: 5
             }),
-        onStoreResult: () => dispatch({ type: STORE_RESULT }),
+        onStoreResult: result => dispatch({ type: STORE_RESULT, result }),
         onDeleteResult: id => dispatch({ type: DELETE_RESULT, payload: id })
     };
 };
