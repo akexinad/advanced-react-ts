@@ -31,9 +31,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddUserHandler: () => {
+    onAddUserHandler: (user) => {
       dispatch({
         type: ADD_USER,
+        user
       });
     },
     onDeleteUserHandler: (id) => {
