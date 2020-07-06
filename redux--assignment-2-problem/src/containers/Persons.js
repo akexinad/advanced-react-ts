@@ -10,7 +10,7 @@ class Persons extends Component {
     return (
       <div>
         <AddPerson personAdded={this.props.onAddUserHandler} />
-        {this.props.users.map((person) => (
+        {this.props.usrs.map((person) => (
           <Person
             key={person.id}
             name={person.name}
@@ -25,7 +25,7 @@ class Persons extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users,
+    usrs: state.users,
   };
 };
 
