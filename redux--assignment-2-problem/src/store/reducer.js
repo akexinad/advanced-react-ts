@@ -16,7 +16,7 @@ const reducer = (state = initialState, action) => {
       };
     case DELETE_USER:
       return {
-        users: state.users.filter((user) => user.id !== action.payload),
+        users: state.users.filter((user) => user.id !== action.userId),
       };
     default:
       return state;

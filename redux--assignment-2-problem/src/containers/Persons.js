@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
     onDeleteUserHandler: (id) => {
       dispatch({
         type: DELETE_USER,
-        payload: id,
+        userId: id,
       });
     },
   };
