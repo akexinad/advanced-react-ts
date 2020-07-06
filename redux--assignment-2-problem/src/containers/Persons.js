@@ -6,7 +6,6 @@ import AddPerson from "../components/AddPerson/AddPerson";
 import { ADD_USER, DELETE_USER } from "../store/actions";
 
 class Persons extends Component {
-
   render() {
     return (
       <div>
@@ -25,8 +24,6 @@ class Persons extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
-
   return {
     users: state.users,
   };
