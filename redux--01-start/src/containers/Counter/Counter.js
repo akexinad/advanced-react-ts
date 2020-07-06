@@ -67,7 +67,11 @@ class Counter extends Component {
                     clicked={this.props.onSubtractFive}
                 />
                 <hr />
-                <button onClick={() => this.props.onStoreResult(this.props.ctr)}>Store Result</button>
+                <button
+                    onClick={() => this.props.onStoreResult(this.props.ctr)}
+                >
+                    Store Result
+                </button>
                 <ul>
                     {this.props.storedResults.map((item, index) => (
                         <li

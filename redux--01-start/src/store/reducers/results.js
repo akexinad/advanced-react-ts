@@ -8,8 +8,6 @@ const initialState = {
 const resultsReducer = (state = initialState, action) => {
     switch (action.type) {
         case STORE_RESULT:
-            console.log('action', action);
-            
             return setIn(
                 state,
                 ["results"],
