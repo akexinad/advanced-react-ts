@@ -45,7 +45,6 @@ const ContactData: FC<ContactDataProps> = ({
     const { register, handleSubmit, errors } = useForm<
         IReactHookFormOrderData
     >();
-    const [validData, setValidData] = useState(false);
 
     useEffect(() => {
         const ingredientQty = Object.values(ingredients).reduce(
@@ -103,19 +102,6 @@ const ContactData: FC<ContactDataProps> = ({
             deliveryMethod: data.deliveryMethod
         };
 
-        const dataValues = Object.values(newOrder);
-
-        if (dataValues.includes(undefined)) setValidData(false);
-
-        if (!validData) {
-            console.error(
-                "There are data values that are undefined. See data object:",
-                newOrder
-            );
-            setLoading(false);
-            return;
-        }
-
         axios
             .post("/orders.json", newOrder)
             .then(() => {
@@ -133,7 +119,7 @@ const ContactData: FC<ContactDataProps> = ({
 
         return orderFormArray.map((item, index) => {
             const elementType = item.config.elementType;
-            
+
             const validationOptios: ValidationOptions = {
                 pattern: item.config.validation.pattern,
                 minLength: item.config.validation.minLength,
@@ -189,10 +175,7 @@ const ContactData: FC<ContactDataProps> = ({
                             </option>
                             {item.config.elementConfig.options?.map(
                                 (option, index) => (
-                                    <option
-                                        key={index}
-                                        value={option.value}
-                                    >
+                                    <option key={index} value={option.value}>
                                         {option.displayValue}
                                     </option>
                                 )

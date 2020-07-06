@@ -23,7 +23,6 @@ const Orders: FC = () => {
 
                 const orders: IOrder[] = Object.entries(response).map(entry => {
                     return {
-                        id: entry[0],
                         ...entry[1]
                     };
                 });
