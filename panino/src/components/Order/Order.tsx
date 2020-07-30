@@ -16,7 +16,9 @@ interface IIngredientDetails {
     quantity: number;
 }
 
-const Order: FC<OrderProps> = ({ orderId, ingredients, price, history, match, location }) => {
+const Order: FC<OrderProps> = props => {
+    const { orderId, ingredients, price, history } = props;
+
     const renderIngredients = () => {
         const ingredientsList: IIngredientDetails[] = [];
 
