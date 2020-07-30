@@ -102,12 +102,26 @@ export interface IReactHookFormOrderData {
 
 export type ActionType = "ADD_INGREDIENT" | "REMOVE_INGREDIENT";
 
+export interface IState {
+    ingredients: IIngredients;
+    totalPrice: number;
+}
+
+export interface IInjectedProps {
+    ings: IState["ingredients"];
+}
+
 export interface IAction {
     type: ActionType;
     payload: keyof IIngredients;
 }
 
-export interface IState {
-    ingredients: IIngredients;
-    totalPrice: number;
+export type ActionDispatch = (action: IAction) => void;
+
+export interface IDispatch {
+    onIngredientAdded: (payload: IAction["payload"]) => void
+    onIngredientRemoved: (payload: IAction["payload"]) => void;
 }
+
+export type DispatchMap = (dispatch: ActionDispatch) => IDispatch;  
+

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { AxiosError } from "axios";
 import { RouteComponentProps } from "react-router-dom";
+import { connect } from "react-redux";
 
 import axios from "../../axios-orders";
 
-import { IIngredients } from "../../interfaces";
+import { IIngredients, IState, IAction, ActionDispatch, DispatchMap } from "../../interfaces";
 
 import Aux from "../../hoc/Auxilliary/Auxilliary";
 import Burger from "../../components/Burger/Burger";
@@ -15,6 +16,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import WithErrorHandler from "../../hoc/WithErrorHandler/WithErrorHandler";
 
 import styles from "./BurgerBuilder.module.css";
+import { Action } from "redux";
 
 export type IngredientLabels = "Salad" | "Bacon" | "Cheese" | "Meat";
 export type IngredientTypes = "salad" | "bacon" | "cheese" | "meat";
@@ -248,5 +250,28 @@ class BurgerBuilder extends Component<RouteComponentProps, AppState> {
     }
 }
 
-export default WithErrorHandler(BurgerBuilder, axios);
-// export default BurgerBuilder;
+const mapStateToProps = (state: IState) => {
+    return {
+        ings: state.ingredients
+    };
+};
+
+const mapDispatchToProps: DispatchMap = (dispatch: ActionDispatch) => {
+    return {
+        onIngredientAdded: (ingName: IAction["payload"]) =>
+            dispatch({
+                type: "ADD_INGREDIENT",
+                payload: ingName
+            }),
+        onIngredientRemoved: (ingName: IAction["payload"]) =>
+            dispatch({
+                type: "REMOVE_INGREDIENT",
+                payload: ingName
+            })
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(WithErrorHandler(BurgerBuilder, axios));

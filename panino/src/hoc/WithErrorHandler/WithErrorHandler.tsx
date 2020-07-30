@@ -1,9 +1,11 @@
-import React, { Component, ReactNode, ReactType } from "react";
+import React, { Component, ReactNode, ReactType, ClassAttributes, ComponentType } from "react";
 import { AxiosInstance, AxiosError } from "axios";
 
 import Aux from "../Auxilliary/Auxilliary";
 import Modal from "../../components/UI/Modal/Modal";
 import { RouteComponentProps } from "react-router-dom";
+import { Matching } from "react-redux";
+import { IIngredients, IInjectedProps } from "../../interfaces";
 
 interface ErrorState {
     isError: boolean;
@@ -14,7 +16,7 @@ interface WrappedComponentProps extends RouteComponentProps {
     children?: ReactNode;
 }
 
-const WithErrorHandler = (
+const WithErrorHandler: any = (
     WrappedComponent: ReactType,
     axios: AxiosInstance
 ) => {
