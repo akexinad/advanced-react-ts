@@ -99,3 +99,15 @@ export interface IReactHookFormOrderData {
     country: string;
     deliveryMethod: string;
 }
+
+export type ActionType = "ADD_INGREDIENT" | "REMOVE_INGREDIENT";
+
+export interface IAction {
+    type: ActionType;
+    payload: keyof IIngredients;
+}
+
+export interface IState {
+    ingredients: IIngredients;
+    totalPrice: number;
+}

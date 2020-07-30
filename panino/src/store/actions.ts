@@ -1,1 +1,1 @@
-export type builderActions = "ADD_INGREDIENT" | "REMOVE_INGREDIENT";
+export type builderActionType = "ADD_INGREDIENT" | "REMOVE_INGREDIENT";
